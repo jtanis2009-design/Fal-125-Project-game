@@ -2,6 +2,9 @@ FAL-125 README. Current version: v258 (file fal125_battle_prototype-v258.html). 
 Folders: docs (this file, ROADMAP, Needed, TEST_LAB, design notes), tools (headless test and audit scripts, see TEST_LAB.txt), data (FAL125_Character_Book.xlsx), sprites.
 Read docs/Needed.txt every time a playable character is added. docs/ROADMAP.txt holds only what is still to build.
 
+WEB PAGE (no game changes)
+- index.html opens the newest game version automatically, so the GitHub Pages link never changes: https://jtanis2009-design.github.io/Fal-125-Project-game/ (turn on Settings > Pages > Deploy from a branch > main, / (root)). .nojekyll makes GitHub serve the files as they are.
+
 V258 (RECOLOUR SKINS: CLOWN.X2 AND VELARA)
 - Clown.x2: Midnight Act (blue, 60), Toxic Jester (green, 75), Royal Court (purple, 90), Grey Matinee (black and white, 120). His free Candy Cane skin stays.
 - Velara: Sapphire Halo (blue, 60), Venom Saint (green, 75), Gilded Angel (gold, 90), Fallen Angel (dark grey, 120). Her Sinner skin stays.

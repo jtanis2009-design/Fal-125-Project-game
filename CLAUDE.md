@@ -65,5 +65,8 @@ Run from the project folder with Node:
 - `node tools/fal125_lab.js --help`-style options are documented at the top of the file (`--party --world 1-8 --level --diff --runs --seed`).
 - Open the game in a browser and play a battle with the new content; check the browser console for errors. Test on a phone-sized window too (the game has a mobile layout).
 
+## Playing it as a web page
+The game is published with GitHub Pages (Settings > Pages > Deploy from a branch > main, / (root)) at https://jtanis2009-design.github.io/Fal-125-Project-game/ . `index.html` opens the newest `fal125_battle_prototype-vNNN.html` automatically (it asks GitHub for the file list). **When you bump the version, also update `FALLBACK` in `index.html`** to the new file name, in case that lookup fails. `.nojekyll` makes GitHub serve the files as they are.
+
 ## Delivering
 The author used to get a zip per version. With Claude Code, edit the folder in place, bump the HTML version, write the README entry, and commit with git (one commit per version, message = the README headline).
