@@ -70,4 +70,5 @@ The game is published with GitHub Pages (Settings > Pages > Deploy from a branch
 
 ## Delivering
 - **Always finish on the `main` branch.** The web page only shows what is on main. If you worked on another branch (Claude Code makes `claude/...` branches), merge it into main and push main, or the author will not see the update.
+- **The author asked for this to happen automatically:** after every delivered version (tests passed, committed), merge into `main` and push `main` straight away, without asking first. Also push the working branch.
 The author used to get a zip per version. With Claude Code, edit the folder in place, bump the HTML version, write the README entry, and commit with git (one commit per version, message = the README headline).
