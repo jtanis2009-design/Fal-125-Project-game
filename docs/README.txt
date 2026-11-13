@@ -1,6 +1,26 @@
-FAL-125 README. Current version: v260 (file fal125_battle_prototype-v260.html). Newest entries first.
+FAL-125 README. Current version: v261 (file fal125_battle_prototype-v261.html). Newest entries first.
 Folders: docs (this file, ROADMAP, Needed, TEST_LAB, design notes), tools (headless test and audit scripts, see TEST_LAB.txt), data (FAL125_Character_Book.xlsx), sprites.
 Read docs/Needed.txt every time a playable character is added. docs/ROADMAP.txt holds only what is still to build.
+
+V261 (NEW FIGHTER: TOMB, 0116, TANK + OUTPOSTER.M1'S FORGE, A SHOP CHARACTER)
+The author's own characters (sheets dated December 28th and December 12th 2025; both sheets said 5937, not used). Search "V261". Numbers in TB and OW.
+TOMB, 17, British, 6'1. Ability: Black Gasoline.
+- Gasoline Pool: Taunts and pours black gasoline at his feet for 2 turns. He takes 20% less damage, every enemy that hits him gets Soaked, and 20% of the time it slips and loses its next turn (a boss is Slowed).
+- Splash: hits, Soaks the enemy and Slows it.
+- Light It: every Soak on every enemy catches fire at once. More Soak, bigger fire, and they keep Burning.
+- Soaked enemies are on edge: they take 6% more damage from everyone for each Soak (up to 5). Fire never hurts Tomb.
+- "If it takes longer than 100 seconds it ignites automatically": from round 5 of a wave, the gasoline lights itself once.
+- Ultimate Just Bone, a gold enhancement, a Rare chip, 3 chips, 2 skins, recruit scenes, story lines for every Tank beat in Worlds 2 to 8, 6 Archive entries, Mastery lines, party quips and an event (A Room Full of Fuel).
+- Containment, Scent and Threat are Claude's guesses.
+- Balance: tank check (claire, inkating, shamoon, World 5, Hard) wave 18.8 (Whiplash 21.9, Ixis 16.4, Crushdeath 16.7); late game 92% (Whiplash 83%, Ixis 83%).
+OUTPOSTER.M1, a shop character (not a fighter). Ability: Contracted Weapon.
+- After a shop stop, 40% of the time his anvil is set up next to the Vendor: "Outposter.M1".
+- Pick one of your fighters, then one of two weapons for their role. That fighter loses 5-10% of their ATK, DEF and max HP for the rest of the run and keeps the weapon. One weapon per fighter per run.
+- Damage weapons: Contracted Blade (+25% damage), Chain Cleaver (single hits also hit another enemy for 35%), Execution Hook (+70% on enemies under 35% HP).
+- Tank weapons: Bulwark Plate (-20% damage taken), Spiked Shell (30% of every hit goes back), Anchor Chain (every wave starts with Taunt and Guard).
+- Healer weapons: Surgeon's Saw (+30% healing), Barbed Scalpel (+60% attack damage), Blood Pump (the most hurt ally heals 5% each of their turns).
+Sprites for Tomb and Outposter are TEMPORARY pixel sprites drawn by Claude. Character Book row 117 (Tomb). Next free ID: 117.
+New test tools/fal125_tomb_test.js (26 checks).
 
 V260 (NEW FIGHTER: HOLE, 0115, DAMAGE)
 The author's own character (sheet dated November 8th 2025, plus a second sheet for his Devil Form; sheet number 5938 dropped). Search "V260". Numbers in HO.
