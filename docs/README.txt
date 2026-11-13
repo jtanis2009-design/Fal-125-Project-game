@@ -1,6 +1,20 @@
-FAL-125 README. Current version: v259 (file fal125_battle_prototype-v259.html). Newest entries first.
+FAL-125 README. Current version: v260 (file fal125_battle_prototype-v260.html). Newest entries first.
 Folders: docs (this file, ROADMAP, Needed, TEST_LAB, design notes), tools (headless test and audit scripts, see TEST_LAB.txt), data (FAL125_Character_Book.xlsx), sprites.
 Read docs/Needed.txt every time a playable character is added. docs/ROADMAP.txt holds only what is still to build.
+
+V260 (NEW FIGHTER: HOLE, 0115, DAMAGE)
+The author's own character (sheet dated November 8th 2025, plus a second sheet for his Devil Form; sheet number 5938 dropped). Search "V260". Numbers in HO.
+HOLE, 16, the Trypophobia Fiend. He was terrified of holes until a bully pushed him into one. Fal-125 gives him a normal life as long as he fights threats for them. Containment Level: Low.
+- Bore: digs a hole into an enemy (up to 5, they stay for the wave). Every hole already in it makes Bore hit harder.
+- Phobia: the enemy becomes scared of holes (Afraid: it hits 25% weaker for 2 turns). If it already has 3 or more holes, it panics and loses its turn (a boss is Slowed instead).
+- Devil Form (once per wave): for 3 turns he turns into his second form, and his picture changes to it. +35% ATK, every enemy gets a hole, every hole rots its enemy at the start of his turns, and Bore pops out of a hole to hit a second enemy.
+- Passive: once per run, when he would fall, his holes join his body back to his brain and he gets back up with 35% HP.
+- Ultimate Pocket Dimension, a gold enhancement, a Rare chip, 3 chips, 2 skins, recruit scenes, story lines for every Damage beat in Worlds 2 to 8, 6 Archive entries, Mastery lines, party quips and an event (A Hole in the Floor). His card shows his Devil Form and how many holes the enemies have.
+- Type Human, Threat and the Archive notes are Claude's guesses: change them if they are wrong.
+- Sprites (normal and Devil Form) are TEMPORARY pixel sprites drawn by Claude (sprites/hole.png, sprites/hole_devil.png and EMBED). Replace them with Gemini sprites.
+- Balance: early game (cy, inkating, shamoon, World 5, Hard) he reaches wave 13.4 (Punchline 13.6, Slinder 14.2, Demure 16.9); late game he clears 96% (Slinder 96%, Demure 88%, Punchline 79%).
+- Character Book row 116. Next free ID: 116.
+New test tools/fal125_hole_test.js (17 checks).
 
 V259 (FOUR NEW HEALERS: TANGLER 0111, BEARABLE 0112, BLACKBIRD 0113, RAINBOW RIPPER 0114)
 The author's own characters, all four Healers by the author's choice (sheets dated August 17th, June 19th, June 23rd and June 25th 2025; sheet numbers 5946, 5950, 5960 and 5959 dropped). Search "V259". Numbers in TG, BR, BB and RR.
