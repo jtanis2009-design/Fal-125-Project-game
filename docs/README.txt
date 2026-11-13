@@ -1,6 +1,26 @@
-FAL-125 README. Current version: v261 (file fal125_battle_prototype-v261.html). Newest entries first.
+FAL-125 README. Current version: v262 (file fal125_battle_prototype-v262.html). Newest entries first.
 Folders: docs (this file, ROADMAP, Needed, TEST_LAB, design notes), tools (headless test and audit scripts, see TEST_LAB.txt), data (FAL125_Character_Book.xlsx), sprites.
 Read docs/Needed.txt every time a playable character is added. docs/ROADMAP.txt holds only what is still to build.
+
+V262 (THE TRIO: GLOOM 0117 DAMAGE, ANO 0118 HEALER, LYCION 0119 TANK)
+The author's own characters (sheets dated October 16th 2025 and September 6th 2025; sheet numbers 5939, 5940, 5941 dropped). Roles and Lycion's design chosen by the author. Search "V262". Numbers in GL, AN and LY.
+GLOOM (Nevidian Psycho, Containment Level 3 High). An experimental soldier: kills with one blow to the head, super fast, jumps very high.
+- Quick Strike hits twice. Head Blow kills a normal enemy left under 30% HP (a boss takes 30% more). Leap: nothing can hit him until his next turn, then he lands on the enemy for a big hit.
+- Aggressive: without Ano or Lycion standing, a quarter of the time he ignores your target. With either of them he is Calm and hits 10% harder. His card shows Calm or Aggressive.
+ANO (Metal Bending, Containment Level -1 easy). Extremely peaceful, friends with Gloom and Lycion.
+- Metal Brace heals one ally and gives a metal plate that soaks damage. Metal Wall plates and heals the whole team. Rebar throws a metal spike.
+- Strain: every metal move builds Strain. At 5 his brain short-circuits and he loses a turn. His card shows the Strain.
+LYCION (RAGE). "The mask is a dam" (option 1, chosen by the author).
+- Mask on: Cover takes the hits meant for an ally, it takes 10% less damage, and every hit fills its Rage (card: Rage 0-100). Maul hits and adds Rage.
+- Mask Off (at 50 Rage): its picture changes to the Rage Form. It Taunts, every enemy is Terrified (hits weaker), it hits harder and bites back at everything that hits it. Rage drains every turn; at 0 the mask goes back on by itself.
+- Ano's Metal Brace on Lycion in Rage Form puts the mask back on early, and the leftover rage heals it.
+- Each has an ultimate (One Blow, Iron Sanctuary, Unmasked), a gold enhancement, a Rare chip, 3 chips, 2 skins, recruit scenes, story lines for their role's beats in Worlds 2 to 8, 6 Archive entries, Mastery lines, party quips and an event (A Training Yard, A Bent Cell Door, A Mirror).
+- Claude's guesses: types (Gloom Human, Ano Hybrid, Lycion Demon), Lycion's containment level, threat levels, the Archive notes, and the idea that "Nevidian" is the name of the program that made Gloom.
+- Balance: Gloom early wave 12.1 (Punchline 10.4 in the same check), late 83%. Ano early 7.5 (Thorn 9.7), late 83% (Thorn 71%). Lycion early 17.7 (Whiplash 21.9, Ixis 16.4), late 92%.
+- Sprites (Gloom, Ano, Lycion and its Rage Form) are TEMPORARY pixel sprites drawn by Claude.
+- tools/fal125_marrowline_test.js: the Powder check now averages 20 hits (one hit each failed by luck).
+- Character Book rows 118 to 120. Next free ID: 120.
+New test tools/fal125_trio_test.js (27 checks).
 
 V261 (NEW FIGHTER: TOMB, 0116, TANK + OUTPOSTER.M1'S FORGE, A SHOP CHARACTER)
 The author's own characters (sheets dated December 28th and December 12th 2025; both sheets said 5937, not used). Search "V261". Numbers in TB and OW.

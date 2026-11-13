@@ -19,7 +19,7 @@ let bad = 0; const ok = (c, m) => { console.log((c ? '✓ ' : '✗ ') + m); if (
   T.setSides([ml, al], [e1, e2]); T.setCur(ml);
   /* Powder */
   await turn('marrowline'); ok(ml.mlPow === 1, 'Powder +1 at the start of his turn');
-  const h0 = e1.hp; T.hit(ml, e1, 1); const d1 = h0 - e1.hp; ml.mlPow = 5; const h1 = e1.hp; T.hit(ml, e1, 1); const d5 = h1 - e1.hp;
+  let d1 = 0, d5 = 0; for (let i = 0; i < 20; i++) { ml.mlPow = 1; e1.hp = e1.maxHp; T.hit(ml, e1, 1); d1 += e1.maxHp - e1.hp; ml.mlPow = 5; e1.hp = e1.maxHp; T.hit(ml, e1, 1); d5 += e1.maxHp - e1.hp; } ml.mlPow = 1;   /* V262: averaged over 20 hits (one hit each was at the mercy of the random spread) */
   ok(d5 > d1 * 1.12, 'each Powder adds damage (' + d1 + ' at 1, ' + d5 + ' at 5)');
   /* City Block */
   ml.mlPow = 4; ok(!!S.mlcity.can(ml), 'City Block is locked under 5 Powder'); ml.mlPow = 5; ok(S.mlcity.can(ml) === null, 'and open at 5');
