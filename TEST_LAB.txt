@@ -1,0 +1,32 @@
+FAL-125 TEST LAB  (v204, tools list synced v225)
+Two ways to playtest anything with a few clicks or one command. Both use the same settings.
+
+1) IN THE GAME: the "Lab" button in the bottom bar (or press ~)
+   - PARTY: pick up to 4 fighters from a list of everyone, or load any recommended party.
+   - RUN: Level (1-10), World, Start wave, Difficulty, Mode (world / endless / bossrush).
+   - HELPERS: Story ease (enemy damage x0.9 on Normal, what a real Story run uses), Auto-play (smart), God mode (party takes no damage),
+     Enemies start at 1 HP, +999 coins.
+   - Chips: type chip ids (comma separated) to start with them, e.g. kd1, cx33c. Force the start wave's enemies: type enemy keys (up to 5).
+   - Launch. A small green "LAB RUN: your save is safe" badge shows while it runs. Your real save is copied first and put back when you
+     leave the end screen ("Change party"). Nothing from a Lab run is written to your save.
+   - CONFIG box: Copy gives text you can paste into a chat or into the command line tool; paste text and press Apply to load it.
+   - "Open Debug" opens the older panel that adds any enemy during a fight.
+
+2) ON THE COMMAND LINE: node tools/fal125_lab.js   (runs the real game headless, many runs at once, in seconds to minutes)
+   node tools/fal125_lab.js --party hush,xekna,snavo,radiant --world 7 --wave 35 --level 10 --runs 20
+   node tools/fal125_lab.js --config '<text from the in-game Copy button>' --runs 20     (in that text world is 0-based: 6 = World 7)
+   node tools/fal125_lab.js --list chars | enemies | chips | parties | worlds           (the keys you can use)
+   Options: --diff --mode --seed --nostory --classic --foes --chips --god --ohk --html
+   It prints the clear rate, the average wave reached and which waves the failed runs ended on.
+
+NOTES (for whoever balances next, including Claude)
+- A jump-in start (--wave 35) has none of the reward cards or chips a real run would have picked up by then, so it is harder than the same wave
+  inside a full run. Compare jump-in numbers with jump-in numbers, or give --chips to make up the difference.
+- Clear rates swing a lot between seeds. Use 20+ runs before judging a change, and the same --seed when comparing two versions.
+- Enemy and fighter keys are in the --list output. Fighter keys are not always the display name (Ghost = ghost_0072, Mushroom = proto_0066).
+- Tools for bigger questions: fal125_campaign.js (whole 8-world campaign), fal125_role_audit.js (stat outliers), fal125_story_check.js.
+- More tools (all take --html path/to/game.html): fal125_reaction_test.js (Steam, Chain, Explosion rules, 11 checks), fal125_mastery_test.js (Mastery data for every fighter),
+  fal125_style_audit.js (compares Run Styles on the same parties and seeds: FAL_STYLE=hour node tools/fal125_style_audit.js --world 6 --smart --runs 50; --tune '{"hourGrow":0.03}' tries numbers without editing the game),
+  fal125_enemy_audit.js (--all for every enemy; it measures against a level-1 dummy party, so late bosses and one-shot bombs read as more dangerous than they are),
+  fal125_blackmarket_test.js, fal125_incident_test.js, fal125_story_check.js, fal125_headless.js (shared loader, exposes G.RXT and G.STT for the tests).
+- Style audit caveat: Hard with level-1 parties is too brutal to compare styles (Standard won about 5%). Use Normal, World 5 or 6, 40+ runs, and treat gaps under about 8 points as noise.

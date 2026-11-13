@@ -1,0 +1,5 @@
+CLOWN.X40: THE FLESH THAT HATES (boss, SCP-610 inspired). Sprites are <key>.png in sprites/. Enemies face LEFT. Chibi style.
+[clown_x40] (boss uses this existing sprite for now) Later: a much bigger version, clown body swollen and split with raw meat showing through the costume, too many small eyes opening along the seams, one arm replaced by a long wet limb.
+[clown_x40lump] Flesh Growth: a small round pulsing lump of red-pink meat the size of a beach ball, a few tiny closed eyes, a stretched torn scrap of clown costume stuck to it, a little wet smear trail behind it.
+[clown_x40husk] Turned One: a pale chibi figure fused halfway into a lump of meat, one half still wearing a hero-style outfit in faded colours, one half raw flesh, hollow glowing white eyes, reaching arm.
+Background override: sprites/bg_clown_flesh.png (Cell 610: white tile wall eaten by flesh, tendrils from the ceiling, eyes in the walls, a FIRE panel on the wall).

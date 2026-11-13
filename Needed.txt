@@ -1,0 +1,20 @@
+NEEDED  (read this every time a new playable character is added)
+
+RULE: every new playable character MUST get a new row in data/FAL125_Character_Book.xlsx (sheet "Characters"). Always. No exceptions.
+
+How to add the row
+1. Use the next free ID (same number as the character's id in the game script, e.g. 0068 = ID 68). The next free ID is 111. New universe (V245): numbers on the drawing sheets are NOT used; every new fighter takes the next free ID.
+2. Fill the Book columns: ID, Name, Ability, Ability+, Containment Level, Scent, Threat LV, Type, Awakened.
+3. Ability+ is "???" when there is no extra ability to know about.
+4. Fill Role, HP, ATK, DEF and SPD from the character's entry in the CHARACTERS list in the game script.
+5. Put "Book" in the Source column once the details are yours. Use "Generated" only for drafts that still need your review.
+6. Extend the formula ranges on the Summary sheet if the new row goes past the last row (the counts now read Characters rows 2 to 111; the next new fighter is ID 111, row 112).
+
+Also needed for each new playable character
+- Add the fighter to CHARACTERS in the game script.
+- Foundation Archive: the file appears automatically. Add their lore to ARC_LORE (search "FOUNDATION ARCHIVE" in the script); until then it shows the stock placeholder text.
+- Bump the version number, add a line to README.txt, and send the updated zip in this same folder layout (docs, tools, data, sprites).
+- Mastery: add the fighter to MAST_TEXT (search "CHARACTER MASTERY" in the script): an epithet, a short lore entry and 3 voice lines (wave start, wave won, low HP). Without it the fighter shows a generic draft. Run tools/fal125_mastery_test.js, it reports how many entries are hand-written (all 99 as of v232).
+- Identification line: add the fighter to IDENT (search "const IDENT"). The game copies IDENT into each fighter once at load, BEFORE late CHARACTERS.push calls, so a fighter pushed after that point must also set its own ident (see Velara, search "V223"), or the Codex and preview show nothing.
+
+STORY LINES (V237): every new fighter also needs their own story line for each beat of their role in Worlds 2 to 8. Run node tools/fal125_lines_audit.js after adding one; it lists the beats that are missing.

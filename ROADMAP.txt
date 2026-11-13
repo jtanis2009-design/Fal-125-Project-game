@@ -1,0 +1,27 @@
+FAL-125 ROADMAP (your picks, still to build)
+Last synced: v225. Finished items are removed from the list and kept in the DONE line below.
+
+COMBAT
+ 1. Revenge hits: when a fighter falls, the next ally acts at once with +ATK
+RUN STRUCTURE
+ 2. Cursed chests: rare relic, risk a curse
+ 3. Hidden rooms: found by clicking background details
+ 4. Speedrun mode: timer, bonus Shards, ghost of your best run
+ECONOMY
+ 5. Gamble altar: bet a chip for a chance at higher rarity
+ 6. Wishing well: coins for a random blessing or curse
+ 7. Loot beasts: rare enemy that flees after 3 rounds, drops chips
+ENEMIES
+ 8. Enemy affixes on elites: Vampiric, Splitting, Shielded, Hasty
+ 9. Mimic enemies that copy one of your fighters' moves (the casino Mimic Slot is only a bite, it does not copy)
+10. Summoner nests: spawner that floods the field until killed (bosses already call reinforcements, this is a separate enemy)
+PROGRESSION / MENUS / QOL
+11. Fake loading-screen tips that turn creepy deeper in
+
+DONE (version in brackets):
+ Enemy adaptation, the counter-pick idea (v17), Branching routes (v38), Run Styles (v120), Hunt contracts + Bond Combo fix (v121), Achievements (v122),
+ Move animations (v123), Confronting Yourself quest (v125), SCP enemy art + moves (v126), Sell chips for coins (v184), Quick party presets (saved presets on the select screen),
+ Visual novel dialogue (v207), VN effects (v208), Battle banter box + knockout effects (v209), Boss phase banner + ultimate/Bond cut-ins + reveals (v210),
+ Elemental reactions (visuals v212, rules v224), Character Mastery with lore for every fighter (v219, all written v223), Black Market (v222), Run Style audit (v225).
+Notes on what counted as done: "Branching map" is the V38 route system (Medical Wing, Containment Sector, Abandoned Barracks, Restricted Floor: fights, elites, infirmary, survivor events, trophies); shop stops are separate and there is no pure "treasure" node.
+"Small lore drops for every fighter's unlocks" is covered by the Mastery 2 lore entry (Lorebook > Fighter Files). Say so if you meant something else and it goes back on the list.

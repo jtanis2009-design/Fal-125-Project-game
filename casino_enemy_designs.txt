@@ -1,0 +1,12 @@
+CASINO EXPANSION (V162): ENEMY DESIGN NOTES
+Save sprites as <key>.png in sprites/. Enemies face LEFT. Chibi style, bright casino colours, a little creepy.
+
+[casino_waiter] Comp Waiter: chibi in a white waistcoat and black bow tie, a tray of drinks held high, a fixed polite smile, eyes that never leave your glass.
+[casino_chipgolem] Chip Golem: a squat tower of stacked red, blue and green poker chips shaped like a body, two chips for fists, a black slot of a mouth.
+[casino_cardsharp] Card Sharp: slim chibi in a dark vest and red-banded hat, a fan of cards spread in each hand, one card tucked behind the ear, narrow grin.
+[casino_ticket] Winning Ticket: a gold lottery ticket with stubby legs and arms, a red banner across the top, giant jackpot-number eyes, a huge grin of printed digits.
+[casino_fixer] The Fixer: a broad chibi in a charcoal suit and tinted glasses, a thick envelope of cash in one hand, a gold pinky ring, a calm, bored face.
+[casino_vault] The Vault (floor 13 boss): a huge round steel safe door with a dial for a face, red-lit eyes in the dial, bolts down the sides, thick arms of hinge and pipe.
+[casino_magnate] The Magnate (floor 14 boss): tall chibi in a gold-trimmed black suit and top hat, a golden cane, rings on every finger, coins floating around, a wide smile.
+[casino_underdealer] The Dealer Below (floor 15 boss): a pale, many-armed dealer in a dark purple vest, six hands each holding a face-down card, red pinpoint eyes, a mouth of narrow card-edge teeth.
+[casino_odds] The Odds (floor 16 boss): a floating black roulette-wheel-like orb with a gold ring and a glowing white "51" in the middle, two small red eyes above it.
