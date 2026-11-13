@@ -29,6 +29,9 @@ The author's own characters, all four Healers by the author's choice (sheets dat
 - Character Book rows 112 to 115. Next free ID: 115.
 New test tools/fal125_healers4_test.js (40 checks).
 
+WEB PAGE (no game changes)
+- index.html opens the newest game version automatically, so the GitHub Pages link never changes: https://jtanis2009-design.github.io/Fal-125-Project-game/ (turn on Settings > Pages > Deploy from a branch > main, / (root)). .nojekyll makes GitHub serve the files as they are.
+
 V258 (RECOLOUR SKINS: CLOWN.X2 AND VELARA)
 - Clown.x2: Midnight Act (blue, 60), Toxic Jester (green, 75), Royal Court (purple, 90), Grey Matinee (black and white, 120). His free Candy Cane skin stays.
 - Velara: Sapphire Halo (blue, 60), Venom Saint (green, 75), Gilded Angel (gold, 90), Fallen Angel (dark grey, 120). Her Sinner skin stays.
