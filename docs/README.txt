@@ -1,6 +1,19 @@
-FAL-125 README. Current version: v258 (file fal125_battle_prototype-v258.html). Newest entries first.
+FAL-125 README. Current version: v259 (file fal125_battle_prototype-v259.html). Newest entries first.
 Folders: docs (this file, ROADMAP, Needed, TEST_LAB, design notes), tools (headless test and audit scripts, see TEST_LAB.txt), data (FAL125_Character_Book.xlsx), sprites.
 Read docs/Needed.txt every time a playable character is added. docs/ROADMAP.txt holds only what is still to build.
+
+V259 (FOUR NEW HEALERS: TANGLER 0111, BEARABLE 0112, BLACKBIRD 0113, RAINBOW RIPPER 0114)
+The author's own characters, all four Healers by the author's choice (sheets dated August 17th, June 19th, June 23rd and June 25th 2025; sheet numbers 5946, 5950, 5960 and 5959 dropped). Search "V259". Numbers in TG, BR, BB and RR.
+- TANGLER (Stringy Body, its body turns into string). Stitch Up: heals one ally 25% and +30% DEF. Tether: ties an ally to Tangler for 3 turns; 30% of the damage they take runs down the string to Tangler. Tangle: hits, Slows, and heals the most hurt ally. The first big hit it takes each wave only does half damage (it comes apart into string). Its card shows who is tied.
+- BEARABLE (Ticking Clock; the name was chosen by the author). The clock gains 1 tick every turn (max 12, empties each wave). Wind Down spends every tick on one big heal (+DEF); at 12 ticks it is MIDNIGHT and it also cleanses. Tick heals the team and winds 2 more ticks. Alarm spends every tick on one big hit that ignores DEF, and costs Bearable 2% HP per tick ("the more used, the more gets taken off"). Its card shows the clock.
+- BLACKBIRD (Moss; the moves are the ones on the sheet). Moss Whip hits and heals the most hurt ally. Moss Infection eats 5% of an enemy's max HP every turn and feeds it to your most hurt ally. Moss Spray heals the team and makes them Mossy (healed every turn). Wants Friends: its heals are 8% stronger for every other ally standing. In World 8, when an alternate falls, it grieves and the moss heals the whole team (once per wave).
+- RAINBOW RIPPER (Rainbow Machine). Steal Colour hits an enemy and turns it Grey for the rest of the wave: it hits weaker, and worse every turn (it cannot be cured). The colour goes into the machine (up to 5). Give Colour spends 1 to heal an ally a lot and make them Colourful (+20% ATK); do it again and they go Vibrant (+45% ATK, but they take 20% more damage). Rainbow Machine pours all the colour over the team. With no colour, the machine costs it 2% HP each turn. Its card shows the colour dots.
+- Each has: an ultimate (Cat's Cradle, Midnight, Overgrowth, Full Spectrum), a gold enhancement, a Rare chip, 3 chips, 2 skins, recruit scenes, story lines for every Healer beat in Worlds 2 to 8, 6 Archive entries, Mastery lines, party quips and a between-wave event (A Snapped Rope Bridge, The Stopped Clock, Someone Who Looks Like You, A Room Full of Paint).
+- Types (Tangler Demon, Bearable Hybrid, Blackbird Hybrid, Rainbow Ripper Angel), Containment levels, Threat and the Archive notes are Claude's guesses: change them if they are wrong.
+- Sprites are TEMPORARY pixel sprites drawn by Claude from the sheets (sprites/*.png and EMBED). Replace them with Gemini sprites.
+- Balance: in the healer check (sna, snavo, radiant, World 5, Hard) they reach wave 5.8 to 8.6, the same range as the other healers (Sevalio 5.5, Velara 6.5, Caspic 7.4, Thorn 9.3). Late game (fuja, eyianix, bearer, World 6) they clear 71% to 100% (Thorn 83%, Luckster 83%).
+- Character Book rows 112 to 115. Next free ID: 115.
+New test tools/fal125_healers4_test.js (40 checks).
 
 V258 (RECOLOUR SKINS: CLOWN.X2 AND VELARA)
 - Clown.x2: Midnight Act (blue, 60), Toxic Jester (green, 75), Royal Court (purple, 90), Grey Matinee (black and white, 120). His free Candy Cane skin stays.
