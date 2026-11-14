@@ -6,7 +6,7 @@ FAL125 is a turn-based character battle game in **one HTML file** (`fal125_battl
 - Plain, simple English. They are not a programmer, and English is not their first language. Short replies, no jargon, explain what changed in game terms ("his fuse now shows on his head"), not code terms.
 - They send **photos of sketchbook pages**, often sideways. Rotate them to read them, and read the notes carefully (name, old ID, ability, age, height, game won). Ask when a name is unclear instead of guessing silently.
 - For a **new character**: first pitch one idea per role (Tank, Damage, Healer) using the sheet's ability, say which you recommend and why, then wait for their choice. Do not build before they choose.
-- They plan to **stop adding characters soon**. Do not push new characters; suggest polish, real sprites and playtesting instead.
+- They plan to **stop adding characters soon** (about 12 more after The Red Walker, said in November 2026). Do not push new characters; suggest polish, real sprites and playtesting instead.
 - Their own canon wins. If something you wrote (lore, scent, containment level) is your guess, say so.
 
 ## Folder layout
@@ -14,17 +14,19 @@ FAL125 is a turn-based character battle game in **one HTML file** (`fal125_battl
 - `sprites/`: one PNG per fighter (and some enemies), about 620 px tall, transparent background. Every sprite is ALSO embedded in the HTML as `EMBED.key = "data:image/webp;base64,..."` (lossless WebP). The game uses EMBED first, then `sprites/key.png`, then a drawn SVG placeholder (`ART.key`).
 - `data/FAL125_Character_Book.xlsx`: one row per character (ID, Name, Ability, Ability+, Containment, Scent, Threat, Type, Awakened, Role, HP, ATK, DEF, SPD, Notes, Source). The Summary sheet's formulas cover a fixed row range: extend it when you add a row, then recalculate.
 - `docs/README.txt`: the changelog. **Every version gets an entry at the top**, written so the author can follow it. Search the code for the version tag (for example "V255") to find that change.
-- `docs/Needed.txt`: checklist for adding a character, plus the **next free ID** (currently **124**, Character Book row 125).
+- `docs/Needed.txt`: checklist for adding a character, plus the **next free ID** (currently **125**, Character Book row 126).
 - `docs/ROADMAP.txt`, `docs/TEST_LAB.txt`: plans and how to use the test lab.
 - `tools/`: Node test scripts (see Testing).
 
 ## Canon you must keep straight
-- **New universe numbering**: the numbers written on the drawing sheets (59xx) are NOT used. Every new fighter takes the next free ID in the game (0103 Marrowline, 0104 Demure, 0105 Caspic, 0106 Soundemon, 0107 Slinder, 0108 Luckster, 0109 Punchline, 0110 Ixis, 0111 Tangler, 0112 Bearable, 0113 Blackbird, 0114 Rainbow Ripper, 0115 Hole, 0116 Tomb, 0117 Gloom, 0118 Ano, 0119 Lycion, 0120 Parda, 0121 Xainbow, 0122 Dollion, 0123 Vein Ripper; next is 0124).
+- **New universe numbering**: the numbers written on the drawing sheets (59xx) are NOT used. Every new fighter takes the next free ID in the game (0103 Marrowline, 0104 Demure, 0105 Caspic, 0106 Soundemon, 0107 Slinder, 0108 Luckster, 0109 Punchline, 0110 Ixis, 0111 Tangler, 0112 Bearable, 0113 Blackbird, 0114 Rainbow Ripper, 0115 Hole, 0116 Tomb, 0117 Gloom, 0118 Ano, 0119 Lycion, 0120 Parda, 0121 Xainbow, 0122 Dollion, 0123 Vein Ripper, 0124 The Red Walker; next is 0125).
 - **Story mode** main four: Fuja, Radiant, Eyianix, Bearer. Snavo is the automatic first encounter. Other fighters are recruited after World 1, each with their own lines.
 - Worlds 1-7 have story beats; **World 8** ("The Climax") is the author's Mandela Catalogue idea: every enemy is an *alternate* (glitched copy) of a fighter you have used, floor bosses are random alternates at a random difficulty, impostors can replace a party member ("That's Not Them" exposes them), final boss is the Amalgam.
 - The author's elimination games (Alice in Borderland / Squid Game style): **Hide and Bleed** (winner: Player 9 = Soundemon, who killed Player 2 afterwards), **Hot Touch** (Gutter, Marrowline and Demure come from it), **Mimic Ball** (Slinder won), **Fade Bite** (Luckster won). Caspic is from a different numbered game. They may rewrite these games later.
 - **Outposter.M1** is a shop character, not a fighter (no ID): his Forge appears after some shop stops (`owVisit`, `OW`, `OW_WEAPONS`). A fighter trades 5-10% of ATK, DEF and max HP for one weapon per run. Not in the Character Book.
 - **Xainbow** is a puppet made by Rainbow Ripper (author). Its ability box was blank: the "Colour Puppet" kit is Claude's draft. **Dollion** has a rivalry with another subject for killing his brother (which one is not confirmed yet).
+- **The Red Walker** (0124, key `redwalker`) is treated as a different person from Walker (0068). His sheet says "after the game ended he killed 3 and 8" with IDs matching Ano's and Lycion's old sheet numbers: NOT used in the game; ask the author who 3 and 8 were and which game it was. One word of his ability text was unreadable.
+- The author said (November 2026) that about **12 more characters** are coming, and then they are done for a long time. The tuning-object name `RW` is taken (rarity weights): his is `RDW`. Check a new `const XX` name is free before using it.
 - Open questions: Slinder may really be named "Splinder" (ask before renaming). Ixis's ability "Abs" was read as Absorb. Soundemon is based on Sandman/Soundman from JoJo SBR; a trap-style rework was discussed but not done.
 
 ## How the code is organised
@@ -57,11 +59,11 @@ The author makes sprites in Gemini. Every prompt must start with exactly:
 
 What works: attach the author's **drawing turned upright, with numbered labels on each body part** as the first image and the **Whiplash sprite** (`sprites/whiplash.png`) as the second, then describe each numbered part, add a "SIZE RULE: about 2 heads tall, like the second image" and a short "Do NOT draw" list. When they send the finished sprite: cut it out of the white background (flood-fill white from the edges, keep enclosed white like teeth and shirts), resize to 620 px tall, save the PNG and replace the `EMBED.key` line, then update the description if the sprite differs from the drawing.
 
-Still on temporary sprites: **Caspic, Ixis, Soundemon, Tangler, Bearable, Blackbird, Rainbow Ripper, Hole (both forms), Tomb, Outposter, Gloom, Ano, Lycion (both forms), Parda, Xainbow, Dollion, Vein Ripper** (Soundemon is waiting for a redraw). 183 of 305 enemies use drawn placeholders, including most bosses.
+Still on temporary sprites: **Caspic, Ixis, Soundemon, Tangler, Bearable, Blackbird, Rainbow Ripper, Hole (both forms), Tomb, Outposter, Gloom, Ano, Lycion (both forms), Parda, Xainbow, Dollion, Vein Ripper, The Red Walker** (Soundemon is waiting for a redraw). 183 of 305 enemies use drawn placeholders, including most bosses.
 
 ## Testing (always before delivering)
 Run from the project folder with Node:
-- `node tools/fal125_<name>_test.js --html GAME.html` for each character test, plus `healers4`, `hole`, `tomb`, `trio`, `tanks4`, `world8`, `v257`, `storycast`, `mastery`, `rework3`, `rework4`, `incident` (`--runs 2`).
+- `node tools/fal125_<name>_test.js --html GAME.html` for each character test, plus `healers4`, `hole`, `tomb`, `trio`, `tanks4`, `redwalker`, `world8`, `v257`, `storycast`, `mastery`, `rework3`, `rework4`, `incident` (`--runs 2`).
 - `node tools/fal125_lines_audit.js` (every character has story lines), `node tools/fal125_enemy_moves.js` (what each enemy does each turn).
 - Balance: `tools/fal125_cmp.sh GAME.html "cy,inkating,shamoon" 5 1 Hard 60 newkey refkey` (early game, damage dealers) and `... "fuja,eyianix,bearer" 6 10 Hard 24 ...` (late game). Tanks: team `claire,inkating,shamoon` vs `whiplash`. Healers: team `sna,snavo,radiant` vs `thorn`. Aim for the same range as the reference.
 - `node tools/fal125_lab.js --help`-style options are documented at the top of the file (`--party --world 1-8 --level --diff --runs --seed`).

@@ -1,6 +1,20 @@
-FAL-125 README. Current version: v263 (file fal125_battle_prototype-v263.html). Newest entries first.
+FAL-125 README. Current version: v264 (file fal125_battle_prototype-v264.html). Newest entries first.
 Folders: docs (this file, ROADMAP, Needed, TEST_LAB, design notes), tools (headless test and audit scripts, see TEST_LAB.txt), data (FAL125_Character_Book.xlsx), sprites.
 Read docs/Needed.txt every time a playable character is added. docs/ROADMAP.txt holds only what is still to build.
+
+V264 (NEW FIGHTER: THE RED WALKER, 0124, DAMAGE)
+The author's own character (sheet dated September 13th 2025; sheet number 5942 dropped). Damage chosen by the author. Search "V264". Numbers in RDW.
+THE RED WALKER. Ability: Doom's Curse. It enhances his strength and speed, but every time it is used it takes a piece of his skin. Signature item: the Shield of Doom.
+- Doom's Curse: +1 Curse (up to 5 in a wave). Each Curse: +15% damage and +10% speed. Each one tears off skin: his max HP drops (4%, then 6%, 8%...) until the next wave, when the skin grows back. His card shows the Curse and the skin lost.
+- Shield Throw: hits the target, and the shield comes back through a second enemy.
+- Shield Bash: hits harder for every Curse.
+- The Shield of Doom blocks 15% of enemy hits on him (half damage).
+- Ultimate Shield of Doom (full Curse for free, then the shield cuts through every enemy), a gold enhancement, a Rare chip, 3 chips, 2 skins, recruit scenes, story lines for every Damage beat in Worlds 2 to 8, 6 Archive entries, Mastery lines, party quips and an event (A Rack of Shields).
+- NOT DECIDED YET (questions for the author): the sheet says he killed "3 and 8" after the game, with numbers that match Ano's and Lycion's old sheets. The game only says "Players 3 and 8" and names nobody. He is treated as a different person from Walker (0068). One word in his ability text could not be read.
+- Containment, threat and type are Claude's guesses. Sprite is a TEMPORARY pixel sprite drawn by Claude.
+- Balance: early game wave 10.3 (Punchline 10.4, Slinder 13.4), late game 83% (Slinder 88%).
+- Character Book row 125. Next free ID: 125.
+New test tools/fal125_redwalker_test.js (12 checks).
 
 V263 (FOUR NEW TANKS: PARDA 0120, XAINBOW 0121, DOLLION 0122, VEIN RIPPER 0123)
 The author's own characters (sheets dated July 8th, June 29th, June 29th and June 26th 2025; sheet numbers 5951, 5958, 5957, 5961 dropped). All Tanks, chosen by the author. Search "V263". Numbers in PA, XB, DO and VR.
