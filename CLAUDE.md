@@ -61,11 +61,13 @@ The author makes sprites in Gemini. Every prompt must start with exactly:
 
 What works: attach the author's **drawing turned upright, with numbered labels on each body part** as the first image and the **Whiplash sprite** (`sprites/whiplash.png`) as the second, then describe each numbered part, add a "SIZE RULE: about 2 heads tall, like the second image" and a short "Do NOT draw" list. When they send the finished sprite: cut it out of the white background (flood-fill white from the edges, keep enclosed white like teeth and shirts), resize to 620 px tall, save the PNG and replace the `EMBED.key` line, then update the description if the sprite differs from the drawing.
 
-Still on temporary sprites: **Caspic, Ixis, Soundemon, Tangler, Bearable, Blackbird, Rainbow Ripper, Tomb, Gloom, Ano, Lycion (both forms), Parda, Xainbow, Dollion, Vein Ripper, The Red Walker** (Soundemon is waiting for a redraw). 183 of 305 enemies use drawn placeholders, including most bosses.
+**Attack and knocked-out poses (V268)**: a fighter can have two extra sprites, `sprites/<key>_atk.png` (shown for a moment when it hits) and `sprites/<key>_ko.png` (shown while it is down), embedded as `EMBED.<key>_atk` / `EMBED.<key>_ko` (lossy WebP, quality 90, is fine for poses). Adding the files and the two EMBED lines is all it takes (`poseShow`, `POSE`). The author sends them as one picture with two poses side by side: check which side is which (Ano's sheet had the knocked-out pose on the LEFT). So far: Rainbow Ripper, Ixis, Gloom, Ano. Cutting tips: group loose bits (motion lines, debris) with the nearest pose; a sprite pasted on a photo is cut along its dark outline instead of the white background.
+
+Still on temporary sprites: **Caspic, Soundemon, Tangler, Bearable, Blackbird, Tomb, Lycion (both forms), Parda, Xainbow, Dollion, Vein Ripper, The Red Walker** (Soundemon is waiting for a redraw). 183 of 305 enemies use drawn placeholders, including most bosses.
 
 ## Testing (always before delivering)
 Run from the project folder with Node:
-- `node tools/fal125_<name>_test.js --html GAME.html` for each character test, plus `healers4`, `hole`, `tomb`, `trio`, `tanks4`, `redwalker`, `shopkeeper`, `w8horror`, `world8`, `v257`, `storycast`, `mastery`, `rework3`, `rework4`, `incident` (`--runs 2`).
+- `node tools/fal125_<name>_test.js --html GAME.html` for each character test, plus `healers4`, `hole`, `tomb`, `trio`, `tanks4`, `redwalker`, `shopkeeper`, `w8horror`, `poses`, `world8`, `v257`, `storycast`, `mastery`, `rework3`, `rework4`, `incident` (`--runs 2`).
 - `node tools/fal125_lines_audit.js` (every character has story lines), `node tools/fal125_enemy_moves.js` (what each enemy does each turn).
 - Balance: `tools/fal125_cmp.sh GAME.html "cy,inkating,shamoon" 5 1 Hard 60 newkey refkey` (early game, damage dealers) and `... "fuja,eyianix,bearer" 6 10 Hard 24 ...` (late game). Tanks: team `claire,inkating,shamoon` vs `whiplash`. Healers: team `sna,snavo,radiant` vs `thorn`. Aim for the same range as the reference.
 - `node tools/fal125_lab.js --help`-style options are documented at the top of the file (`--party --world 1-8 --level --diff --runs --seed`).

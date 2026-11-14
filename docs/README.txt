@@ -1,6 +1,17 @@
-FAL-125 README. Current version: v267 (file fal125_battle_prototype-v267.html). Newest entries first.
+FAL-125 README. Current version: v268 (file fal125_battle_prototype-v268.html). Newest entries first.
 Folders: docs (this file, ROADMAP, Needed, TEST_LAB, design notes), tools (headless test and audit scripts, see TEST_LAB.txt), data (FAL125_Character_Book.xlsx), sprites.
 Read docs/Needed.txt every time a playable character is added. docs/ROADMAP.txt holds only what is still to build.
+
+V268 (REAL SPRITES + ATTACK AND KNOCKED-OUT POSES: RAINBOW RIPPER, IXIS, GLOOM, ANO)
+Search "V268" (one block at the end of the main game script).
+- NEW: ATTACK POSES AND KNOCKED-OUT POSES. A fighter can now have two extra pictures. The attack pose shows for a moment every time the fighter hits something. The knocked-out pose shows while the fighter is down (it stays visible, a little faded, and no longer tips over), and the normal picture comes back if the fighter is revived.
+- First four fighters with all three pictures, from the author's Gemini sprites: Rainbow Ripper, Ixis, Gloom and Ano. Their temporary sprites are gone.
+- It also works for copies of them: World 8 alternates and wild fighters use the same poses.
+- To add poses to any other fighter: put sprites/<key>_atk.png and sprites/<key>_ko.png in the folder and add the two EMBED lines. Nothing else is needed.
+- Settings > move animations off also switches the attack pose off.
+- Descriptions updated to match the sprites (passive and Archive): Rainbow Ripper is a small thing with a huge stitched doll head and a coat of rainbow rags (no chest eyes). Ixis has a round white head like a bloodshot eye with a huge grin, two red-and-white scythes sweeping down from its head, and dark spiked armour. Gloom has a pale grey head, white eyes with tiny pink pupils, a collar of bone spikes and dark grey fur. Ano has a grey face marked in purple, glinting eyes, a wide grin of square teeth, a dark hoodie and metal gauntlets with long silver claws.
+- Nothing about how they play changed.
+New test tools/fal125_poses_test.js (6 checks).
 
 V267 (WORLD 8: THE ANALOG HORROR PASS, "THE TAPE")
 The author asked for World 8 to be far more glitchy and horrifying, like the alternates of The Mandela Catalogue. Search "V267" (one block at the end of the main game script). Looks, sound and text only: no numbers or balance changed. All wording was written for this game.
