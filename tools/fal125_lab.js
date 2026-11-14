@@ -8,7 +8,7 @@
 
    OPTIONS  --party a,b,c,d   --world N (1-8)   --wave N (start wave, 1-based)   --level N (1-10)   --diff Easy|Normal|Hard|Challenge|Nuzlocke
             --runs N   --seed N   --html path   --nostory (drop the Story-mode x0.9)   --classic (old autopilot instead of smart)
-            --foes key,key (force the start wave's enemies)   --chips id,id   --god (party takes no damage)   --ohk (enemies start at 1 HP)   --mode world|endless|bossrush
+            --foes key,key (force the start wave's enemies)   --chips id,id   --god (party takes no damage)   --ohk (enemies start at 1 HP)   --mode world|endless|bossrush   --why (V270: print the enemies of the wave that ended each failed run)
    Prints the clear rate, the average wave reached, and which waves the failed runs ended on. */
 const fs = require('fs'), path = require('path'), vm = require('vm');
 const args = process.argv.slice(2), opt = {};
@@ -43,7 +43,8 @@ let html = opt.html; if (!html) { const d = path.join(__dirname, '..'); const f 
     H.reseed((+opt.seed || 1) * 1000 + i);
     try {
       const r = await H.run(P, { world:c.world, runlen:c.runlen, diff:c.diff, xp:0, xpMap, chips, smart:!opt.classic, story:c.story, wave:c.wave, foes, god:c.god, ohk:c.ohk });
-      if (r.win) wins++; else { const k = r.stalemate ? 'stall' + r.stallWave : String(r.atWave); loss[k] = (loss[k] || 0) + 1; if (r.stalemate) stalls++; }
+      if (r.win) wins++; else { const k = r.stalemate ? 'stall' + r.stallWave : String(r.atWave); loss[k] = (loss[k] || 0) + 1; if (r.stalemate) stalls++;
+        if (opt.why) { try { console.log('  run ' + i + ' lost on wave ' + r.atWave + ': ' + ev('JSON.stringify((WAVES[wave] || []).map(k => ENEMIES[k] ? ENEMIES[k].name : k))') + ' | alive foes: ' + ev('JSON.stringify(foes.filter(f => f.alive).map(f => f.name))')); } catch (e) {} } }
       waveSum += r.atWave || 0;
     } catch (e) { errs++; console.log('run ' + i + ' error: ' + String(e.message).slice(0, 160)); }
   }

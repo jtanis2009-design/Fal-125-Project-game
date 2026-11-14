@@ -2286,6 +2286,9 @@ function tickStatuses(u) {
 const Sound = (() => {
   let ctx = null, master, musicBus, sfxBus, noiseBuf, timer = null;
   let musicOn = true, sfxOn = true, want = null, playing = null, step = 0, nextT = 0;
+  let musicMain = null, trackG = null; const XFADE = { out: .7, in: .35 };
+  /* V270: volume trims, measured in Chrome. The hand-made clown songs and a few boss songs were 3 to 5 dB quieter than the rest (1.4 = about +3 dB). */
+  const TRIM = { clown1:1.5, clown2:1.4, clown3:1.5, clown4:1.5, clown5:1.5, clown6:1.7, clownb3:1.4, clownb6:1.3, boss_recovery:1.4 };   /* V270: each track plays into its own gain (trackG) so a new track fades in while the old one fades out */
   const mtof = m => 440 * Math.pow(2, (m - 69) / 12);
 
   function init() {
@@ -2300,6 +2303,7 @@ const Sound = (() => {
     const fb = ctx.createGain(); fb.gain.value = .35;
     const wet = ctx.createGain(); wet.gain.value = .35;
     musicBus.connect(master); musicBus.connect(dl); dl.connect(fb); fb.connect(dl); dl.connect(wet); wet.connect(master);
+    musicMain = musicBus;   /* V270 */
     noiseBuf = ctx.createBuffer(1, ctx.sampleRate, ctx.sampleRate);
     const d = noiseBuf.getChannelData(0); for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
     return true;
@@ -3447,8 +3451,83 @@ const Sound = (() => {
     casinob4:{ lv:1.24, s:'funk', dk:'disco', bp:'bounce', bpm:148, root:45, mode:'harm', seed:103, p:0, v:'reed', ding:1 },
     casinofinal:{ lv:0.91, s:'dnb', dk:'four', bp:'octave', bpm:172, root:57, mode:'min', seed:109, p:5, v:'fm', ding:1 }
   };
+  /* ===== V270 MUSIC: five more Casino floor songs and four more Casino boss songs (the Casino has 16 floors and only had 4 + 4,
+     so floors 5 to 16 played no music at all). Same format as the lines above. ===== */
+  Object.assign(SONGS, {
+    casino5:{ lv:1.1, s:'synthwave', bpm:112, root:47, mode:'dor', seed:131, p:3, v:'ep', ding:1 },               /* The High Roller Room: neon and velvet */
+    casino6:{ lv:1.45, s:'house', bp:'bounce', bpm:124, root:45, mode:'min', seed:137, p:5, v:'pluck', ding:1 },   /* The Sportsbook: screens everywhere, everyone shouting */
+    casino7:{ lv:1.31, s:'techno', dk:'half2', bpm:118, root:43, mode:'phr', seed:139, p:2, v:'bell', ding:1 },    /* The Cashier's Cage: counting machines */
+    casino8:{ lv:0.8, s:'dub', bpm:84, root:46, mode:'dor', seed:149, p:0, v:'flute', ding:1 },                    /* The Lounge: slow smoke */
+    casino9:{ lv:0.6, s:'trap', bpm:140, root:41, mode:'harm', seed:151, p:6, v:'pluck', ding:1 },                 /* The Back Room / The Vault: nobody is smiling here */
+    casinob5:{ lv:0.8, s:'electro', dk:'break2', bp:'octave', bpm:150, root:48, mode:'min', seed:157, p:1, v:'fm', ding:1 },
+    casinob6:{ lv:0.97, s:'gallop', bpm:158, root:45, mode:'harm', seed:163, p:4, v:'brass' },
+    casinob7:{ lv:1.41, s:'break', dk:'break2', bp:'funk', bpm:146, root:44, mode:'dor', seed:167, p:7, v:'reed', ding:1 },
+    casinob8:{ lv:0.6, s:'goth', dk:'four', bp:'pulse16', bpm:164, root:40, mode:'phr', seed:179, p:3, v:'organ' }
+  });
   Object.keys(SONGS).forEach(k => { const e = SONGS[k]; if (!e.from) TRACKS[k] = mkSong(e); });
   Object.keys(SONGS).forEach(k => { const e = SONGS[k]; if (e.from) TRACKS[k] = mkSong({ ...SONGS[e.from], ...e }); });
+
+  /* ===== V270 MUSIC: Clown's Massacre gets two new floors and two new bosses (Clown.x25 and Clown.x33), so four new hand-made tracks,
+     same style as clown1 to clownb4 (calliope, music box, oompah). The "lead" arrays are the melodies, 16 steps per bar, 0 = rest. ===== */
+  /* Floor, The Dressing Room (Clown.x25): two music boxes play the same tune, the second one a little late. Every bar it catches up,
+     and on the last bar they play as one. */
+  TRACKS.clown5 = { bpm: 96, chords: [[50,53,57],[46,50,53],[48,52,55],[45,49,52]],
+    lead: [[74,0,0,77,0,0,81,0,79,0,77,0,76,0,0,0],[74,0,0,77,0,0,82,0,81,0,77,0,74,0,0,0],[76,0,0,79,0,0,84,0,82,0,79,0,76,0,0,0],[73,0,76,0,79,0,81,0,79,0,76,0,74,0,0,0]],
+    play(i, bar, ch, t, sd) {
+      if (i === 0 || i === 8) tone(t, mtof(ch[0] - 24), sd * 6, 'triangle', .16, musicBus);
+      if (i === 4 || i === 12) ch.forEach(n => tone(t, mtof(n), sd * 1.2, 'triangle', .022, musicBus));
+      if (i === 0 || i === 6 || i === 10) kick(t, .13);
+      const L = this.lead[bar][i], lag = [3, 2, 1, 0][bar];
+      if (L) { mbox(t, L, sd * 4, .07); mbox(t + sd * lag, L + (lag ? .2 : 0), sd * 4, lag ? .04 : .05); }
+      if (bar === 3 && i === 12) mbox(t, ch[0] + 24, sd * 8, .06);
+    } };
+  /* Floor, The Infirmary Tent (Clown.x33): a slow, sad calliope over a heart monitor that beeps on every beat */
+  TRACKS.clown6 = { bpm: 84, chords: [[57,60,64],[53,57,60],[50,53,57],[52,56,59]],
+    lead: [[76,0,0,0,0,0,74,0,72,0,0,0,71,0,0,0],[72,0,0,0,0,0,71,0,69,0,0,0,65,0,0,0],[69,0,0,0,72,0,0,0,74,0,0,0,77,0,76,0],[76,0,0,0,74,0,0,0,71,0,0,0,68,0,0,0]],
+    play(i, bar, ch, t, sd) {
+      if (i === 0) { tone(t, mtof(ch[0] - 24), sd * 14, 'sine', .15, musicBus); ch.forEach(n => tone(t, mtof(n), sd * 15, 'triangle', .02, musicBus)); }
+      if (i % 4 === 0) tone(t, 1000, .06, 'square', .025, musicBus);   /* the heart monitor */
+      if (i === 0 || i === 2) kick(t, i ? .07 : .11);
+      const L = this.lead[bar][i]; if (L) cal(t, L, sd * 5, .05);
+      if (bar === 3 && i === 14) tone(t, 1000, sd * 2, 'square', .02, musicBus);   /* one long beep */
+    } };
+  /* Boss, Clown.x25 (Two to One): iron stomps and a melody played by two voices in a canon. The gap closes every bar,
+     and on bar 4 they play in unison: two become one. */
+  TRACKS.clownb5 = { bpm: 148, chords: [[50,53,57],[51,55,58],[50,53,57],[45,49,52]],
+    lead: [[74,0,74,0,77,0,0,0,81,0,79,0,77,0,74,0],[75,0,75,0,79,0,0,0,82,0,81,0,79,0,75,0],[74,0,74,0,77,0,0,0,86,0,84,0,81,0,77,0],[73,0,76,0,79,0,82,0,81,0,0,0,0,0,0,0]],
+    play(i, bar, ch, t, sd) {
+      if ([0, 3, 8, 10].includes(i)) kick(t, .5);
+      if (i === 4 || i === 12) { snare(t, .22); noise(t, .09, .1, musicBus, 6500); tone(t, 1250, .05, 'square', .03, musicBus); }   /* metal clank */
+      hat(t, i % 2 ? .035 : .06);
+      if (i % 2 === 0) tone(t, mtof(ch[0] - 24 + (i === 6 || i === 14 ? 12 : 0)), sd * 1.8, 'sawtooth', .15, musicBus);
+      const L = this.lead[bar][i], lag = [4, 2, 1, 0][bar];
+      if (L) { cal(t, L, sd * 2.2, .055); if (lag) cal(t + sd * lag, L - 12, sd * 2.2, .04); else cal(t, L - 12, sd * 2.2, .05); }
+      if (bar === 3 && i === 8) { noise(t, sd * 6, .14, musicBus, 1400); tone(t, mtof(ch[0] - 12), sd * 8, 'sawtooth', .1, musicBus, mtof(ch[0] - 24)); }
+    } };
+  /* Boss, Clown.x33 (Blood Patches): a fast tarantella (a 6/8 dance) on a wheezy organ, with the heart monitor racing underneath */
+  TRACKS.clownb6 = { bpm: 156, chords: [[52,55,59],[57,60,64],[47,51,54],[52,55,59]],
+    lead: [[76,0,0,79,0,0,83,0,0,79,0,0,76,0,75,0],[76,0,0,81,0,0,84,0,0,81,0,0,76,0,0,0],[78,0,0,75,0,0,71,0,0,75,0,0,78,0,81,0],[83,0,0,79,0,0,76,0,0,75,0,0,76,0,0,0]],
+    play(i, bar, ch, t, sd) {
+      if (i === 0 || i === 6 || i === 12) kick(t, .45);
+      if (i === 3 || i === 9) snare(t, .17);
+      if (i % 3 === 0) hat(t, .05);
+      if (i === 0 || i === 6 || i === 12) tone(t, mtof(ch[0] - 24), sd * 2.5, 'triangle', .19, musicBus);
+      if (i === 3 || i === 9 || i === 15) ch.forEach(n => tone(t, mtof(n), sd * 1.4, 'square', .03, musicBus));
+      if (i % 4 === 2) tone(t, 1000, .04, 'square', .02, musicBus);   /* the monitor, too fast */
+      const L = this.lead[bar][i]; if (L) { tone(t, mtof(L), sd * 2.6, 'square', .045, musicBus); tone(t, mtof(L) * 1.004, sd * 2.6, 'sawtooth', .03, musicBus); }
+      if (bar === 3 && i === 12) noise(t, sd * 4, .12, musicBus, 3000);
+    } };
+
+  /* ===== V270 MUSIC: PHASE 2 KEEPS THE BOSS'S OWN SONG. Before V270 every normal boss switched to the same "boss2" track at 50% HP.
+     Now Sound.music(name + '~hot') plays the boss's own track faster and busier. Generated songs use their built-in "hot" mode;
+     hand-made tracks get 12% more speed, extra hats and an extra kick. ===== */
+  const HOT_SPEED = 1.12;
+  function mkHot(n) {
+    const base = n.replace(/~hot$/, ''), T = TRACKS[base]; if (!T) return null;
+    if (SONGS[base]) { const e = SONGS[base], src = e.from ? { ...SONGS[e.from], ...e } : e; return mkSong({ ...src, bpm: Math.round(src.bpm * HOT_SPEED), hot: true }); }
+    return { bpm: T.bpm * HOT_SPEED, chords: T.chords, lead: T.lead,
+      play(i, bar, ch, t, sd) { T.play.call(T, i, bar, ch, t, sd); if (i % 2) hat(t, .028); if (i === 8) kick(t, .2); if (i === 0 && bar === 0) noise(t, sd * 8, .07, musicBus, 4500); } };
+  }
 
   function tick() {
     if (!ctx || !playing) return;
@@ -3465,6 +3544,12 @@ const Sound = (() => {
     if (ctx.state === 'suspended' && ctx.resume) ctx.resume();
     if (want === playing) return;
     stop();
+    if (want && /~hot$/.test(want) && !TRACKS[want]) { try { const h = mkHot(want); if (h) TRACKS[want] = h; } catch (e) {} }   /* V270 */
+    try {   /* V270: crossfade. The old track fades out, the new one fades in. */
+      const now = ctx.currentTime;
+      if (trackG) { const g = trackG; trackG = null; g.gain.cancelScheduledValues(now); g.gain.setValueAtTime(Math.max(.0001, g.gain.value), now); g.gain.linearRampToValueAtTime(.0001, now + XFADE.out); setTimeout(() => { try { g.disconnect(); } catch (e) {} }, XFADE.out * 1000 + 400); }
+      if (want && TRACKS[want] && musicMain) { trackG = ctx.createGain(); trackG.gain.setValueAtTime(.0001, now); trackG.gain.linearRampToValueAtTime(TRIM[want.replace(/~hot$/, '')] || 1, now + XFADE.in); trackG.connect(musicMain); musicBus = trackG; }
+    } catch (e) {}
     if (want && TRACKS[want]) { playing = want; step = 0; nextT = ctx.currentTime + .08; timer = setInterval(tick, 40); }
   }
   function unlock() { if (init()) sync(); }
@@ -3504,7 +3589,7 @@ const Sound = (() => {
     $('#musicBtn').textContent = 'Music: ' + (musicOn ? 'on' : 'off'); $('#musicBtn').classList.toggle('off', !musicOn);
     $('#sfxBtn').textContent = 'Effects: ' + (sfxOn ? 'on' : 'off');   $('#sfxBtn').classList.toggle('off', !sfxOn);
   }
-  function vol() { if (musicBus) musicBus.gain.setTargetAtTime(musicOn ? .5 * CFG.music : 0, ctx.currentTime, .05); if (sfxBus) sfxBus.gain.setTargetAtTime(sfxOn ? .7 * CFG.sfx : 0, ctx.currentTime, .05); }
+  function vol() { const mb = musicMain || musicBus; if (mb) mb.gain.setTargetAtTime(musicOn ? .5 * CFG.music : 0, ctx.currentTime, .05); if (sfxBus) sfxBus.gain.setTargetAtTime(sfxOn ? .7 * CFG.sfx : 0, ctx.currentTime, .05); }
   function toggleMusic() { musicOn = !musicOn; vol(); label(); }
   function toggleSfx()   { sfxOn = !sfxOn; vol(); label(); }
   $('#musicBtn').onclick = toggleMusic;
@@ -3516,7 +3601,7 @@ const Sound = (() => {
     if (level < 0) { if (humG && ctx) { const o = humO; humG.gain.setTargetAtTime(.0001, ctx.currentTime, .4); humG = null; humO = null; setTimeout(() => { try { o.forEach(x => x.stop()); } catch (e) {} }, 2500); } return; }
     if (!init()) return;
     if (!humG) { humG = ctx.createGain(); humG.gain.value = .0001; const lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 240;
-      humO = [55, 82.5, 110.6].map((f, i) => { const o = ctx.createOscillator(); o.type = i ? 'sine' : 'sawtooth'; o.frequency.value = f; o.connect(lp); o.start(); return o; }); lp.connect(humG); humG.connect(musicBus); }
+      humO = [55, 82.5, 110.6].map((f, i) => { const o = ctx.createOscillator(); o.type = i ? 'sine' : 'sawtooth'; o.frequency.value = f; o.connect(lp); o.start(); return o; }); lp.connect(humG); humG.connect(musicMain || musicBus); }   /* V270: the hum goes to the main music volume, not to one track */
     humG.gain.setTargetAtTime(.012 + .11 * level * level, ctx.currentTime, .8); humO[2].frequency.setTargetAtTime(110.6 + level * 7, ctx.currentTime, 1);
   }
   return { music(n) { want = n; sync(); }, now() { return want; }, sfx, unlock, vol, hum };
@@ -25082,6 +25167,305 @@ try {   /* overtime: enemies act faster. eSpd is a const, so the haste goes on a
   startWave = function (i) { const r = _swV269b.apply(this, arguments); try { if (wspOn(4) && wspS().dir === 'overtime') foes.forEach(f => { if (f.alive) addStatus0(f, 'haste', 99, WSP.dir.overtime); }); } catch (e) {} return r; };
   [0, 1, 2, 3, 4].forEach(w => { const W = WORLD_DATA[w]; if (W) W.note = (W.note ? W.note + ' ' : '') + 'World special, ' + WSP.name[w].charAt(0) + WSP.name[w].slice(1).toLowerCase() + ': ' + WSP.text[w]; });
 } catch (e) {}
+/* V270 BLOCK START */
+/* ===== V270: BOSS PHASE 2 HELPERS. At 50% HP a boss enrages and calls ONE helper. Before V270 every boss without its own
+   helper called a Guard Drone (a Facility robot), even in the sewers, the cult, the casino or the circus.
+   Now each boss calls something from its own world, and lone bosses call nobody ('none').
+   Tune in P2_V270 (boss key : enemy key, or null for nobody). Helpers are capped at P2_CAP so the fight is not harder than before.
+   Final bosses keep their own guards (FINAL_GUARDS). Search "V270". ===== */
+const P2_V270 = {
+  /* World 1, the Facility: drones and husks belong here, but each boss now calls its own kind */
+  kennel:'hound', matron:'mirror', choir:'ghost', foreman:'leaker', echoeye:'eyelet',
+  /* World 2, the sewers */
+  ratking:'gutterrat', sludgemother:'sludge', eelqueen:'eel', mothermold:'mold',
+  /* World 3, outside the fence */
+  houndmaster:'houndpup', theshardedman:'razorhusk', thewarden2:'nullsoldier', theforeman2:'checkpoint',
+  /* World 4, the Safe Haven: more friendly faces */
+  greeter:'wagon', thehost:'volunteer',
+  /* World 5, the retrieval */
+  recoverychief:'agent', theprototype:'returned', theannouncer:'siren', accountant:'sweeper',
+  /* World 6, the church */
+  deaconhale:'usher', sistermarigold:'choirkid', hallwalker:'wanderer', thedreamer:'dreamdoll',
+  /* World 7, the cult */
+  welcomer:'lidless', eldersill:'sandbearer', hallwaything:'blinker', thirdsleeper:'glassmoth', eldermarrow:'sandhound',
+  reflection:null, thetongue:'scribe', eldercandle:'glassmoth', theschism:'echoer',
+  /* World 8: an alternate floor boss calls another alternate */
+  altboss:'altA',
+  /* Clown's Massacre: the clown bosses do their own thing in phase 2 (see the CLOWN block below), no drone */
+  clown_x3boss:null, clown_x2boss:null, clown_x2alt:null, clown_x14boss:null, clown_x5boss:null,
+  /* The Casino: the staff comes running */
+  casino_pitboss:'casino_bouncer', casino_jackpot:'casino_chipper', casino_highroller:'casino_hostess', casino_house:'casino_security',
+  casino_loanshark:'casino_repoman', casino_banker:'casino_cashier', casino_croupier:'casino_dealer', casino_whale:'casino_waiter',
+  casino_bookmaker:'casino_bookie', casino_ghost:null, casino_auditor:'casino_counter', casino_ladyluck:'casino_scratch',
+  casino_vault:'casino_chipgolem', casino_magnate:'casino_valet', casino_underdealer:'casino_shill', casino_odds:'casino_die',
+  /* secret and story bosses fight alone */
+  serpentine:null, secret_collector:null, overtime:'worker', lonelyone:null, secret_hollow:null, secret_undertaker:null, flawless:null,
+  oldest_fuja:null, oldest_radiant:null, oldest_marrow:null, oldest_eyeofsin:null, oldest_envival:null, oldest_inkating:null
+};
+const P2_CAP = { hp:90, atk:11 };   /* a phase-2 helper is never bigger than a 90 HP / 11 ATK enemy (the old drone was 70 / 9) */
+try {
+  Object.keys(P2_V270).forEach(k => { const E = ENEMIES[k], v = P2_V270[k]; if (!E) return; E.p2sum = v === null ? 'none' : (ENEMIES[v] ? v : 'none'); });
+  const _muV270 = makeUnit;   /* World 8 builds each alternate boss fresh, so give it the helper here */
+  makeUnit = function (def, team) { const u = _muV270.apply(this, arguments); try { if (u && def && def.altSlot === 'boss' && team === 'enemy') u.p2sum = 'altA'; } catch (e) {} return u; };
+  const _sumV270 = summon;
+  summon = function (key) { if (key === 'none' || !ENEMIES[key]) return null; return _sumV270.apply(this, arguments); };
+  const _ep2V270 = enterPhase2;
+  enterPhase2 = function (u) {
+    const before = foes.slice();
+    const r = _ep2V270.apply(this, arguments);
+    try {
+      foes.forEach(f => { if (before.includes(f) || f.boss || !f.alive) return; const E = ENEMIES[f.key] || {};
+        const hf = E.hp > P2_CAP.hp ? P2_CAP.hp / E.hp : 1, af = E.atk > P2_CAP.atk ? P2_CAP.atk / E.atk : 1;
+        if (hf < 1) { f.maxHp = Math.max(1, Math.round(f.maxHp * hf)); f.hp = Math.min(f.hp, f.maxHp); }
+        if (af < 1) f.atk = Math.max(1, Math.round(f.atk * af));
+        f.p2help = true; refresh(f); });
+      if (u && u.p2sum === 'none' && !u.final && !/^clown_/.test(u.key)) say(`${u.name} needs no one.`);
+    } catch (e) {}
+    return r;
+  };
+} catch (e) {}
+
+/* V270: WORLD-FIT REINFORCEMENTS. The endless extras (loop mutators "Swarm" and "Remixed boss", Apex boss breaks, Heat 9 and 10)
+   always called Facility enemies (Guard Drone, Husk, Spotter), even in the circus or the casino. Now, outside World 1,
+   they call a cheap enemy from the world you are in (World 8: an alternate). World 1 keeps its drones. */
+const FIT_FAC = ['drone', 'husk', 'spotter'];
+let FIT_ON = 0;
+function fitHelper() {
+  try {
+    const W = WD(); if (!W || W === WORLD_DATA[0]) return null;
+    const pool = Object.keys(W.unlock || {}).filter(k => ENEMIES[k] && !ENEMIES[k].boss);
+    if (pool.some(k => /^alt[A-F]$/.test(k))) return pick(['altA', 'altB', 'altC']);
+    const lo = (W.unlock || {}), cheap = pool.filter(k => (COST[k] || 9) <= 2 && (lo[k] || 0) <= 1);
+    const ok = cheap.length ? cheap : pool.filter(k => (COST[k] || 9) <= 3);
+    return ok.length ? pick(ok) : null;
+  } catch (e) { return null; }
+}
+try {
+  const _sumFit = summon;
+  summon = function (key) { if (FIT_ON && FIT_FAC.includes(key)) { const k = fitHelper(); if (k) key = k; } return _sumFit.call(this, key); };
+  const fitWrap = fn => function () { FIT_ON++; try { return fn.apply(this, arguments); } finally { FIT_ON--; } };
+  endWaveRules = fitWrap(endWaveRules);
+  heatWave = fitWrap(heatWave);
+  apexBreak = fitWrap(apexBreak);
+} catch (e) {}
+
+/* ===== V270: CLOWN'S MASSACRE. Clown.x25 and Clown.x33 are real floor bosses now, each with a rare (1 in 10) special form that,
+   like Clown.x2's Understudy, is the ONLY way to unlock that clown as a fighter. Six floors instead of four:
+   The Big Top (Clown.x3), The Midway (Clown.x2), The Dressing Room (Clown.x25), The Backstage (Clown.x14), The Infirmary Tent (Clown.x33),
+   The Terror Stairs (Clown.x5). Plus a balance pass (see CWB) and a phase-2 move for every clown boss instead of a drone.
+   Tune in CWB, X25B and X33B. Search "V270". ===== */
+const CWB = {
+  rareChance: .10,          /* the rare unlock forms (Clown.x25 Double Act, Clown.x33 Curtain Call). Clown.x2's Understudy keeps X2_VARIANT_CHANCE (also 10%) */
+  fleshFrom: 3,             /* Clown.x40 (The Flesh) can only replace a floor boss from this floor on (0 = first floor). Was 1 (wave 10), now 3 (wave 20) */
+  fleshCap: .30,            /* its chance per boss wave never goes above this (was 35%) */
+  promoFrom: 2,             /* a normal clown can rise to boss from this floor on (was 1) */
+  fsc: [1.0, 1.1, 1.2, 1.3, 1.35, 1.4],   /* enemy strength per floor (was 1.1, 1.2, 1.3, 1.4 for four floors) */
+  x3hp: 370                 /* the first boss, Clown.x3, was 400 HP: it ended a lot of runs on wave 5 */
+};
+const X25B = { hp:400, atk:13, def:7, spd:8, dollHp:110, dollAtk:11, fuseIn:4, shield:.35, fuseHeal:.25, fuseAtk:1.25, loneAtk:.3 };
+const X33B = { fadeFrom:12, fadeOff:20, hp:460, atk:13, def:5, spd:10, drink:.025, drinkMax:3, bleed:[3, .04], patchMax:2, patchHp:50, patchHeal:.05, selfHeal:.10, allyHeal:.15 };
+const CW_ROT = ['clown_x3boss', 'clown_x2boss', 'clown_x25boss', 'clown_x14boss', 'clown_x33boss', 'clown_x5boss'];
+const CW_RARE = { clown_x25boss:'clown_x25alt', clown_x33boss:'clown_x33alt' };
+const CW_RARE_KEYS = ['clown_x2alt', 'clown_x25alt', 'clown_x33alt'];
+try {
+  /* the doll finally has its own picture (it used to be a grey placeholder) */
+  if (typeof EMBED_SKIN !== 'undefined' && EMBED_SKIN.clownx25_doll) EMBED.clown_x25doll = EMBED_SKIN.clownx25_doll;
+  if (ENEMIES.clown_x25b && EMBED.clown_x25doll) ENEMIES.clown_x25b.spriteKey = 'clown_x25doll';
+  if (ENEMIES.clown_x3boss) ENEMIES.clown_x3boss.hp = CWB.x3hp;
+} catch (e) {}
+
+/* ---- Clown.x25: Two to One. The armor and the doll come in holding hands. While the doll lives the armor takes less damage,
+   and after a few turns the doll climbs inside and they FUSE (heals, hits much harder). Kill the doll first: the armor is left
+   behind, angrier but open. ---- */
+function x25Doll(u) { return u && u.mate && u.mate.alive ? u.mate : null; }
+function x25Spawn(u) {
+  if (!u || !u.alive || u.mateDone || u.fused) return; u.mateDone = true; u.fuseLeft = X25B.fuseIn;
+  if (foes.filter(f => f.alive).length >= 5) { u.lone = true; return; }
+  const d = cwSummon(u, u.key === 'clown_x25alt' ? 'clown_x25altdoll' : 'clown_x25bdoll'); if (!d) { u.lone = true; return; }
+  d.mate = u; u.mate = d; say(`${u.name} walks on stage holding a small doll by the hand. Neither of them lets go.`);
+}
+function x25Fuse(u, why) {
+  const d = x25Doll(u); if (d) { d.alive = false; d.hp = 0; refresh(d); }
+  u.mate = null; u.fused = true; u.n = 0;
+  say(why || `The doll climbs into ${u.name}'s chest. The armor closes. Two become one.`);
+  u.name = u.name.replace(/\s*\(.*\)$/, '') + (u.key === 'clown_x25alt' ? ' (Double Act, Fused)' : ' (Fused)');
+  u.atk = Math.round(u.atk * X25B.fuseAtk); const g = Math.round(u.maxHp * X25B.fuseHeal); heal(u, g); popup(u, 'FUSED', 'status');
+  try { if (u.key === 'clown_x25boss') { const old = u.el.querySelector('.sprite'); if (old) old.replaceWith(makeSprite('clown_x25')); } const nm = u.el.querySelector('.nm'); if (nm && nm.firstChild) nm.firstChild.nodeValue = u.name; } catch (e) {}
+  refresh(u); try { refreshIntents(); } catch (e) {}
+}
+function x25Lone(u) { if (u.lone || u.fused) return; u.lone = true; u.mate = null; say(`${u.name} holds on to an empty hand. Then it makes a fist.`); addStatus(u, 'atkUp', 99, X25B.loneAtk); popup(u, 'LEFT BEHIND', 'status'); }
+const x25Intent = u => {
+  if (u.fused) return ((u.n || 0) + 1) % 3 === 0 ? 'Two Become One (hits everyone, marks)' : 'Fused Claws (heavy)';
+  if (u.lone) return ((u.n || 0) + 1) % 2 ? 'Iron Fist (left behind, enraged)' : 'Clamp (heavy, slows)';
+  const s = ((u.n || 0) + 1) % 3, left = Math.max(1, (u.fuseLeft == null ? X25B.fuseIn : u.fuseLeft));
+  return (s === 1 ? 'Iron Fist' : s === 2 ? 'Hold Hands (both guard)' : 'Clamp (heavy, slows)') + ` · FUSES in ${left} (kill the doll!)`;
+};
+function x25AI(u) {
+  if (!u.mateDone) x25Spawn(u);
+  if (!u.fused && !u.lone && u.mateDone && !x25Doll(u)) x25Lone(u);
+  u.n = (u.n || 0) + 1;
+  if (u.fused) {
+    if (u.n % 3 === 0) { say(`${u.name} opens both arms. Two become one, and one is a lot.`); livingParty().forEach(p => { hit(u, p, .75, { fx:'slash', chain:true }); if (p.alive) addStatus(p, 'mark', 2, .2); }); }
+    else { const t = foeTarget(); if (t) { say(`${u.name} rakes ${tName(t)} with both hands.`); hit(u, t, 1.35, { fx:'slash' }); } }
+    return;
+  }
+  if (!u.lone) { u.fuseLeft = (u.fuseLeft == null ? X25B.fuseIn : u.fuseLeft) - 1; if (u.fuseLeft <= 0) { x25Fuse(u); return; } }
+  const s = u.lone ? (u.n % 2 ? 1 : 0) : u.n % 3, t = foeTarget(); if (!t) return;
+  if (s === 1) { say(`${u.name} swings an iron fist at ${tName(t)}.`); hit(u, t, u.lone ? 1.1 : 1.0, { fx:'impact' }); }
+  else if (s === 2) { const d = x25Doll(u); say(`${u.name} squeezes the doll's hand. They brace together.`); addStatus(u, 'guard', 1, 1); if (d) { addStatus(d, 'guard', 1, 1); heal(d, d.maxHp * .1); } }
+  else { say(`${u.name} clamps down on ${tName(t)}.`); hit(u, t, u.lone ? 1.5 : 1.4, { fx:'impact' }); if (t.alive) addStatus(t, 'slow', 2, .25); }
+}
+const x25DollAI = u => {
+  if (!u.mate || !u.mate.alive) { kill(u, `${u.name} sits down where its other half used to be.`); return; }
+  u.n = (u.n || 0) + 1; const t = foeTarget(); if (!t) return;
+  if (u.n % 3 === 0 && u.mate.hp < u.mate.maxHp) { const g = Math.round(u.mate.maxHp * .05); heal(u.mate, g); popup(u.mate, '+' + g, 'heal'); say(`${u.name} pats the armor. It holds together a little better.`); return; }
+  say(`${u.name} jabs ${tName(t)} with a stitched hand.`); hit(u, t, .8, { fx:'slash' }); if (t.alive) addStatus(t, 'mark', 2, .2);
+};
+
+/* ---- Clown.x33: Blood Patches. It claws you open and drinks: at the start of its turn it heals for every hero who is Bleeding.
+   Its Bandaged Clowns keep patching it up. Cure the bleeding and cut the helpers down. ---- */
+/* its healing fades in long fights (half from round 12, none from round 20) so it can never out-heal a team forever */
+const x33Fade = () => { const r = typeof round === 'number' ? round : 0; return r >= X33B.fadeOff ? 0 : r >= X33B.fadeFrom ? .5 : 1; };
+const x33Bleeders = () => livingParty().filter(p => p.st.some(s => s.k === 'bleed')).length;
+const x33Intent = u => { const s = ((u.n || 0) + 1) % 4; const dr = Math.min(X33B.drinkMax, x33Bleeders());
+  return (s === 1 ? 'Rend (hit + bleed)' : s === 2 ? 'Blood Patches (heals itself and the clowns)' : s === 3 ? 'Twin Rend (2 targets, bleed)' : (cwCount('clown_x33patch', u) < X33B.patchMax ? 'Stitch Up (a Bandaged Clown joins)' : 'Rend All (hits everyone, bleed)'))
+    + (dr ? ` · drinks from ${dr} bleeding` : ''); };
+function x33AI(u) {
+  const dr = Math.min(X33B.drinkMax, x33Bleeders());
+  if (dr && x33Fade()) { const g = Math.round(u.maxHp * X33B.drink * dr * x33Fade()); heal(u, g); popup(u, '+' + g, 'heal'); say(`${u.name} licks the bandages. ${dr} of you are bleeding, and it drinks.`); }
+  u.n = (u.n || 0) + 1; const s = u.n % 4, B = X33B.bleed;
+  if (s === 1) { const t = foeTarget(); if (t) { say(`${u.name} rends ${tName(t)} open.`); hit(u, t, 1.0, { fx:'slash' }); if (t.alive) addStatus(t, 'bleed', B[0], B[1]); } }
+  else if (s === 2) { say(`${u.name} presses bloody patches onto itself and every clown in reach.`); heal(u, u.maxHp * X33B.selfHeal * x33Fade()); addStatus(u, 'defUp', 2, .25); foes.forEach(f => { if (f.alive && f !== u) heal(f, f.maxHp * X33B.allyHeal * x33Fade()); }); if (!x33Fade()) say('The bandages are soaked through. They do not help any more.'); }
+  else if (s === 3) { const a = foeTarget(), b = foeTarget(); [a, b].filter((x, i, A) => x && A.indexOf(x) === i).forEach(t => { hit(u, t, .75, { fx:'slash' }); if (t.alive) addStatus(t, 'bleed', B[0] - 1, B[1]); }); say(`${u.name} rends two of you at once.`); }
+  else if (cwCount('clown_x33patch', u) < X33B.patchMax && foes.filter(f => f.alive).length < 5) { say(`${u.name} stitches a clown together out of spare bandages. It gets up.`); cwSummon(u, 'clown_x33patch'); }
+  else { say(`${u.name} claws at everyone in reach.`); livingParty().forEach(p => { hit(u, p, .5, { fx:'slash', chain:true }); if (p.alive) addStatus(p, 'bleed', 2, B[1]); }); }
+}
+const x33PatchAI = u => {
+  const o = u.owner; if (!o || !o.alive) { kill(u, 'The bandages fall loose. Nothing is inside.'); return; }
+  if (o.hp < o.maxHp * .9 && x33Fade()) { const g = Math.round(o.maxHp * X33B.patchHeal * x33Fade()); heal(o, g); popup(o, '+' + g, 'heal'); say(`A Bandaged Clown wraps a fresh patch around ${o.name}.`); return; }
+  const t = foeTarget(); if (t) { say(`A Bandaged Clown slaps ${tName(t)} with a wet bandage.`); hit(u, t, .7, { fx:'slash' }); }
+};
+
+Object.assign(ENEMIES, {
+  clown_x25boss:{ key:'clown_x25boss', spriteKey:'clown_x25a', name:'Clown.x25 (Boss)', color:'#7a2a2a', hp:X25B.hp, atk:X25B.atk, def:X25B.def, spd:X25B.spd, type:'Other', boss:true, intent:x25Intent, ai:x25AI },
+  clown_x25bdoll:{ key:'clown_x25bdoll', spriteKey:'clown_x25doll', name:'Clown.x25 (Doll)', color:'#d8cfc8', hp:X25B.dollHp, atk:X25B.dollAtk, def:2, spd:12, type:'Other', intent:u => 'Stitch Jab (marks) · holding hands', ai:x25DollAI },
+  /* the rare form: the playable Clown.x25's look. Beat it in Clown's Massacre to unlock Clown.x25 */
+  clown_x25alt:{ key:'clown_x25alt', spriteKey:'clownx25', name:'Clown.x25 (Double Act)', color:'#9c2a2a', hp:X25B.hp + 40, atk:X25B.atk + 1, def:X25B.def, spd:X25B.spd, type:'Other', boss:true, intent:x25Intent, ai:x25AI },
+  clown_x25altdoll:{ key:'clown_x25altdoll', spriteKey:'clown_x25doll', name:'Clown.x25 (Doll)', color:'#d8cfc8', hp:X25B.dollHp + 10, atk:X25B.dollAtk, def:2, spd:12, type:'Other', intent:u => 'Stitch Jab (marks) · holding hands', ai:x25DollAI },
+  clown_x33boss:{ key:'clown_x33boss', spriteKey:'clown_x33', name:'Clown.x33 (Boss)', color:'#c06a68', hp:X33B.hp, atk:X33B.atk, def:X33B.def, spd:X33B.spd, type:'Other', boss:true, intent:x33Intent, ai:x33AI },
+  clown_x33patch:{ key:'clown_x33patch', spriteKey:'clown_x33', name:'Bandaged Clown', color:'#e8ddd0', hp:X33B.patchHp, atk:8, def:1, spd:11, type:'Other', intent:u => (u.owner && u.owner.alive && u.owner.hp < u.owner.maxHp * .9) ? 'Patches up Clown.x33 (heals it)' : 'Wet Bandage', ai:x33PatchAI },
+  /* the rare form: the playable Clown.x33's look. Beat it in Clown's Massacre to unlock Clown.x33 */
+  clown_x33alt:{ key:'clown_x33alt', spriteKey:'clownx33', name:'Clown.x33 (Curtain Call)', color:'#c06a68', hp:X33B.hp + 40, atk:X33B.atk + 1, def:X33B.def, spd:X33B.spd, type:'Other', boss:true, intent:x33Intent, ai:x33AI }
+});
+try {
+  Object.assign(COIN, { clown_x25bdoll:0.1, clown_x25altdoll:0.1, clown_x33patch:0.1 });
+  ['clown_x25boss', 'clown_x25alt', 'clown_x33boss', 'clown_x33alt'].forEach(k => { if (COIN.clown_x2boss != null && COIN[k] == null) COIN[k] = COIN.clown_x2boss; });
+  P2_V270.clown_x25boss = P2_V270.clown_x25alt = P2_V270.clown_x33boss = P2_V270.clown_x33alt = null;
+  ['clown_x25boss', 'clown_x25alt', 'clown_x33boss', 'clown_x33alt'].forEach(k => ENEMIES[k].p2sum = 'none');
+  /* the playable clowns now unlock ONLY from their rare boss form (saves that already unlocked them keep them) */
+  CLOWN_UNLOCK_FOES.clownx25 = ['clown_x25alt'];
+  CLOWN_UNLOCK_FOES.clownx33 = ['clown_x33alt'];
+  /* six floors */
+  const W = WORLD_DATA.find(w => w.name === "Clown's Massacre");
+  if (W) {
+    W.bosses = CW_ROT.slice();
+    W.floors = ['The Big Top', 'The Midway', 'The Dressing Room', 'The Backstage', 'The Infirmary Tent', 'The Terror Stairs'];
+    W.fsc = CWB.fsc.slice();
+    W.music.floor = ['clown1', 'clown2', 'clown5', 'clown3', 'clown6', 'clown4'];
+    W.music.boss = ['clownb1', 'clownb2', 'clownb5', 'clownb3', 'clownb6', 'clownb4'];
+    W.note = 'Side quest: a purely endless run against the Clown types. It never ends. Six floor bosses, round and round: Clown.x3, Clown.x2, Clown.x25 (Two to One: kill the doll before they fuse), Clown.x14, Clown.x33 (Blood Patches: it drinks while you bleed), then Clown.x5 on the Terror Stairs. Any clown can rise to boss later, and deeper in, something worse is waiting in Cell 610. Every wave beaten earns 1 Clown Token. This is the ONLY place the playable Clowns unlock: about 1 time in 10 a floor boss is a rare special act (Clown.x2 Understudy, Clown.x25 Double Act, Clown.x33 Curtain Call). Beat it and that clown joins your fighters.';
+  }
+} catch (e) {}
+
+/* which floor boss Clown's Massacre gets: the rotation above, the rare forms, then the Flesh and rising clowns (later than before).
+   It also stops the endless loop from pulling in World 1-3 bosses (The Sharded Man and friends turned up in the circus after wave 40). */
+try {
+  const _cwbV270 = cwBoss;
+  cwBoss = function (k) {
+    try {
+      if (!cwOn()) return _cwbV270.call(this, k);
+      if (CW_RARE_KEYS.includes(k)) return k;   /* a rare form is never swapped for something else */
+      if (!/^clown_/.test(k) || !ENEMIES[k]) k = pick(CW_ROT);
+      if (CW_RARE[k] && Math.random() < CWB.rareChance) return CW_RARE[k];
+      const fl = Math.floor(WAVES.length / 5);
+      if (fl >= CWB.fleshFrom && (cwSince >= CW_PITY || Math.random() < Math.min(CWB.fleshCap, CW_FLESH_CHANCE + fl * .01))) { cwSince = 0; return 'clown_x40boss'; }
+      cwSince++;
+      if (fl >= CWB.promoFrom && Math.random() < CW_PROMO_CHANCE) { const pool = CW_PROMO.filter(p => ENEMIES[p + '_rise'] && (UNLOCK_CLOWN[p] || 0) <= Math.min(3, fl)); if (pool.length) return pick(pool) + '_rise'; }
+      return k;
+    } catch (e) { return k; }
+  };
+} catch (e) {}
+
+/* the armor's shield while the doll holds its hand */
+try {
+  const _hitCW = hit;
+  hit = function (att, tgt, mult, o) {
+    try { if (tgt && (tgt.key === 'clown_x25boss' || tgt.key === 'clown_x25alt') && !tgt.fused && x25Doll(tgt) && att && att.team === 'party') mult *= 1 - X25B.shield; } catch (e) {}
+    return _hitCW.call(this, att, tgt, mult, o);
+  };
+  /* the doll walks in with the armor at the start of the wave, and a rare act announces itself */
+  const _swCW = startWave;
+  startWave = function (i) {
+    const r = _swCW.apply(this, arguments);
+    try {
+      if (cwOn()) foes.forEach(f => {
+        if (!f.alive) return;
+        if ((f.key === 'clown_x25boss' || f.key === 'clown_x25alt') && !f.mateDone) x25Spawn(f);
+        if (CW_RARE_KEYS.includes(f.key)) { const ck = Object.keys(CLOWN_UNLOCK_FOES).find(c => CLOWN_UNLOCK_FOES[c].includes(f.key)); say(`The spotlight turns red. This is not the usual act. ${f.name} takes the stage${ck && !clownOpen(ck) ? ': beat it and it will join you' : ''}.`); }
+      });
+    } catch (e) {}
+    return r;
+  };
+  /* phase 2 for the clown bosses: each does its own thing instead of calling a drone */
+  const _ep2CW = enterPhase2;
+  enterPhase2 = function (u) {
+    const r = _ep2CW.apply(this, arguments);
+    try {
+      if (!u || !/^clown_/.test(u.key) || !foes.includes(u)) return r;
+      const room = foes.filter(f => f.alive).length < 5;
+      if (u.key === 'clown_x3boss') { say(`${u.name} swings the spotlight across the stage. Everyone is a target now.`); livingParty().forEach(p => addStatus(p, 'mark', 2, .25)); }
+      else if (u.key === 'clown_x2boss' || u.key === 'clown_x2alt') { const ck = u.key === 'clown_x2alt' ? 'clown_x2altcopy' : 'clown_x2copy'; if (room && cwCount(ck, u) < 2) { say(`${u.name} tears in half. Both halves are smiling.`); cwSummon(u, ck); } }
+      else if (u.key === 'clown_x14boss') { say(`${u.name} pulls every ribbon tight at once.`); livingParty().forEach(p => addStatus(p, 'slow', 2, .25)); addStatus(u, 'guard', 1, 1); }
+      else if (u.key === 'clown_x5boss') { const st = foes.find(f => f.alive && f.owner === u && String(f.key).startsWith('clown_stairs')); if (!st && room) { say(`${u.name} drags the staircase back out. It is taller this time.`); cwSummon(u, 'clown_stairsboss'); u.step = 1; } else if (st) { u.step = (u.step || 0) + 1; say(`${u.name} takes two steps at once.`); } }
+      else if (u.key === 'clown_x25boss' || u.key === 'clown_x25alt') { if (x25Doll(u)) x25Fuse(u, `${u.name} stops waiting. The doll climbs in, the armor slams shut. Two become one.`); else if (!u.fused) { say(`The armor cracks open. There is nothing inside to protect any more.`); addStatus(u, 'atkUp', 99, .2); } }
+      else if (u.key === 'clown_x33boss' || u.key === 'clown_x33alt') { say(`${u.name} wraps itself up tight and opens everyone else.`); addStatus(u, 'guard', 2, 1); heal(u, u.maxHp * .08); livingParty().forEach(p => addStatus(p, 'bleed', 2, X33B.bleed[1])); }
+    } catch (e) {}
+    return r;
+  };
+} catch (e) {}
+/* Clown's Massacre now has 6 floors instead of 4, and the endless difficulty counts from the world's last floor and in laps of its
+   floors, so it would start climbing 10 waves later and climb slower. Keep the old clock: enemy scaling as if there were 4 floors,
+   and loop mutators (Frenzy, Swarm...) on the old 20-wave laps. */
+const CW_CLOCK = { shift: 10, lap: 6 / 4 };
+try {
+  const _esCW = endScale;
+  endScale = function (e, i, share) { try { if (cwOn() && typeof i === 'number') i = i + CW_CLOCK.shift; } catch (er) {} return _esCW.call(this, e, i, share); };
+  const _ewrCW = endWaveRules;
+  endWaveRules = function (i) { try { if (cwOn() && typeof i === 'number') i = Math.floor(i * CW_CLOCK.lap); } catch (er) {} return _ewrCW.call(this, i); };
+} catch (e) {}
+
+/* V270 MUSIC: the Casino has 16 floors, so its music lists now have 16 songs (5 new floor songs, 4 new boss songs, see SONGS).
+   Every other world is checked too: if a world has more floors than songs, the list repeats instead of going silent. */
+try {
+  const C = WORLD_DATA.find(w => w.casino);
+  if (C && C.music) {
+    C.music.floor = ['casino1', 'casino2', 'casino3', 'casino4', 'casino5', 'casino6', 'casino7', 'casino8', 'casino3', 'casino9', 'casino2', 'casino7', 'casino9', 'casino5', 'casino6', 'casino4'];
+    C.music.boss = ['casinob1', 'casinob2', 'casinob3', 'casinob4', 'casinob5', 'casinob6', 'casinob7', 'casinob8', 'casinob1', 'casinob2', 'casinob3', 'casinob4', 'casinob5', 'casinob6', 'casinob7', 'casinob8'];
+  }
+  WORLD_DATA.forEach(w => { if (!w.music) return; ['floor', 'boss'].forEach(k => { const a = w.music[k]; if (Array.isArray(a) && a.length && a.length < w.floors.length) { const b = a.slice(); while (b.length < w.floors.length) b.push(a[b.length % a.length]); w.music[k] = b; } }); });
+} catch (e) {}
+/* phase 2 keeps the boss's own song (faster and busier) instead of switching every boss to the same "boss2" track */
+try {
+  const _ep2Mus = enterPhase2;
+  enterPhase2 = function (u) {
+    let prev = null; try { prev = Sound.now(); } catch (e) {}
+    const r = _ep2Mus.apply(this, arguments);
+    try { if (u && !u.final && u.key !== 'clown_x40boss' && prev && prev !== 'boss2' && !/~hot$/.test(prev) && Sound.now() === 'boss2') Sound.music(prev + '~hot'); } catch (e) {}
+    return r;
+  };
+} catch (e) {}
+
+/* V270 BLOCK END */
 </script>
 <div id="jsStat" style="position:fixed;left:8px;bottom:8px;z-index:99998;font:12px monospace;color:#9d96a6;background:#000a;padding:3px 7px;border-radius:4px;max-width:90vw">Loading game...</div>
 <noscript><div style="position:fixed;left:0;right:0;top:30%;z-index:99999;background:#300;color:#fff;padding:16px;font:16px sans-serif;text-align:center">JavaScript is off or blocked here. Open this file in Chrome or Firefox (not a file preview or in-app viewer).</div></noscript>

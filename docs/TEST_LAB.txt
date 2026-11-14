@@ -16,7 +16,7 @@ Two ways to playtest anything with a few clicks or one command. Both use the sam
    node tools/fal125_lab.js --party hush,xekna,snavo,radiant --world 7 --wave 35 --level 10 --runs 20
    node tools/fal125_lab.js --config '<text from the in-game Copy button>' --runs 20     (in that text world is 0-based: 6 = World 7)
    node tools/fal125_lab.js --list chars | enemies | chips | parties | worlds           (the keys you can use)
-   Options: --diff --mode --seed --nostory --classic --foes --chips --god --ohk --html
+   Options: --diff --mode --seed --nostory --classic --foes --chips --god --ohk --html --why (V270: prints the enemies of the wave that ended each failed run)
    It prints the clear rate, the average wave reached and which waves the failed runs ended on.
 
 NOTES (for whoever balances next, including Claude)
