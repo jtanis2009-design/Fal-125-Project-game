@@ -12,7 +12,7 @@ Each rule shows as a small tag in the corner of the battlefield (hover or tap it
 - WORLD 5, Freedom at a Price: THE DIRECTIVE. Fal-125 broadcasts one order every wave, and every order has a price: Lethal Force Authorised (both sides hit harder), Recover Alive (one of your fighters is spared, the rest are not), Hold the Line (enemies are tough for 2 rounds, then weak), Medical to All Floors (everyone heals every round, you too), Overtime Approved (enemies are faster but wear themselves out).
 - Every rule cuts both ways, and the worlds are as hard as before. Same team, 40 runs each, before and after: World 1 88% / 90% cleared, World 2 60% / 63%, World 3 38% / 43%, World 4 98% / 98%, World 5 5% / 20% (the average wave reached there went from 15.6 to 14.8, so it is not easier in general: a lucky order can carry a run).
 - Not in The Archive, Boss Rush, the tutorial, the prologue or quests.
-New test tools/fal125_worldspecials_test.js (25 checks).
+New test tools/fal125_worldspecials_test.js (29 checks).
 
 V268 (REAL SPRITES + ATTACK AND KNOCKED-OUT POSES: RAINBOW RIPPER, IXIS, GLOOM, ANO)
 Search "V268" (one block at the end of the main game script).
