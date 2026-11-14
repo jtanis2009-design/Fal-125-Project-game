@@ -60,7 +60,7 @@ The author makes sprites in Gemini. Every prompt must start with exactly:
 
 What works: attach the author's **drawing turned upright, with numbered labels on each body part** as the first image and the **Whiplash sprite** (`sprites/whiplash.png`) as the second, then describe each numbered part, add a "SIZE RULE: about 2 heads tall, like the second image" and a short "Do NOT draw" list. When they send the finished sprite: cut it out of the white background (flood-fill white from the edges, keep enclosed white like teeth and shirts), resize to 620 px tall, save the PNG and replace the `EMBED.key` line, then update the description if the sprite differs from the drawing.
 
-Still on temporary sprites: **Caspic, Ixis, Soundemon, Tangler, Bearable, Blackbird, Rainbow Ripper, Hole (both forms), Tomb, Gloom, Ano, Lycion (both forms), Parda, Xainbow, Dollion, Vein Ripper, The Red Walker** (Soundemon is waiting for a redraw). 183 of 305 enemies use drawn placeholders, including most bosses.
+Still on temporary sprites: **Caspic, Ixis, Soundemon, Tangler, Bearable, Blackbird, Rainbow Ripper, Tomb, Gloom, Ano, Lycion (both forms), Parda, Xainbow, Dollion, Vein Ripper, The Red Walker** (Soundemon is waiting for a redraw). 183 of 305 enemies use drawn placeholders, including most bosses.
 
 ## Testing (always before delivering)
 Run from the project folder with Node:

@@ -1,6 +1,11 @@
-FAL-125 README. Current version: v265 (file fal125_battle_prototype-v265.html). Newest entries first.
+FAL-125 README. Current version: v266 (file fal125_battle_prototype-v266.html). Newest entries first.
 Folders: docs (this file, ROADMAP, Needed, TEST_LAB, design notes), tools (headless test and audit scripts, see TEST_LAB.txt), data (FAL125_Character_Book.xlsx), sprites.
 Read docs/Needed.txt every time a playable character is added. docs/ROADMAP.txt holds only what is still to build.
+
+V266 (REAL SPRITES: HOLE AND HIS DEVIL FORM)
+- The author's Gemini sprites replace the temporary ones for Hole and his Devil Form (sprites/hole.png, sprites/hole_devil.png and EMBED). Cut out of the white background; the white inside the Devil Form's thorn halo and the gap beside his claw arm were removed too.
+- His description (passive, Archive, recruit scene, one party quip) was updated to match the sprites: tired eyes with dark rings (no glasses), a blue ribbed zip-up hoodie (no teal scarf), black trousers, clawed feet, and one black-and-red plated arm with long red claws. Devil Form: a huge round bald head full of tiny holes, a halo of thorns, white eyes, a torn bloody mouth, one pale holed hand and one of red claws.
+- Nothing about how he plays changed.
 
 V265 (SHOP REVAMP: THE SHOPKEEPERS HAVE THEIR OWN SPRITES AND TALK)
 Search "V265" (one block at the end of the main game script). Nothing about prices, stock or slots changed.
