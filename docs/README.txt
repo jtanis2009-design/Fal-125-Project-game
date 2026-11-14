@@ -1,6 +1,19 @@
-FAL-125 README. Current version: v262 (file fal125_battle_prototype-v262.html). Newest entries first.
+FAL-125 README. Current version: v263 (file fal125_battle_prototype-v263.html). Newest entries first.
 Folders: docs (this file, ROADMAP, Needed, TEST_LAB, design notes), tools (headless test and audit scripts, see TEST_LAB.txt), data (FAL125_Character_Book.xlsx), sprites.
 Read docs/Needed.txt every time a playable character is added. docs/ROADMAP.txt holds only what is still to build.
+
+V263 (FOUR NEW TANKS: PARDA 0120, XAINBOW 0121, DOLLION 0122, VEIN RIPPER 0123)
+The author's own characters (sheets dated July 8th, June 29th, June 29th and June 26th 2025; sheet numbers 5951, 5958, 5957, 5961 dropped). All Tanks, chosen by the author. Search "V263". Numbers in PA, XB, DO and VR.
+- PARDA (Parry: "it can parry anything, bullets, trucks, everything"). Parry: Taunts and parries the next 2 enemy hits; they do nothing to Parda and the attacker is hit by its own attack. Cover Parry: parries the next hit meant for an ally. Riposte: hits harder for every parry this wave. It also parries 10% of hits on its own, even boss attacks.
+- XAINBOW (a puppet made by Rainbow Ripper). Its ability box was empty, so the kit is Claude's draft, "Colour Puppet": every hit knocks colour loose into it (up to 5), and each colour makes it take 5% less damage. Confetti Taunts, adds 2 colour and blinds every enemy. Bead Swipe hits. Colour Burst lets all the colour out: it hurts every enemy and heals every ally. With Rainbow Ripper in the party it takes less damage and the hits also fill Rainbow Ripper's machine.
+- DOLLION (Doll: "he keeps all the dolls"). Voodoo Doll makes a doll of an enemy: part of every hit Dollion takes also hurts it. Doll Decoy Taunts and puts a decoy doll in front of the team that soaks their hits. Pin hits harder if it has the doll. When an enemy dies before its doll, Dollion keeps the doll for the rest of the run (+2% max HP and DEF each, up to 15).
+- VEIN RIPPER (Vein Infusion, Vein Web, Vein Control). Vein Web Taunts and webs every enemy (Slowed, they hit 25% weaker). Vein Rip tears out an enemy's veins: it heals and the stolen veins soak damage. Vein Control makes an enemy lose its next turn. Weak to fire and cold (+25% fire damage, +25% damage while Frostbitten).
+- Each has an ultimate (Parry Everything, Puppet Show, Every Doll, Rip Them All), a gold enhancement, a Rare chip, 3 chips, 2 skins, recruit scenes, story lines for every Tank beat in Worlds 2 to 8, 6 Archive entries, Mastery lines, party quips and an event (A Shooting Range, Its Maker's Workshop, A Shelf of Dolls, A Cold Store).
+- Claude's guesses: types, containment and threat levels, Parda's Archive notes (its info is "???"), Xainbow's whole ability, and Dollion's rival (not named).
+- Balance (tank check, World 5 Hard; Whiplash 21.9, Tomb 18.8, Ixis 16.4): Parda 22.7, Vein Ripper 18.2, Dollion 17.2, Xainbow 15.8. Late game 92% to 100%. Vein Ripper was much too weak at first (it Taunted with nothing to protect itself); its web and Vein Rip were made stronger.
+- Sprites are TEMPORARY pixel sprites drawn by Claude.
+- Character Book rows 121 to 124. Next free ID: 124.
+New test tools/fal125_tanks4_test.js (31 checks).
 
 V262 (THE TRIO: GLOOM 0117 DAMAGE, ANO 0118 HEALER, LYCION 0119 TANK)
 The author's own characters (sheets dated October 16th 2025 and September 6th 2025; sheet numbers 5939, 5940, 5941 dropped). Roles and Lycion's design chosen by the author. Search "V262". Numbers in GL, AN and LY.
