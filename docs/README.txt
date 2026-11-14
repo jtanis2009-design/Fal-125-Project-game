@@ -1,6 +1,20 @@
-FAL-125 README. Current version: v264 (file fal125_battle_prototype-v264.html). Newest entries first.
+FAL-125 README. Current version: v265 (file fal125_battle_prototype-v265.html). Newest entries first.
 Folders: docs (this file, ROADMAP, Needed, TEST_LAB, design notes), tools (headless test and audit scripts, see TEST_LAB.txt), data (FAL125_Character_Book.xlsx), sprites.
 Read docs/Needed.txt every time a playable character is added. docs/ROADMAP.txt holds only what is still to build.
+
+V265 (SHOP REVAMP: THE SHOPKEEPERS HAVE THEIR OWN SPRITES AND TALK)
+Search "V265" (one block at the end of the main game script). Nothing about prices, stock or slots changed.
+- SPRITES: the author's two pose sheets were cut into separate poses. The Vendor has 8 (show, greet, offer, thanks, poor, shock, sly, full body) and Outposter.M1 has 6 (idle, talk, show, calm, sly, shock). Files: sprites/kp_vendor_*.png and sprites/kp_outposter_*.png (also built into the game).
+- THE SHOP SCREEN (every Vendor counter: Chip Shop, Bit Counter, Byte Shop, Supply Counter):
+  - On a computer: the shopkeeper stands big on the right with a speech bubble above him. The stock is a grid of small tiles on the left. Point at a tile (or tap it) and the whole item shows on a card under the shopkeeper: name, who it is for, what it does and the price.
+  - On a phone: the shopkeeper and his speech bubble sit in a bar at the top. The item cards stay full size, as before.
+- THE SHOPKEEPER REACTS, with a different pose and line each time: when you walk in (different for each counter), when you look at an item (by rarity; Bits, Bytes and fighter-only chips have their own lines, and he says the fighter's name), when you cannot afford it, when your slots are full, when you buy (bigger reaction for Legendary and above), when you reroll, when you sell something back, and now and then while you stand around.
+- THREE VOICES: The Vendor (polite, loves coins), The Other Vendor (when The Vendor is in your party: jealous and rude about him) and The Glitch Vendor in the Byte Shop (stutters, half broken). About 90 lines, all written for this game. Add more in KP_LINES.
+- The Vendor's menu ("which counter?") shows his new sprite too.
+- OUTPOSTER'S FORGE uses his new sprites: a different pose for the greeting, the offer (holding the weapon), the deal, and walking away. He has several versions of each line now, and he answers when you say no.
+- The Black Market keeps its own keeper and look.
+- Settings > Reduced Motion: lines appear at once (no typing), no bobbing.
+New test tools/fal125_shopkeeper_test.js (10 checks).
 
 V264 (NEW FIGHTER: THE RED WALKER, 0124, DAMAGE)
 The author's own character (sheet dated September 13th 2025; sheet number 5942 dropped). Damage chosen by the author. Search "V264". Numbers in RDW.
