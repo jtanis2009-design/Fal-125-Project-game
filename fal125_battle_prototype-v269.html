@@ -24937,6 +24937,151 @@ try { const st = document.createElement('style'); st.textContent = `.unit.dead.h
   const _klV268 = kill;
   kill = function (u, msg) { const r = _klV268.apply(this, arguments); try { if (u && u.el && !u.alive) { clearTimeout(u._poseT); if (poseShow(u, 'ko')) u.el.classList.add('hasKO'); } } catch (e) {} return r; };
 }
+/* ===== V269: WORLD SPECIALS FOR WORLDS 1 TO 5. Worlds 6, 7 and 8 each had something of their own (the dream, the Order that studies you, the
+   alternates). Worlds 1 to 5 only differed by their enemies. Now each has one signature rule that fits its story. Every rule cuts both ways
+   (it can help you or hurt you), and the clear rates were kept where they were. The rule shows as a chip in the top right of the battlefield
+   (hover or tap for the text), is explained in the log on the first wave, and is written in the world's note.
+     World 1  Containment Facility   THE ALARM        a wave that drags on (round 3+) raises the alarm; at 3 a Guard Drone arrives (once a wave, from
+                                                      floor 2, never on a boss wave). Clear a wave in 3 rounds or less: "Unnoticed", coins and a small heal.
+     World 2  Sewer Network          THE TIDE         every 3rd round the water rises: everyone on both sides is Soaked 2 turns, the water washes off
+                                                      Irradiated, Burning and Venom, and something in it bites the healthiest fighter on each side (4%).
+     World 3  Beyond the Facility    THE SEARCHLIGHT  each round the floodlight settles on one of your fighters: enemies go for whoever is Lit
+                                                      (a Taunt still wins), and the Lit fighter hits 20% harder.
+     World 4  The Safe Haven         HOSPITALITY      tea every round: everyone on your team heals 3%. A fighter who did not attack that round gets
+                                                      Comfortable (+1); at 3 they are too comfortable and lose their next turn.
+     World 5  Freedom at a Price     THE DIRECTIVE    Fal-125 broadcasts one order each wave, and every order has a price (5 different ones).
+   Not in The Archive, Boss Rush, the tutorial, the prologue or quests. Tune in WSP; switch one world off with WSP.on[worldIndex] = false. Search "V269". ===== */
+const WSP = {
+  on:{ 0:true, 1:true, 2:true, 3:true, 4:true },
+  alarm:{ from:5, startRound:3, at:3, add:'drone', quick:3, coins:6, coinsPerFloor:2, heal:.04 },
+  tide:{ every:3, soak:2, bite:.04, wash:['burn', 'scorch', 'venom'] },
+  light:{ pull:.6, dmg:.20 },
+  tea:{ heal:.03, at:3 },
+  dir:{ lethal:.15, alive:.30, others:.10, hold:.15, holdRounds:2, medical:.04, overtime:.15, overtimeCost:.03 },
+  name:['THE ALARM', 'THE TIDE', 'THE SEARCHLIGHT', 'HOSPITALITY', 'THE DIRECTIVE'],
+  text:[
+    'A fight that drags on raises the alarm (from round 3). At 3, a Guard Drone arrives. Win a wave in 3 rounds or less and nobody notices: coins and a small heal.',
+    'Every 3rd round the water rises. Everyone on both sides is Soaked, the water washes off Irradiated, Burning and Venom, and something in it bites the healthiest fighter on each side.',
+    'Each round the floodlight settles on one of your fighters. Enemies go for whoever is Lit (a Taunt still wins), and the Lit fighter hits 20% harder.',
+    'Tea is served every round: your whole team heals a little. A fighter who did not attack gets Comfortable. At 3 they are too comfortable to move and lose a turn.',
+    'Fal-125 broadcasts one order every wave. Every order has a price.'
+  ],
+  dirs:{
+    lethal:{ n:'LETHAL FORCE AUTHORISED', d:'Enemies deal 15% more damage and take 15% more damage.', s:'"All staff: lethal force is authorised. Fal-125 regrets the paperwork."' },
+    alive:{ n:'RECOVER ALIVE', d:'Enemies deal 30% less damage to {who}, and 10% more to everyone else.', s:'"Subject {who} is to be recovered alive. The others are optional."' },
+    hold:{ n:'HOLD THE LINE', d:'Enemies take 15% less damage for 2 rounds, then 15% more when the line breaks.', s:'"Hold the line for two rounds. Help is not coming, but hold it anyway."' },
+    medical:{ n:'MEDICAL TO ALL FLOORS', d:'Every round, everyone heals 4%: the enemy, and your team too.', s:'"Medical to all floors. Treat anyone with a number. Sort them out later."' },
+    overtime:{ n:'OVERTIME APPROVED', d:'Enemies act 15% faster, but each of them loses 3% max HP every round.', s:'"Overtime is approved. Fal-125 thanks you for what this will do to you."' }
+  }
+};
+const wspW = () => (typeof PRO_ON_WD !== 'undefined' && PRO_ON_WD) ? -1 : CFG.world;
+const wspOn = w => { try { return wspW() === w && WSP.on[w] && wqOn() && !!RUN && !RUN.quest; } catch (e) { return false; } };
+const wspS = () => RUN.wsp || (RUN.wsp = {});
+Object.assign(LABEL, { wslit:'Lit', wscomfy:'Comfortable' });
+Object.assign(STATUS_DESC, { wslit:'In the floodlight: enemies go for this fighter, and this fighter hits 20% harder.', wscomfy:'Getting comfortable. At 3, this fighter is too comfortable to move and loses a turn. Attack something to stay sharp.' });
+function wspChip() {
+  try {
+    const a = $('#arena'); if (!a) return; let c = document.getElementById('wsBar'); const w = wspW();
+    if (!(w >= 0 && w <= 4 && wspOn(w))) { if (c) c.style.display = 'none'; return; }
+    if (!c) { c = document.createElement('div'); c.id = 'wsBar'; a.appendChild(c);
+      const st = document.createElement('style'); st.textContent = `#wsBar{position:absolute;right:10px;top:8px;z-index:5;max-width:46%;font:600 12px/1.3 var(--ui,system-ui,sans-serif);color:var(--gold);background:rgba(10,9,12,.72);border:1px solid var(--line);border-radius:10px;padding:4px 9px;text-align:right;cursor:help}
+#wsBar small{display:block;font-weight:400;color:#ddd;opacity:.9;font-size:11px}#wsBar.hot{border-color:#ff5a4a;color:#ff8a7a}
+.unit.wslit .sprite{filter:drop-shadow(0 0 12px #fff6b8) brightness(1.12)}
+@media (max-width:640px){#wsBar{font-size:10px;padding:3px 6px;right:4px;top:auto;bottom:4px;max-width:60%}#wsBar small{font-size:9.5px}}`; document.head.appendChild(st);
+      c.onclick = () => { try { say('World special, ' + WSP.name[wspW()] + ': ' + c.title); } catch (e) {} }; }
+    const s = wspS(); let sub = '', hot = false, tip = WSP.text[w];
+    if (w === 0) { sub = wave < WSP.alarm.from ? 'quiet on this floor' : wave % 5 === 4 ? 'the boss already knows' : s.came ? 'reinforced' : 'alarm ' + (s.alarm || 0) + '/' + WSP.alarm.at; hot = (s.alarm || 0) >= WSP.alarm.at - 1 && !s.came && wave >= WSP.alarm.from && wave % 5 !== 4; }
+    if (w === 1) { const left = WSP.tide.every - (round % WSP.tide.every || WSP.tide.every); sub = left <= 0 || round % WSP.tide.every === 0 ? 'high tide' : 'water rises in ' + left + (left === 1 ? ' round' : ' rounds'); hot = round % WSP.tide.every === WSP.tide.every - 1; if (round % WSP.tide.every === WSP.tide.every - 1) sub = 'water rises this round'; }
+    if (w === 2) { const l = party.find(p => p.alive && p.st.some(x => x.k === 'wslit')); sub = l ? 'on ' + l.name : 'sweeping'; }
+    if (w === 3) sub = 'tea every round';
+    if (w === 4) { const d = WSP.dirs[s.dir]; sub = d ? d.n : 'no order'; if (d) tip = d.d.replace('{who}', s.who || '?'); }
+    c.style.display = ''; c.className = hot ? 'hot' : ''; c.title = tip; c.innerHTML = WSP.name[w] + '<small></small>'; c.lastChild.textContent = sub;
+  } catch (e) {}
+}
+function wspWaveStart(i) {
+  const s = wspS(); s.alarm = 0; s.came = false; s.dir = null; s.who = null; s.quiet = false;
+  party.forEach(p => { p.wsComfy = 0; if (p.st) p.st = p.st.filter(x => x.k !== 'wslit' && x.k !== 'wscomfy'); if (p.el) p.el.classList.remove('wslit'); });
+  const w = wspW(); if (!(w >= 0 && w <= 4) || !wspOn(w)) return;
+  if (!s['told' + w]) { s['told' + w] = 1; say('World special, ' + WSP.name[w] + ': ' + WSP.text[w]); }
+  if (w === 4) {
+    const ks = Object.keys(WSP.dirs).filter(k => k !== s.lastDir), k = pick(ks), d = WSP.dirs[k], al = livingParty().filter(p => !p.tempCopy);
+    s.dir = s.lastDir = k; s.who = k === 'alive' && al.length ? pick(al).name : null;
+    say('FAL-125 DIRECTIVE: ' + d.n + '. ' + d.s.replace('{who}', s.who || '') + ' ' + d.d.replace('{who}', s.who || ''));
+  }
+}
+function wspRoundStart() {
+  const w = wspW(); if (!(w >= 0 && w <= 4) || !wspOn(w) || !foes.some(f => f.alive)) return; const s = wspS();
+  if (w === 2) {   /* the floodlight moves */
+    party.forEach(p => { if (p.st && p.st.some(x => x.k === 'wslit')) { p.st = p.st.filter(x => x.k !== 'wslit'); if (p.el) p.el.classList.remove('wslit'); try { refresh(p); } catch (e) {} } });
+    const al = livingParty().filter(p => !p.tempCopy); if (al.length) { const c = al.filter(p => p.name !== s.lit), t = pick(c.length ? c : al); s.lit = t.name; addStatus(t, 'wslit', 2, 1); if (t.el) t.el.classList.add('wslit'); if (round === 1) say(`The floodlight swings round and stops on ${t.name}.`); }
+  }
+  if (w === 3 && round > 1) {   /* tea, and getting comfortable */
+    say(pick(['Tea is served. Nobody saw who poured it.', 'Somebody has put a blanket round your shoulders. Tea?', 'Another cup appears. It would be rude to refuse.', 'The hosts insist. Just one more cup.']));
+    livingParty().forEach(p => { if (p.tempCopy) return; heal(p, p.maxHp * WSP.tea.heal);
+      if (p._wsHit !== round - 1) { p.wsComfy = (p.wsComfy || 0) + 1;
+        if (p.wsComfy >= WSP.tea.at) { p.wsComfy = 0; p.st = p.st.filter(x => x.k !== 'wscomfy'); addStatus(p, 'stun', 1, 1); popup(p, 'Too comfortable', 'status'); say(`${p.name} is far too comfortable to get up.`); }
+        else { const c = p.st.find(x => x.k === 'wscomfy'); if (c) { c.v = p.wsComfy; c.t = 9; } else addStatus(p, 'wscomfy', 9, p.wsComfy); } }
+      else if (p.wsComfy) { p.wsComfy = 0; p.st = p.st.filter(x => x.k !== 'wscomfy'); refresh(p); } });
+  }
+  if (w === 4) {
+    if (s.dir === 'medical' && round > 1) { say('Medics move down the line and treat everyone they find.'); [...party, ...foes].forEach(u => { if (u.alive && !u.tempCopy) heal(u, u.maxHp * WSP.dir.medical); }); }
+    if (s.dir === 'overtime' && round > 1) foes.forEach(f => { if (f.alive) { const d = Math.min(f.hp - 1, Math.max(1, Math.round(f.maxHp * WSP.dir.overtimeCost))); if (d > 0) { f.hp -= d; popup(f, '-' + d + ' overtime', 'status'); refresh(f); } } });
+    if (s.dir === 'hold' && round === WSP.dir.holdRounds + 1) say('The line breaks. They are easier to hurt now.');
+  }
+  wspChip();
+}
+async function wspRoundEnd() {
+  const w = wspW(); if (!(w >= 0 && w <= 4) || !wspOn(w) || !foes.some(f => f.alive) || !party.some(p => p.alive)) return; const s = wspS();
+  if (w === 0 && wave >= WSP.alarm.from && wave % 5 !== 4 && !s.came && round >= WSP.alarm.startRound) {
+    s.alarm = (s.alarm || 0) + 1;
+    if (s.alarm >= WSP.alarm.at) { s.came = true; say('The alarm has been ringing too long. Something answers it.'); try { Sound.sfx('encounter'); } catch (e) {} try { summon(WSP.alarm.add); } catch (e) {} }
+    else say(`The alarm gets louder (${s.alarm}/${WSP.alarm.at}).`);
+  }
+  if (w === 1 && round % WSP.tide.every === 0) {
+    say('The water rises to your knees. Everything is Soaked, and whatever was burning goes out.');
+    [...party, ...foes].forEach(u => { if (!u.alive || u.tempCopy) return; u.st = u.st.filter(x => !WSP.tide.wash.includes(x.k)); addStatus(u, 'soak', WSP.tide.soak, 1); });
+    [livingParty().filter(p => !p.tempCopy), foes.filter(f => f.alive)].forEach(side => { const t = side.slice().sort((a, b) => b.hp / b.maxHp - a.hp / a.maxHp)[0]; if (!t) return;
+      const d = Math.min(t.hp - 1, Math.max(1, Math.round(t.maxHp * (t.boss ? WSP.tide.bite / 2 : WSP.tide.bite)))); if (d > 0) { t.hp -= d; popup(t, '-' + d + ' bitten', 'status'); refresh(t); } });
+    say('Something in the water bites, and is gone again.'); await sleep(350);
+  }
+  wspChip();
+}
+{
+  const _swV269 = startWave;
+  startWave = function (i) { const r = _swV269.apply(this, arguments); try { wspWaveStart(i); wspChip(); } catch (e) {} return r; };
+  const _rsV269 = V17.roundStart;
+  V17.roundStart = function () { const r = _rsV269.apply(this, arguments); try { wspRoundStart(); } catch (e) {} return r; };
+  const _reV269 = V17.roundEnd;
+  V17.roundEnd = async function () { const r = await _reV269.apply(this, arguments); if (r) return r; try { await wspRoundEnd(); } catch (e) {} return r; };
+  const _cbV269 = clearBeat;   /* World 1: a wave won quickly goes unnoticed */
+  clearBeat = async function (o) {
+    try { if (wspOn(0) && wave % 5 !== 4 && round <= WSP.alarm.quick && !wspS().quiet) { wspS().quiet = true; const c = WSP.alarm.coins + WSP.alarm.coinsPerFloor * floorOf(wave); bank(c); livingParty().forEach(p => heal(p, p.maxHp * WSP.alarm.heal)); say(`Unnoticed: over before the alarm could ring. +${c} coins, and everyone catches their breath.`); } } catch (e) {}
+    return _cbV269.apply(this, arguments);
+  };
+  const _ftV269 = foeTarget;   /* World 3: enemies go for whoever is in the light */
+  foeTarget = function () {
+    try { if (wspOn(2)) { const al = livingParty(); if (!al.some(p => p.st.some(x => x.k === 'taunt'))) { const l = al.find(p => p.st.some(x => x.k === 'wslit') && !p.st.some(x => x.k === 'hidden')); if (l && Math.random() < WSP.light.pull) return l; } } } catch (e) {}
+    return _ftV269.apply(this, arguments);
+  };
+  const _hitV269 = hit;
+  hit = function (att, tgt, mult, o) {
+    try {
+      if (att && tgt && att.team === 'party' && tgt.team === 'enemy') att._wsHit = round;
+      const w = wspW();
+      if (w === 2 && wspOn(2) && att && att.team === 'party' && att.st && att.st.some(x => x.k === 'wslit')) mult *= 1 + WSP.light.dmg;
+      if (w === 4 && wspOn(4) && att && tgt && att.team !== tgt.team) { const s = wspS(), D = WSP.dir, e2p = att.team === 'enemy';
+        if (s.dir === 'lethal') mult *= 1 + D.lethal;
+        if (s.dir === 'alive' && e2p) mult *= tgt.name === s.who ? 1 - D.alive : 1 + D.others;
+        if (s.dir === 'hold' && !e2p) mult *= round <= D.holdRounds ? 1 - D.hold : 1 + D.hold; }
+    } catch (e) {}
+    return _hitV269.call(this, att, tgt, mult, o);
+  };
+}
+try {   /* overtime: enemies act faster. eSpd is a const, so the haste goes on as a status at the start of the wave */
+  const _swV269b = startWave;
+  startWave = function (i) { const r = _swV269b.apply(this, arguments); try { if (wspOn(4) && wspS().dir === 'overtime') foes.forEach(f => { if (f.alive) addStatus0(f, 'haste', 99, WSP.dir.overtime); }); } catch (e) {} return r; };
+  [0, 1, 2, 3, 4].forEach(w => { const W = WORLD_DATA[w]; if (W) W.note = (W.note ? W.note + ' ' : '') + 'World special, ' + WSP.name[w].charAt(0) + WSP.name[w].slice(1).toLowerCase() + ': ' + WSP.text[w]; });
+} catch (e) {}
 </script>
 <div id="jsStat" style="position:fixed;left:8px;bottom:8px;z-index:99998;font:12px monospace;color:#9d96a6;background:#000a;padding:3px 7px;border-radius:4px;max-width:90vw">Loading game...</div>
 <noscript><div style="position:fixed;left:0;right:0;top:30%;z-index:99999;background:#300;color:#fff;padding:16px;font:16px sans-serif;text-align:center">JavaScript is off or blocked here. Open this file in Chrome or Firefox (not a file preview or in-app viewer).</div></noscript>

@@ -1,6 +1,18 @@
-FAL-125 README. Current version: v268 (file fal125_battle_prototype-v268.html). Newest entries first.
+FAL-125 README. Current version: v269 (file fal125_battle_prototype-v269.html). Newest entries first.
 Folders: docs (this file, ROADMAP, Needed, TEST_LAB, design notes), tools (headless test and audit scripts, see TEST_LAB.txt), data (FAL125_Character_Book.xlsx), sprites.
 Read docs/Needed.txt every time a playable character is added. docs/ROADMAP.txt holds only what is still to build.
+
+V269 (THE OLD WORLDS REVISITED: A SPECIAL RULE FOR EACH OF WORLDS 1 TO 5)
+The author asked to revisit the old worlds and add special things where they were needed. Worlds 6, 7 and 8 each had something of their own already (the dream effects, the Order that studies your team, the alternates and the tape). Worlds 1 to 5 only differed by their enemies. Now each has one signature rule that fits its story. Search "V269". Numbers in WSP.
+Each rule shows as a small tag in the corner of the battlefield (hover or tap it to read it), is explained in the log on the first wave, and is written in the world's note.
+- WORLD 1, Containment Facility: THE ALARM. A fight that drags on raises the alarm (from round 3). At 3 a Guard Drone arrives (once per wave). Win a wave in 3 rounds or less and nobody notices: you get coins and a small heal. No alarm on the first floor or on boss waves, so the start of the game stays gentle.
+- WORLD 2, Sewer Network: THE TIDE. Every 3rd round the water rises: everyone on both sides is Soaked, the water washes off Irradiated, Burning and Venom, and something in the water bites the healthiest fighter on each side.
+- WORLD 3, Beyond the Facility: THE SEARCHLIGHT. Each round the floodlight settles on one of your fighters. Enemies go for whoever is Lit (a Taunt still wins), and the Lit fighter hits 20% harder.
+- WORLD 4, The Safe Haven: HOSPITALITY. Tea is served every round and your whole team heals a little. A fighter who did not attack gets Comfortable; at 3 they are too comfortable to move and lose a turn. (Nothing here wants to hurt you. It only wants you to stay.)
+- WORLD 5, Freedom at a Price: THE DIRECTIVE. Fal-125 broadcasts one order every wave, and every order has a price: Lethal Force Authorised (both sides hit harder), Recover Alive (one of your fighters is spared, the rest are not), Hold the Line (enemies are tough for 2 rounds, then weak), Medical to All Floors (everyone heals every round, you too), Overtime Approved (enemies are faster but wear themselves out).
+- Every rule cuts both ways, and the worlds are as hard as before. Same team, 40 runs each, before and after: World 1 88% / 90% cleared, World 2 60% / 63%, World 3 38% / 43%, World 4 98% / 98%, World 5 5% / 20% (the average wave reached there went from 15.6 to 14.8, so it is not easier in general: a lucky order can carry a run).
+- Not in The Archive, Boss Rush, the tutorial, the prologue or quests.
+New test tools/fal125_worldspecials_test.js (25 checks).
 
 V268 (REAL SPRITES + ATTACK AND KNOCKED-OUT POSES: RAINBOW RIPPER, IXIS, GLOOM, ANO)
 Search "V268" (one block at the end of the main game script).
