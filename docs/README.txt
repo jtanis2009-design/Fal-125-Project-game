@@ -1,6 +1,21 @@
-FAL-125 README. Current version: v266 (file fal125_battle_prototype-v266.html). Newest entries first.
+FAL-125 README. Current version: v267 (file fal125_battle_prototype-v267.html). Newest entries first.
 Folders: docs (this file, ROADMAP, Needed, TEST_LAB, design notes), tools (headless test and audit scripts, see TEST_LAB.txt), data (FAL125_Character_Book.xlsx), sprites.
 Read docs/Needed.txt every time a playable character is added. docs/ROADMAP.txt holds only what is still to build.
+
+V267 (WORLD 8: THE ANALOG HORROR PASS, "THE TAPE")
+The author asked for World 8 to be far more glitchy and horrifying, like the alternates of The Mandela Catalogue. Search "V267" (one block at the end of the main game script). Looks, sound and text only: no numbers or balance changed. All wording was written for this game.
+- THE TAPE: every World 8 fight plays like an old black-and-white recording: scan lines, static, a rolling tracking bar, and a tape label in the corner ("FAL-125 ARCHIVE TAPE 8-1") with a time code that sometimes runs backwards.
+- THE PLACES: the backgrounds are now places from Worlds 1 to 7, in black and white, a different one each wave. Some are mirrored ("WRONG WAY ROUND"), and from floor 3 some are upside down. On the last floor the tape cannot hold one place and keeps changing ("SIGNAL LOST").
+- COLOUR: the only colour left is your own fighters. The screen, the buttons and the alternates are grey.
+- IMPOSTORS: an impostor in your party is a little greyer than the real ones (a new clue, on top of facing the wrong way).
+- THE ALTERNATES: they warp, stretch, turn into a negative for a frame, and slowly lean closer. Their name tag sometimes shows the real fighter's name for a moment. A boss that "stops pretending" stays warped.
+- THEY TALK: an alternate sometimes says one of the real fighter's lines, wrong (repeating it, forgetting the end, saying it without moving its mouth). Copies of fighters who do not speak do other things instead ("It asks to be let back into the party. Politely. Twice.").
+- ADVISORIES: Fal-125 emergency advisory screens cut in at the start of each floor, before each floor boss, and sometimes between waves (26 texts). Tap to dismiss, or they leave after 4 seconds.
+- THE CUT: when an alternate takes one of your fighters down, the tape cuts to black for a second (once per wave).
+- THE WATCHER: now and then a tall shape with two white eyes stands at the back of the room. It is not part of the fight. It stands closer on deeper floors.
+- Settings > Reduced Motion, No Flashes or Dim Effects switch off the flicker, the cut and the watcher. The black-and-white look stays.
+- Nothing leaks into other worlds: leaving World 8 puts every colour back.
+New test tools/fal125_w8horror_test.js (9 checks).
 
 V266 (REAL SPRITES: HOLE AND HIS DEVIL FORM)
 - The author's Gemini sprites replace the temporary ones for Hole and his Devil Form (sprites/hole.png, sprites/hole_devil.png and EMBED). Cut out of the white background; the white inside the Devil Form's thorn halo and the gap beside his claw arm were removed too.

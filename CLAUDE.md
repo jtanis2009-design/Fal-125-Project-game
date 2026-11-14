@@ -28,6 +28,7 @@ FAL125 is a turn-based character battle game in **one HTML file** (`fal125_battl
 - **The Red Walker** (0124, key `redwalker`) is treated as a different person from Walker (0068). His sheet says "after the game ended he killed 3 and 8" with IDs matching Ano's and Lycion's old sheet numbers: NOT used in the game; ask the author who 3 and 8 were and which game it was. One word of his ability text was unreadable.
 - The author said (November 2026) that about **12 more characters** are coming, and then they are done for a long time. The tuning-object name `RW` is taken (rarity weights): his is `RDW`. Check a new `const XX` name is free before using it.
 - **Shopkeepers (V265)**: The Vendor and Outposter.M1 have the author's own pose sprites (`sprites/kp_vendor_*.png`, `sprites/kp_outposter_*.png`, `EMBED.kp_*`; poses listed in `KP.poses`). The shop screen (`#shop`) has a keeper panel (`#kpPanel`, `kpOpen`/`kpSay`/`kpPose`) and their set lines live in `KP_LINES` (sets: `vendor`, `rival` = The Other Vendor, `byte` = the glitch vendor, `outposter`). Lines must be original, never copied from another game. The Black Market keeps its own keeper. New pose sheets from the author: cut each pose out along its green outline (see README V265).
+- **World 8 look (V267, "the tape")**: black-and-white analog-horror pass (`W8H`, `w8h*` functions, body class `w8on`). Backgrounds are places from Worlds 1-7 in grey; only the player's fighters keep colour (an impostor is slightly grey); advisory screens (`W8H.adv*`), alternates that talk (`w8hTalk`), a cut to black when an alternate downs a fighter, a watcher at the back. Inspired by The Mandela Catalogue, but every line is original: never quote that series. Looks and text only, no balance changes.
 - Open questions: Slinder may really be named "Splinder" (ask before renaming). Ixis's ability "Abs" was read as Absorb. Soundemon is based on Sandman/Soundman from JoJo SBR; a trap-style rework was discussed but not done.
 
 ## How the code is organised
@@ -64,7 +65,7 @@ Still on temporary sprites: **Caspic, Ixis, Soundemon, Tangler, Bearable, Blackb
 
 ## Testing (always before delivering)
 Run from the project folder with Node:
-- `node tools/fal125_<name>_test.js --html GAME.html` for each character test, plus `healers4`, `hole`, `tomb`, `trio`, `tanks4`, `redwalker`, `shopkeeper`, `world8`, `v257`, `storycast`, `mastery`, `rework3`, `rework4`, `incident` (`--runs 2`).
+- `node tools/fal125_<name>_test.js --html GAME.html` for each character test, plus `healers4`, `hole`, `tomb`, `trio`, `tanks4`, `redwalker`, `shopkeeper`, `w8horror`, `world8`, `v257`, `storycast`, `mastery`, `rework3`, `rework4`, `incident` (`--runs 2`).
 - `node tools/fal125_lines_audit.js` (every character has story lines), `node tools/fal125_enemy_moves.js` (what each enemy does each turn).
 - Balance: `tools/fal125_cmp.sh GAME.html "cy,inkating,shamoon" 5 1 Hard 60 newkey refkey` (early game, damage dealers) and `... "fuja,eyianix,bearer" 6 10 Hard 24 ...` (late game). Tanks: team `claire,inkating,shamoon` vs `whiplash`. Healers: team `sna,snavo,radiant` vs `thorn`. Aim for the same range as the reference.
 - `node tools/fal125_lab.js --help`-style options are documented at the top of the file (`--party --world 1-8 --level --diff --runs --seed`).
