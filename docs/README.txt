@@ -1,6 +1,20 @@
-FAL-125 README. Current version: v271 (file fal125_battle_prototype-v271.html). Newest entries first.
+FAL-125 README. Current version: v272 (file fal125_battle_prototype-v272.html). Newest entries first.
 Folders: docs (this file, ROADMAP, Needed, TEST_LAB, design notes), tools (headless test and audit scripts, see TEST_LAB.txt), data (FAL125_Character_Book.xlsx), sprites.
 Read docs/Needed.txt every time a playable character is added. docs/ROADMAP.txt holds only what is still to build.
+
+V272 (BUFFS FOR THE WEAKEST HEALERS AND SNA, FROM A FULL BALANCE TEST)
+The author asked whether a ChatGPT tier list was accurate. Claude tested every fighter instead (60 early runs and 24 late runs each, in a team that suits their role). The tier list was partly right, but wrong on several big points (most tanks are NOT all equally strong; Demure and Eyianix are among the strongest, not the weakest). The full ranking is in docs/BALANCE_TEST.txt. The author asked to make only the weak healers and Sna stronger, and nobody weaker. Search "V272". Numbers in BUFF272 and CD272.
+- WEAK EARLY: Sadie & The Stray, Bearable, The Vendor, Still-06, Velara, Sevalio, Mushroom: more HP (+15%), +2 DEF, and their healing is 40% to 80% stronger.
+- WEAK LATE: Hush, Serpentine, Seam, Moon: more HP, a little more DEF, and their healing is 10% to 70% stronger.
+- SHORTER COOLDOWNS: Sadie's Echo Location Bark (3 -> 2), Sevalio's Transfusion Stitch (3 -> 2), The Vendor's Buy One Get One (2 -> 1) and Clearance Sale (4 -> 3), Seam's Full Reload (4 -> 3), Still-06's Cord Tether (2 -> 1).
+- SEAM: Checker Lash hits for 1.0x (was 0.6x).
+- THE VENDOR: Clearance Sale also gives the whole team +15% ATK for 2 turns. He has no attack, so his runs used to stall at the last boss.
+- AUTO-PLAY: Sadie and The Vendor have their own plan now. They have no attack, and the general auto-play hardly ever used their team moves (Sadie's Echo Location Bark, which makes every enemy take more damage, was almost never used).
+- SNA: +20% HP (150 -> 180), +3 DEF, Symbiote Claws heals him for 50% of the damage (was 30%). He had no Taunt: now Constrict makes him Taunt for 1 turn, and Shared Skin makes him Taunt for 2 turns and comes back 1 turn sooner. Tank test: wave 7.8 -> 12.7 (he was the weakest tank, now lower-middle).
+- RESULTS (early test, average wave): Sadie 5.4 -> 9.1, Bearable 5.5 -> 7.2, The Vendor 5.7 -> 8.4, Still-06 5.7 -> 7.6, Velara 5.8 -> 8.1, Sevalio 5.8 -> 7.0, Mushroom 5.9 -> 7.3, Seam 6.4 -> 7.0, Moon 6.8 -> 8.0, Serpentine 7.8 -> 9.3. The middle healer is about 7.0, the best (Eyianix) 12.2.
+- SIDE EFFECT: Sna is in the starting story team, so the early story got easier (World 2, Hard, the starting team: 63% -> 85% of runs won).
+- Nobody was made weaker. The Character Book has the new HP and DEF.
+New test tools/fal125_buffs_test.js.
 
 V271 (FIVE HEALERS STOP PLAYING LIKE THEIR TWINS: TEARWING, INKATING, GHOST, THORN, BLACKBIRD)
 The author ran the game through a review that listed 12 pairs of fighters that looked alike. Checked against the real moves, 6 pairs really shared the shape of their moves and 6 only sounded alike. The author asked to change one fighter of each real pair, except Renku / Void. Search "V271". Numbers in OVX.

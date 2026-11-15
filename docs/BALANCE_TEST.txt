@@ -1,0 +1,136 @@
+FAL-125 BALANCE TEST, every fighter (made for V272, on v271 before the V272 buffs).
+How: each fighter played in a team that suits its role. EARLY = 60 runs, World 5, level 1, Hard (the test that shows differences).
+LATE = 24 runs, World 6, level 10, Hard (most fighters win almost every run, and it is noisy: re-running a fighter can move it by 4-5 clears).
+Teams: Damage with cy, inkating, shamoon. Tank with claire, inkating, shamoon. Healer with sna, snavo, radiant (Sna was made stronger in V272, so healer numbers measured after V272 are about 3-6 waves higher).
+Fighters can only be compared inside the same role (each role played in a different team).
+Columns: fighter, early wins out of 60, early average wave reached, late wins out of 24, late average wave.
+
+== DAMAGE (strongest first, by early average wave)
+  wugang          14/60   16.7    24/24   26.0
+  soundemon        7/60   15.8    23/24   25.3
+  gutter          11/60   15.0    19/24   23.4
+  demure          11/60   14.5    23/24   26.0
+  stalker          9/60   14.5    22/24   24.9
+  kitsuna          8/60   14.5    20/24   24.4
+  renku            7/60   13.9    23/24   26.0
+  watcher          5/60   13.8    23/24   25.8
+  smiley           5/60   13.7    22/24   25.3
+  tulu             6/60   13.6    21/24   24.6
+  naginata        10/60   13.4    22/24   25.9
+  ruckus           6/60   13.4    20/24   24.0
+  nose             8/60   13.3    20/24   23.4
+  void             7/60   13.2    24/24   26.0
+  claire           4/60   13.0    24/24   26.0
+  bloodspike       8/60   12.9    24/24   26.0
+  punchline        8/60   12.8    21/24   25.7
+  pyrelash         3/60   12.7    24/24   26.0
+  hole             4/60   12.7    23/24   25.3
+  radiant          7/60   12.4    23/24   25.8
+  clownx2          3/60   12.4    19/24   22.9
+  slinder          3/60   12.3    24/24   26.0
+  ox               3/60   12.2    21/24   25.3
+  snavo            3/60   12.2    22/24   25.1
+  felodese         6/60   11.8    23/24   25.3
+  sunburst         6/60   11.8    22/24   25.1
+  gloom            2/60   11.8    21/24   24.7
+  walker           3/60   11.7    22/24   25.3
+  triggerfinger    6/60   11.6    22/24   25.9
+  kasugu           2/60   11.6    23/24   25.3
+  haz225           6/60   11.4    24/24   26.0
+  nero             4/60   11.3    24/24   26.0
+  sunshine         4/60   11.1    23/24   25.1
+  voltage77        4/60   11.0    22/24   25.5
+  shatter          4/60   10.9    22/24   24.9
+  akuna            3/60   10.6    20/24   24.8
+  marrow           4/60   10.5    24/24   26.0
+  nukasaurus       2/60   10.4    23/24   26.0
+  bearer           2/60   10.4    21/24   24.2
+  shamoon          0/60    9.8    24/24   26.0
+  hounddog         0/60    9.8    21/24   24.2
+  marrowline       2/60    9.4    22/24   24.9
+  cloak            2/60    9.3    17/24   21.8
+  ronin            0/60    9.2    21/24   24.4
+  redwalker        0/60    9.1    20/24   24.2
+
+== TANK (strongest first, by early average wave)
+  iris            40/60   23.0    23/24   26.0
+  maw             37/60   22.4    24/24   26.0
+  parda           36/60   22.1    23/24   26.0
+  goodbye         33/60   20.9    24/24   26.0
+  uquna           20/60   19.1    24/24   26.0
+  clownx25        16/60   18.3    23/24   26.0
+  whiplash        25/60   18.0    24/24   26.0
+  tomb            17/60   17.2    23/24   26.0
+  eyeofsin        19/60   17.0    24/24   26.0
+  fuja            17/60   16.4    21/24   24.2
+  ixis            15/60   16.1    23/24   25.8
+  proto_0065      16/60   16.1    22/24   25.7
+  dia             15/60   16.0    21/24   24.8
+  envival         14/60   15.9    22/24   24.9
+  creep           16/60   15.8    24/24   26.0
+  dragonfire      13/60   15.6    24/24   26.0
+  xainbow         13/60   15.4    24/24   26.0
+  lycion          13/60   15.3    21/24   24.6
+  bonesaw         12/60   14.4    24/24   26.0
+  veinripper      14/60   14.3    22/24   25.7
+  ripper          13/60   14.1    22/24   25.9
+  vor             10/60   14.0    23/24   25.8
+  conquer         12/60   13.8    24/24   26.0
+  mindbender      12/60   13.7    19/24   25.2
+  crushdeath       6/60   13.2    24/24   26.0
+  dollion         12/60   13.2    24/24   26.0
+  cy               4/60   13.0    23/24   26.0
+  lifewire        10/60   12.9    15/24   24.2
+  outbreak         5/60   12.5    22/24   25.3
+  anigari          7/60   12.1    23/24   26.0
+  whorl            9/60   11.9    20/24   25.0
+  devic            7/60   11.6    22/24   25.5
+  weepingangel     9/60   11.5    23/24   25.8
+  stitchheart      7/60   11.4    22/24   25.3
+  xekna            5/60   10.9    23/24   25.3
+  flick            4/60   10.6    20/24   25.6
+  intervein        4/60   10.2    24/24   26.0
+  glitch           2/60    9.4    21/24   25.1
+  kano             2/60    9.4    22/24   24.9
+  sinkhole         2/60    9.1    22/24   24.5
+  reflux           2/60    8.9    21/24   25.5
+  cruin            2/60    8.8    22/24   25.3
+  sna              2/60    7.8    23/24   26.0
+
+== HEALER (strongest first, by early average wave)
+  eyianix          5/60   12.2    21/24   24.2
+  thorn            3/60    9.9    20/24   25.0
+  blackbird        3/60    9.6    23/24   25.1
+  rue              1/60    9.6    18/24   23.0
+  ghost_0072       1/60    9.0    23/24   26.0
+  hush             3/60    8.4    12/24   19.9
+  luckster         0/60    7.9    22/24   25.3
+  hollowpoint      0/60    7.8    22/24   25.3
+  tearwing         0/60    7.8    21/24   25.3
+  serpentine       0/60    7.8    14/24   20.6
+  monstro          1/60    7.5    22/24   25.7
+  devourer         0/60    7.4    23/24   26.0
+  lovesick         0/60    7.1    21/24   24.8
+  rainbowripper    2/60    7.1    21/24   24.4
+  smileywires      2/60    7.0    20/24   23.8
+  caspic           0/60    7.0    21/24   23.8
+  ano              0/60    7.0    18/24   23.8
+  nanenane         0/60    6.8    21/24   24.5
+  moon             0/60    6.8    17/24   23.6
+  tangler          1/60    6.7    23/24   26.0
+  clownx33         0/60    6.7    21/24   24.4
+  kaleido          0/60    6.6    23/24   25.1
+  haz378           0/60    6.6    21/24   24.4
+  flokelore        0/60    6.5    18/24   23.9
+  sleepy           0/60    6.5    20/24   23.3
+  seam             0/60    6.4    16/24   21.1
+  inkating         0/60    6.3    19/24   24.5
+  proto_0066       0/60    5.9    24/24   26.0
+  sevalio          0/60    5.8    21/24   25.1
+  velara           0/60    5.8    17/24   22.0
+  stillborn        0/60    5.7    17/24   24.3
+  vendor           0/60    5.7    10/24   18.1
+  bearable         0/60    5.5    21/24   24.8
+  sadie            0/60    5.4    19/24   25.0
+
+AFTER THE V272 BUFFS (early test, measured with the OLD Sna so it can be compared with the table above): Sadie 5.4 -> 9.1, Bearable 5.5 -> 7.2, The Vendor 5.7 -> 8.4, Still-06 5.7 -> 7.6, Velara 5.8 -> 8.1, Sevalio 5.8 -> 7.0, Mushroom 5.9 -> 7.3, Seam 6.4 -> 7.0, Moon 6.8 -> 8.0, Hush 8.4 -> 8.1 (Hush, Moon, Serpentine and Seam were weak LATE; they were brought up there), Serpentine 7.8 -> 9.3. Sna (tank test) 7.8 -> 12.7.

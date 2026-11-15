@@ -25601,6 +25601,67 @@ try { COUNTER_FIELDS.push('_lastMv'); } catch (e) {}
     return _apV271.apply(this, arguments);
   };
 }
+/* ===== V272: BUFFS FOR THE WEAKEST HEALERS AND SNA. A full test of every fighter (60 early runs and 24 late runs each, in a team that suits
+   their role) showed which healers fell below the rest. The author asked to make only those healers and Sna stronger; nobody was made weaker.
+   heal = their healing is this much stronger; hp / def = base stats are this much higher (also shown in the Codex and the Character Book).
+   Sna (a tank with no Taunt) also: Shared Skin taunts for 2 turns and comes back 1 turn sooner, and Symbiote Claws heals him for 40% (was 30%).
+   Tune in BUFF272. Search "V272". ===== */
+const CD272 = { sdbark:2, svstitch:2, vdbogo:1, vdsale:3, smpatch:3, sttether:1 };   /* V272: shorter cooldowns (were sdbark 3, svstitch 3, vdbogo 2, vdsale 4, smpatch 4, sttether 2) */
+const BUFF272 = {
+  sadie: {heal: 1.6, hp: 1.15, def: 2},
+  bearable: {heal: 1.6, hp: 1.15, def: 2},
+  vendor: {heal: 1.4, hp: 1.15, def: 2},
+  stillborn: {heal: 1.8, hp: 1.15, def: 2},
+  velara: {heal: 1.5, hp: 1.15, def: 2},
+  sevalio: {heal: 1.8, hp: 1.15, def: 2},
+  proto_0066: {heal: 1.6, hp: 1.15, def: 2},
+  hush: {heal: 1.1, hp: 1.15, def: 2},
+  serpentine: {heal: 1.2, hp: 1.1, def: 1},
+  seam: {heal: 1.7, hp: 1.15, def: 2},
+  moon: {heal: 1.25, hp: 1.1, def: 1},
+  sna: {hp: 1.2, def: 3, claws: 0.5, wrap: 1},
+};
+try {
+  Object.keys(BUFF272).forEach(k => { const c = CHARACTERS.find(x => x.key === k), b = BUFF272[k]; if (!c || c._v272) return; c._v272 = 1;
+    if (b.hp) c.hp = Math.round(c.hp * b.hp); if (b.def) c.def += b.def; });
+  if (SKILLS.skin) { SKILLS.skin.cd = 3; SKILLS.skin.desc = 'The symbiote spreads over the whole party. Every ally gets +35% DEF for 3 turns, Sna Taunts for 2 turns (enemies must target him), and Sna heals 15% HP.';
+    const r0 = SKILLS.skin.run; SKILLS.skin.run = function (u) { const r = r0.apply(this, arguments); try { addStatus(u, 'taunt', 2, 1); } catch (e) {} return r; }; }
+  if (SKILLS.constrict && BUFF272.sna.wrap) { SKILLS.constrict.desc = '0.7x and the target is Slowed (-40% SPD, 2 turns), so it acts later in the round. Sna wraps it up and Taunts for 1 turn.';
+    const c0 = SKILLS.constrict.run; SKILLS.constrict.run = function (u, t) { const r = c0.apply(this, arguments); try { addStatus(u, 'taunt', 1, 1); } catch (e) {} return r; }; }
+  if (SKILLS.claws) { SKILLS.claws.desc = '1.1x. Heals Sna for 40% of the damage dealt.'; SKILLS.claws.run = (u, t) => { const d = hit(u, t, 1.1); if (d) heal(u, d * (BUFF272.sna.claws || .3)); }; }
+  Object.keys(CD272).forEach(k => { if (SKILLS[k]) SKILLS[k].cd = CD272[k]; });   /* their best move comes back sooner */
+  if (SKILLS.smstitch) { SKILLS.smstitch.desc = SKILLS.smstitch.desc.replace('0.6x', '1.0x'); SKILLS.smstitch.run = (u, t) => { hit(u, t, 1.0); u.glitch = clamp((u.glitch || 0) + 1, 0, 5); popup(u, 'Missing Texture ' + u.glitch, 'status'); }; }   /* Seam: Checker Lash 1.0x (was 0.6x) */
+  if (SKILLS.vdsale) { SKILLS.vdsale.desc = SKILLS.vdsale.desc.replace('and cleanses Slow, Mark and Irradiated.', 'cleanses Slow, Mark and Irradiated, and everyone leaves the sale excited: +15% ATK for 2 turns.');
+    const v0 = SKILLS.vdsale.run; SKILLS.vdsale.run = function (u) { const r = v0.apply(this, arguments); try { livingParty().forEach(p => addStatus(p, 'atkUp', 2, .15)); } catch (e) {} return r; }; }   /* The Vendor: Clearance Sale also gives +15% ATK */
+  const sn = CHARACTERS.find(x => x.key === 'sna'); if (sn) sn.passive = 'Tough and self-healing. His symbiote can cover the whole party in armor, and while it does, enemies have to go through him: Shared Skin makes him Taunt. Constrict slows enemies down.';
+} catch (e) {}
+{
+  const _heV272 = heal;
+  heal = function (u, n) { try { const b = cur && cur.team === 'party' && BUFF272[cur.key]; if (b && b.heal && n > 0) n *= b.heal; } catch (e) {} return _heV272.call(this, u, n); };
+  const _apV272 = autoPick;   /* auto-play: Sadie and The Vendor have no attack, so the general picker wasted their best moves */
+  autoPick = function (u) {
+    try {
+      if (u && (u.key === 'sadie' || u.key === 'vendor') && resolveChoice && CFG.auto && foes.some(f => f.alive) && !foes.some(f => f.alive && f.tell)) {
+        const ok = k => u.skills.includes(k) && !((u.cd[k] || 0) > 0) && !(SKILLS[k].can && SKILLS[k].can(u));
+        const L = livingParty().filter(p => !p.tempCopy), srt = L.slice().sort((a, b) => a.hp / a.maxHp - b.hp / b.maxHp), low = srt[0], lr = low ? low.hp / low.maxHp : 1;
+        const avg = L.reduce((n, p) => n + p.hp / p.maxHp, 0) / (L.length || 1), hurt = L.filter(p => p.hp < p.maxHp * .8).length;
+        if (u.key === 'sadie') {
+          if (low && lr < .4 && ok('sdcamo')) return submit({ skill:'sdcamo', target:low });
+          if (ok('sdbark') && (avg < .9 || foes.some(f => f.alive && f.boss) || !foes.some(f => f.alive && f.st.some(s => s.k === 'mark')))) return submit({ skill:'sdbark', target:null });
+          if (low && lr < .85 && ok('sdlure')) return submit({ skill:'sdlure', target:low });
+          if (low && ok('sdcamo') && lr < .7) return submit({ skill:'sdcamo', target:low });
+          if (low && ok('sdlure')) return submit({ skill:'sdlure', target:low });
+        }
+        if (u.key === 'vendor') {
+          if (ok('vdsale') && (avg < .7 || (u.meter >= 5 && avg < .9))) return submit({ skill:'vdsale', target:null });
+          if (ok('vdbogo') && hurt >= 2) return submit({ skill:'vdbogo', target:low });
+          if (low && ok('vdsample')) return submit({ skill:'vdsample', target:low });
+        }
+      }
+    } catch (e) {}
+    return _apV272.apply(this, arguments);
+  };
+}
 </script>
 <div id="jsStat" style="position:fixed;left:8px;bottom:8px;z-index:99998;font:12px monospace;color:#9d96a6;background:#000a;padding:3px 7px;border-radius:4px;max-width:90vw">Loading game...</div>
 <noscript><div style="position:fixed;left:0;right:0;top:30%;z-index:99999;background:#300;color:#fff;padding:16px;font:16px sans-serif;text-align:center">JavaScript is off or blocked here. Open this file in Chrome or Firefox (not a file preview or in-app viewer).</div></noscript>
