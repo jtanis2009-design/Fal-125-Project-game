@@ -5886,10 +5886,10 @@ const CHARACTERS = [
     passive:"Containment Level: Unknown. It grows a size and a head taller every time it's provoked, hardening as it goes — and nobody has seen what it looks like once it stops growing. IDENTITY, grow as enemies hit it and unleash the Chaos: every enemy hit on Glitch builds +1 Chaos (max 5) and a little DEF, and Digital Death cashes all of it out." },
   { key:'thorn', name:'Thorn', id:'0051', role:'Healer', type:'Hybrid', title:'Hidden Eye', color:'#2e8b3a', hp:100, atk:11, def:6, spd:10, build:'Warden',
     skills:['thclaw','thwatch','thrend'],
-    passive:"Something behind her hair is always watching her friends as much as her enemies. She doesn't speak much, but she notices who's hurting first. THE SHIELD HEALER. SIGNATURE PASSIVE, Eye on the Door: once per wave, when an ally would go down, her hidden eye spots it first. That ally stays up at 25% max HP with Guard for 2 turns (Thorn must be alive and it can't be herself). She heals less than the others but stops the damage before it lands." },
+    passive:"Something behind her hair is always watching her friends as much as her enemies. She doesn't speak much, but she notices who's hurting first. THE THORN HEALER. THORNS: Hidden Eye and Claw Guard cover allies in thorns for 2 turns. Every enemy that hits a thorned ally takes 35% of the damage back, and the ally heals 7% max HP each time. SIGNATURE PASSIVE, Eye on the Door: once per wave, when an ally would go down, her hidden eye spots it first. That ally stays up at 25% max HP with Guard for 2 turns (Thorn must be alive and it can't be herself). She heals less than the others: her allies get their health back out of whatever hits them." },
   { key:'inkating', name:'Inkating', id:'0055', role:'Healer', type:'Other', title:'Leeching Ink', color:'#5a5a5a', hp:100, atk:11, def:7, spd:9, build:'Medic',
     skills:['inksiphon','inkredraw','inkpage'],
-    passive:"Stepping right out of a 1930's cartoon, inked straight onto paper in black line and old grey wash. He can fix anything, as long as it's drawn on paper — and as far as he's concerned, that's everything. Ink Siphon drains the colour out of whatever he bites and feeds it back to himself; Redraw and Fresh Page erase the damage done to his friends like pencil marks under an eraser." }
+    passive:"Stepping right out of a 1930's cartoon, inked straight onto paper in black line and old grey wash. He can fix anything, as long as it's drawn on paper — and as far as he's concerned, that's everything. THE ERASER. Ink Siphon drains the colour out of whatever he bites, feeds it back to himself, and rubs one buff off the enemy. Redraw draws an ally back the way they were: the more they have just been hurt, the more it gives back. Fresh Page turns the page on the whole fight: every bad status is rubbed off his friends, and every buff is rubbed off the enemy, like pencil marks under an eraser." }
   ,{ key:'ruckus', name:'Ruckus', id:'0056', role:'Damage', type:'Demon', title:'Stampede', color:'#8a1a9a', hp:104, atk:15, def:6, spd:11, build:'Burst',
     skills:['rkrake','rkram','rkchomp'],
     passive:"A round little horror with huge wide eyes, a jagged grin, flaming horns and claws far too long for his arms. He is never quiet and never alone for long: everything he does starts a commotion. Stampede: whenever Ruckus finishes off an enemy his horns flare, giving him +25% ATK for 3 turns and healing 6% max HP. Horn Ram Slows, and Jagged Chomp bites much harder into anything that is Slowed." }
@@ -5952,7 +5952,7 @@ const CHARACTERS = [
     passive:"A hulking mass of dark-red, bristled fur with one huge black eye with a purple pupil, a maw of needle teeth, purple armour plates on the shoulders, stitched blue legs, chains hanging from the arms and long dangling claws. Drawn March 12th 2023. Abilities on the sheet: Claw Swipe, Chain of Torment, Touch of Paralysis. Brutal fighter with extreme strength, vengeful and cunning. Weakness: slow, so SPD is very low. V172: he is a Bruiser Tank, the front-line bully who hits back. Torment (max 5, resets each wave): each Torment makes his damage 5% stronger and his DEF 4% higher. Claw Swipe cuts two enemies. Chain of Torment Marks and Slows one enemy, hits harder when he is below half HP, and makes the enemy line fight him (Taunt). Touch of Paralysis spends 3 Torment, ignores DEF and Stuns."}
   ,{ key:'tearwing', name:'Tearwing', id:'0086', role:'Healer', type:'Angel', title:'Bleeding Angel', color:'#e01818', hp:104, atk:11, def:6, spd:9, build:'Weeping Medic',
     skills:['twtear','twwrap','twflood'],
-    passive:"A tall red-and-black bleeding angel with a bandaged body, two black eyes with blue stripes above them, a long red beak like a plague mask, a purple X on the chest, grey spiked wings folded round the head and red feather-blades down both arms. Drawn March 12th 2023, filed as Weeping Angel, renamed Tearwing. Tears (max 5, resets each wave): each Tear makes her healing 5% stronger, and so does every Bleeding enemy (+3%). She is the party's Bleeding healer, not its protector: the Weeping Angel wards and punishes, Tearwing opens wounds and mends. Bleeding Tear makes an enemy Bleed and heals the most hurt ally. Bandage Wrap heals and cleanses one ally (Bleeding too), and the suffering she absorbs becomes an extra Tear. Sorrow Flood spends 3 Tears, Slows every enemy, makes them all Bleed and heals the whole party, more for every enemy already Bleeding."}
+    passive:"A tall red-and-black bleeding angel with a bandaged body, two black eyes with blue stripes above them, a long red beak like a plague mask, a purple X on the chest, grey spiked wings folded round the head and red feather-blades down both arms. Drawn March 12th 2023, filed as Weeping Angel, renamed Tearwing. SHE WEEPS FOR HER FRIENDS. Tears (max 5, resets each wave) are not made by her moves: she gains 1 Tear every time an ally takes a hit worth 8% or more of their max HP, and 2 when an ally falls. At the start of each of her turns her Tears fall on the most hurt ally (3% max HP for each Tear; the Tears are not used up), and each Tear makes all her healing 5% stronger, as does every Bleeding enemy (+3%). Bleeding Tear is her attack: it makes an enemy Bleed. Bandage Wrap heals and cleanses one ally (Bleeding too), and the suffering she takes off them becomes a Tear. Sorrow Flood spends 3 Tears, Slows every enemy, makes them all Bleed and heals the whole party, more for every enemy already Bleeding. The harder the fight is on her friends, the more she has to give."}
   ,{ key:'stitchheart', name:'Stitchheart', id:'0087', role:'Tank', type:'Demon', title:'Heart Guardian', color:'#9a2be2', hp:150, atk:11, def:11, spd:7, build:'Heartbound',
     skills:['shlash','shtether','sharrest'],
     passive:"A horned, purple-furred Demon with long stitched hair, one huge pink eye with a red pupil and one dark X-shaped eye, a mouth of needle teeth, a torn bandaged right arm ending in black blades and a long pink tail that ends in a stitched heart. The sheet has no name, so the game calls it Stitchheart. Heartbeat (max 5, resets each wave): each Heartbeat makes its damage and healing 4% stronger. V172: it is the damage-sharing Tank. Heart Tether ties it to one ally for 3 turns: 35% of every hit that ally would take goes to Stitchheart instead, which builds Heartbeat and stores Pain. Stitch Lash hits and mends it, and the shared pulse mends the tethered ally too. Cardiac Arrest spends 3 Heartbeat, hits and Slows every enemy, releases the stored Pain on all of them, and takes Taunt, DEF and a heal."}
@@ -5976,7 +5976,7 @@ const CHARACTERS = [
     passive:"A grinning punk with a tall teal mohawk, black shades, a lightning-split face (half of it red) and a blue jacket bristling with purple spikes, over red shorts, grey armoured legs and violet claws. Abilities: Adrenaline Spike, Sound Spikes. Adrenaline (max 5, resets each wave): every hit he takes kicks it in, and each Adrenaline is +6% damage and +8% SPD. Spike Jab uses a spike as a melee weapon. Sound Spike rips a spike off his body and launches it as a shock wave through the whole enemy line (the spike is easily replaced, it costs him 3% max HP). Spike Frenzy spends the adrenaline on three fast strikes and a burst of ATK." }
   ,{ key:'ghost_0072', name:'Ghost', id:'0072', role:'Healer', type:'Other', title:'Save File', color:'#ff1f8a', hp:102, atk:11, def:6, spd:10, build:'Medic',
     skills:['ghstatic','ghsave','ghdead'],
-    passive:"A quiet chibi figure with lime-green hair that bleeds through hot pink into violet, huge black eyes with violet pupils, a pale skull-like face with a purple tear running from the nose, and a black fur-trimmed hoodie with a stitched purple X-eyed grin on the chest. Abilities: Save file, Dead media manipulation. Tapes (max 5, resets each wave): every move records one, and each Tape makes her heals 4% stronger. Save File writes a Save on an ally: the next time they would fall they load it instead and stand back up. Dead Air plays a dead channel at an enemy (Blur) and patches the most wounded ally. Dead Media rewinds all her Tapes into a party heal and cleanse while every screen goes to static. Autosave: if nobody holds a Save she spends a Tape to Save the most wounded ally on her own." }
+    passive:"A quiet chibi figure with lime-green hair that bleeds through hot pink into violet, huge black eyes with violet pupils, a pale skull-like face with a purple tear running from the nose, and a black fur-trimmed hoodie with a stitched purple X-eyed grin on the chest. Abilities: Save file, Dead media manipulation. Tapes (max 5, resets each wave): every move records one, and each Tape makes her heals 4% stronger. Save File writes a Save on an ally: the next time they would fall they load it instead and stand back up. Dead Air plays a dead channel at an enemy and records it: for 2 turns, every fighter that enemy hits heals afterwards. Dead Media rewinds the tape on one ally and plays it back: they are cleansed and use their last move again, for free. Autosave: if nobody holds a Save she spends a Tape to Save the most wounded ally on her own." }
   ,{ key:'ronin', name:'Ronin', id:'0070', role:'Damage', type:'Hybrid', title:'Contracted Merc', color:'#3a3a40', hp:106, atk:14, def:6, spd:10, build:'Bomber',
     skills:['rncut','rngrenade','rngoblin'],
     passive:"A tired-looking swordsman in a heavy black hood, brown hair in a bun, one blue eye and one orange eye, long white claws on both hands. He is a Contracted Goblin Devil host: the green growing through his coat and across his face is the goblin coming through. A Fal-125 contracted merc, he fights demons with his katana and grenades. His ability is listed as ???. Goblin (max 5, resets each wave): every move lets more of the goblin through, each Goblin is +4% damage and mends him 1% max HP at the start of his turn. Iaido hits Demons for 1.3x. Frag Grenade blasts the target and its neighbours and sets the target Burning. Goblin Takes the Wheel spends all his Goblin: for 2 turns the goblin drives (+40% ATK, Iaido strikes twice) and the contract costs him 6% max HP." }
@@ -6060,7 +6060,7 @@ const CHARACTERS = [
     passive:"Five foot nine and 50.3 kg. A scruffy plush thing with a big mop of shaggy brown hair, one eye ringed in blue with a purple pupil and one yellow eye with a red ring, a stitched frown, and fur scribbled in orange, yellow and red that hangs off its arms like flames. It wears orange dungarees with a stitched X patch, has huge dark grey-green feet, a blue band on one arm, and a golden wind-up key sticking out of its back. Its signature item is a long red-and-white striped blade. Drawn June 19th 2025; its old 2021 design was a black, red-eyed face. Ability: Ticking Clock. Its mind is a ticking clock, and each tick is an increase in the amount of storage for an attack. The more it uses, the more gets taken off. THE CLOCK: it gains 1 tick at the start of every one of its turns (up to 12). Wind Down spends every tick on one big heal, Tick heals the team a little and winds the clock 2 more, and Alarm spends every tick on one big hit that ignores DEF, but costs Bearable 2% of its own max HP for each tick. At 12 ticks it is MIDNIGHT: Wind Down also cleans every bad status off the ally." }
   ,{ key:'blackbird', name:'Blackbird', id:'0113', role:'Healer', type:'Hybrid', title:'The Moss', color:'#3c8a4a', hp:106, atk:11, def:7, spd:10, build:'Moss',
     skills:['bbwhip','bbinfect','bbspray'],
-    passive:"Five foot five and 15 years old. A tall black bird with a huge open beak full of white teeth and a red tongue, one bloodshot red-and-white eye, sprouts of moss growing out of its back, and a body stitched together from the pieces of its dead alternate versions: the eye of Player 5, the bloodshot eye of Player 10, the fur and spikes of Player 8, the horns of Player 7, an arm striped green and blue from Players 2 and 4 and another arm from Player 1, all fur and claws. Drawn June 23rd 2025. It is depressed. Its favourite artist is beabadoobee. Not much is known about Blackbird. It grieves for its alternates, who were the closest thing it ever had to a friend, and it is a friendly creature that wants friends like it. Ability: Moss. It controls moss at will and makes it out of thin air. MOSS: Moss Whip lashes an enemy, and the moss on the whip heals the most hurt ally. Moss Infection grows moss inside an enemy: it eats 5% of the enemy's max HP every turn and feeds it to your most hurt ally. Moss Spray covers the whole team in moss that heals them every turn. WANTS FRIENDS: its heals are 8% stronger for every other ally still standing. When an alternate falls in front of it, it grieves, and the moss grows over the whole team." }
+    passive:"Five foot five and 15 years old. A tall black bird with a huge open beak full of white teeth and a red tongue, one bloodshot red-and-white eye, sprouts of moss growing out of its back, and a body stitched together from the pieces of its dead alternate versions: the eye of Player 5, the bloodshot eye of Player 10, the fur and spikes of Player 8, the horns of Player 7, an arm striped green and blue from Players 2 and 4 and another arm from Player 1, all fur and claws. Drawn June 23rd 2025. It is depressed. Its favourite artist is beabadoobee. Not much is known about Blackbird. It grieves for its alternates, who were the closest thing it ever had to a friend, and it is a friendly creature that wants friends like it. Ability: Moss. It controls moss at will and makes it out of thin air. MOSS: Moss Whip lashes an enemy, and the moss on the whip heals the most hurt ally. Moss Infection grows moss inside an enemy: every time that enemy hits one of your fighters, moss bursts out of it, hurting it and healing whoever it hit. Moss Spray covers the whole team in moss that heals them every turn. WANTS FRIENDS: its heals are 8% stronger for every other ally still standing. When an alternate falls in front of it, it grieves, and the moss grows over the whole team." }
   ,{ key:'rainbowripper', name:'Rainbow Ripper', id:'0114', role:'Healer', type:'Angel', title:'Rainbow Machine', color:'#c83cc8', hp:102, atk:12, def:6, spd:11, build:'Prism',
     skills:['rrsteal','rrgive','rrmachine'],
     passive:"A small thing with a huge round head like a stitched doll's: bone white with torn red patches sewn on, one big dark hollow eye, one huge spiral eye in every colour, and a stitched line for a mouth. Its body is a shaggy coat of jagged rainbow rags: red, yellow, green, blue, purple and pink in sharp zigzags, fading to brown and white at the edges, with brown clawed hands and patchwork feet. Drawn June 25th 2025; its original ability was The Flaming Core. It uses a machine to fuel its lifespan while it makes monsters. Ability: Rainbow Machine. It can steal the colour out of people, and that gives them a sadness that cannot be cured and gets worse every day. It can also give people more colour, which makes them crazy, vibrant monsters. COLOUR: Steal Colour hits an enemy and turns it Grey (it hits weaker, and worse every turn, for the rest of the wave), and Rainbow Ripper keeps the colour (up to 5). Give Colour spends 1 colour to heal an ally and make them Colourful (+20% ATK); give colour to someone who is already Colourful and they go Vibrant (+45% ATK, but they take 20% more damage). Rainbow Machine spends all the colour to heal the whole team. THE MACHINE needs fuel: on any turn it starts with no colour, it loses 2% of its max HP." }
@@ -7092,7 +7092,7 @@ LABEL.ixguard = 'Swallowing'; STATUS_DESC.ixguard = 'Ixis is taking 25% less dam
      Alarm         (cooldown 2) spends every tick: (0.6 + 0.15 per tick)x ignoring DEF, and costs Bearable 2% max HP per tick (never below 1).
    BLACKBIRD, 5'5, 15. Ability: Moss, it controls moss at will and makes it out of thin air. Moves named on the sheet: Moss Whip, Moss Infection, Moss Spray.
      Moss Whip     0.9x; the moss on the whip heals the most hurt ally 10%.
-     Moss Infection (cooldown 1) 0.5x and Moss Infection for 3 turns: the enemy loses 5% max HP at the start of its turns and the most hurt ally heals 8%.
+     Moss Infection (cooldown 1) 0.5x and Moss Infection for 3 turns. V271: it no longer ticks; whenever the infected enemy hits a fighter it takes 6% max HP (3% boss) and that fighter heals 11%.
      Moss Spray    (cooldown 2) every ally heals 8% now and is Mossy for 3 turns: heals 7% at the start of each of their turns.
      Passive: Wants Friends, its heals are 8% stronger for each other ally standing. When an alternate (World 8) falls, it grieves: every ally heals 5% (once per wave).
    RAINBOW RIPPER. Ability: Rainbow Machine, it steals colour (an incurable sadness that gets worse every day) or gives colour (crazy, vibrant monsters).
@@ -7183,8 +7183,7 @@ Object.assign(STATUS_DESC, {
         if (u.team === 'party' && u.key === 'rainbowripper' && !(u.rrCol > 0) && foes.some(f => f.alive)) { const c = Math.round(u.maxHp * (u.rrFuel ?? RR.fuel)); if (c > 0 && u.hp > 1) { u.hp = Math.max(1, u.hp - c); popup(u, '-' + c + ' no fuel', 'status'); refresh(u); } }
         const ms = u.team === 'party' && u.st.find(s => s.k === 'bbmoss');
         if (ms) v259As(bb || null, () => heal(u, u.maxHp * ms.v));
-        const inf = u.team === 'enemy' && u.st.find(s => s.k === 'bbinf');
-        if (inf) { say(`The moss in ${u.name} grows.`); damage(u, Math.max(1, Math.round(u.maxHp * inf.v)), 'rad'); const l = v259Low(); if (l) v259As(bb || null, () => heal(l, l.maxHp * BB.infHeal)); await sleep(300); }
+        /* V271: Moss Infection no longer ticks here; it bursts when the infected enemy hits someone (see V271) */
         const g = u.team === 'enemy' && u.alive && u.st.find(s => s.k === 'rrgrey');
         if (g) g.v = Math.min(u.boss ? RR.bossMax : RR.greyMax, g.v + RR.worse);
       }
@@ -11298,8 +11297,8 @@ const IDENT = {
   goodbye:"Nobody remembers it: attacks forget who they were aiming at and the attackers forget why they came.",
   seam:"Re-renders the party while her missing pieces teach her to fix more.",
   glitch:"Grows every time he is provoked, storing the damage for Digital Death.",
-  thorn:"Watches over the party from behind her hair and saves a falling ally once per wave.",
-  inkating:"Drains the colour out of enemies to heal himself, then redraws the party whole.",
+  thorn:"Covers the party in thorns that hurt whoever hits them and heal the one who was hit, and saves a falling ally once per wave.",
+  inkating:"The eraser: rubs buffs off enemies, draws a hurt ally back the way they were, and turns to a fresh page that wipes every bad status off the party.",
   ruckus:"Every kill makes his horns flare, and the stampede builds.",
   ox:"Marks and locks a target away from the fight, then spends it all dragging them into the Red Room for good.",
   stalker:"Rules three corridors at once, Dark, Icy and Red, and spends his Stalk to throw one enemy into the Neverland maze.",
@@ -11353,14 +11352,14 @@ const IDENT = {
   reflux:"A time-bending vampire: drinks from frozen enemies, regenerates every turn, and stops time to rewind his wounds.",
   kasugu:"A thunder duelist: slashes and dashes to build Anger, then breathes dark lightning across every enemy.",
   conquer:"A slow, brutal bruiser Tank: swipes and chains build Torment (damage and DEF), the chains pull every enemy onto him, then one touch paralyzes the target.",
-  tearwing:"A bleeding Angel: her tears make enemies bleed and heal the weakest ally, she wraps wounds and absorbs the suffering, and floods the room with blood and mending when the sorrow is full.",
+  tearwing:"A bleeding Angel who weeps when her friends are hurt: every big hit on an ally is a Tear, her Tears fall on the weakest ally every turn, and when the sorrow is full she floods the room with blood and mending.",
   stitchheart:"A stitched Demon tank: ties its heart to one ally and takes a share of every hit they suffer, then releases the stored pain when the beat gets loud.",
   bloodspike:"A spiked brute: stacks bleed on one enemy with jabs and rainbow quills, then impales it to cash the whole bleed in and finish it.",
   naginata:"Slices through armor, fills the room with paralyzing spores, and eats a soul to heal.",
   uquna:"A starving Containment wall: captures one enemy in its guts (it hits far softer while held), drains the room to monochrome, then eats the captive.",
   cruin:"A gravity-bending Tank: drags enemies around the line with Side Swap, then slows the whole room to a crawl.",
   shamoon:"A shadow duelist that drinks the light off its targets, then pulls every enemy's shadow tight and Marks the whole line.",
-  ghost_0072:"Writes a Save on an ally so they stand back up when they would fall, then rewinds the tape to heal the party.",
+  ghost_0072:"Writes a Save on an ally so they stand back up when they would fall, records enemies so their hits heal you, and rewinds the tape so an ally does their last move again.",
   ronin:"A contracted merc with a goblin under his skin: katana for demons, grenades for the rest, and the green takes the wheel when he lets it.",
   xekna:"Gets stronger with every hit he takes and a little less himself, until he is Gone and the party has to hope he comes back.",
   walker:"Never stops walking and cuts through every lie, taunt and shield in his way: Maw's eternal enemy.",
@@ -14541,7 +14540,7 @@ C('cq2','Old Grudge','Rare','conquer','Conquer starts every wave with 2 Torment.
 C('cq3','Vengeful Heart','Epic','conquer','While Conquer is below half HP, Claw Swipe hits the enemy beside the target as hard as the target.',{inst:u=>{u.cqVenge=true;}});
 C('cq4','Merciless Touch','Legendary','conquer','Touch of Paralysis only needs 2 Torment and keeps 1 Torment instead of spending all of it.',{inst:u=>{u.cqNeed=2;u.cqKeep=1;}});
 C('cq5','Total Paralysis','Mythic','conquer','Touch of Paralysis Stuns 1 turn longer.',{inst:u=>{u.cqMythic=true;}});
-C('tw1','Salt Water','Rare','tearwing','Bleeding Tear and Bandage Wrap heal 30% more.',{inst:u=>{u.twBoost=1.3;}});
+C('tw1','Salt Water','Rare','tearwing','Her weeping and Bandage Wrap heal 30% more.',{inst:u=>{u.twBoost=1.3;}});
 C('tw2','Deeper Cuts','Rare','tearwing','Bleeding Tear and Sorrow Flood make enemies bleed 1 turn longer.',{inst:u=>{u.twBleed=1;}});
 C('tw3','Endless Weeping','Epic','tearwing','Tearwing starts every wave with 2 Tears.',{wave:(c,me)=>tearm(me,2)});
 C('tw4','Open Floodgates','Legendary','tearwing','Sorrow Flood only needs 2 Tears and keeps 1 Tear instead of spending all of it.',{inst:u=>{u.twNeed=2;u.twKeep=1;}});
@@ -25466,6 +25465,142 @@ try {
 } catch (e) {}
 
 /* V270 BLOCK END */
+/* ===== V271: FIVE HEALERS STOP PLAYING LIKE THEIR TWINS. A review of the roster found pairs of healers whose three moves had the same shape.
+   One fighter of each pair is changed here (the author chose to leave Renku / Void alone); the other keeps its kit. Their names, looks, lore,
+   stats, move names, chips, ultimates and enhancements all stay. Only how the moves work changes. Strength was kept (see README V271).
+     TEARWING (was the twin of Clown.x33). She no longer builds Tears by pressing buttons. She weeps when her friends are hurt:
+        +1 Tear whenever an ally takes a hit worth 8% or more of their max HP, +2 when an ally falls. At the start of each of her turns her Tears
+        fall on the most hurt ally (3% max HP per Tear; Tears are not spent). Bleeding Tear is now a plain attack that Bleeds (0.8x, 3 turns).
+        Bandage Wrap heals and cleanses, and only gives a Tear if it took something off. Sorrow Flood is unchanged.
+     INKATING (was the twin of Serpentine). He is the eraser now. Ink Siphon also rubs one buff off the enemy. Redraw draws an ally back the way
+        they were: it heals 18% plus 40% of the HP they lost since their own last turn (40% at most). Fresh Page heals 18%, wipes every bad status
+        off the party and every buff off the enemy.
+     GHOST (was the twin of Kaleido). Dead Air records the enemy: for 2 turns, every fighter it hits heals 8% (no more Blur and instant heal).
+        Dead Media rewinds one ally: they are cleansed and use their last move again, free, at 50% + 10% per Tape power. Save File is unchanged.
+     THORN (was the twin of Eyianix). She has thorns now. Hidden Eye heals less (18%), keeps the Guard, and covers the ally in thorns for 2 turns:
+        whoever hits them takes 35% of the damage back, and the ally heals 7% each time. Claw Guard gives the party DEF and thorns (and 8% healing).
+     BLACKBIRD (one move was Mushroom's). Moss Infection no longer eats the enemy every turn. Now, whenever the infected enemy hits one of your
+        fighters, moss bursts out of it: it takes 6% of its max HP (3% on a boss) and the fighter it hit heals 11%.
+   Tune in OVX. Search "V271". ===== */
+const OVX = {
+  tw:{ hurt:.08, fall:2, weep:.03, tear:.8, bleed:3 },
+  ik:{ base:.18, back:.4, cap:.40, page:.18, buffs:['atkUp', 'defUp', 'guard', 'taunt', 'reflect', 'haste'], bad:['slow', 'mark', 'burn', 'scorch', 'venom', 'soak', 'blur', 'frost', 'stun', 'bleed', 'spore'] },
+  gh:{ rec:[2, .08], base:.5, perTape:.1, noMove:.15 },
+  th:{ swipe:.8, heal:.18, back:.35, sip:.07, turns:2, party:.08 },
+  bb:{ burst:.06, boss:.03, heal:.11 }
+};
+const ovLow = () => livingParty().filter(p => !p.tempCopy).sort((a, b) => a.hp / a.maxHp - b.hp / b.maxHp)[0];
+function ovAs(src, f) { const c0 = cur; cur = src || c0; try { f(); } finally { cur = c0; } }
+Object.assign(SKILLS.twtear, {
+  desc:'0.8x on the target, which Bleeds for 3 turns (3% max HP per turn). Every Bleeding enemy makes all her healing 3% stronger.',
+  run:(u,t)=>{ hit(u,t,OVX.tw.tear); if(t.alive) addStatus(t,'bleed',OVX.tw.bleed+(u.twBleed||0),.03); } });
+Object.assign(SKILLS.twwrap, {
+  desc:'You pick the ally (she can pick herself). They heal 22% max HP (stronger with Tears and Bleeding enemies) and are cleansed of Slow, Mark, Burning, Venom, Bleeding, Soak, Blur and Frostbite. She absorbs the suffering: if anything was cleansed, she gains +1 Tear.',
+  run:(u,t)=>{ const n0=t.st.length; t.st=t.st.filter(x=>!GH_CLEAN.includes(x.k)&&x.k!=='bleed'); const got=n0-t.st.length; heal(t,t.maxHp*.22*twMul(u)*(u.twBoost||1)); refresh(t); if(got>0){ popup(u,'Absorbed','status'); tearm(u,1); } } });
+Object.assign(SKILLS.inksiphon, {
+  desc:'Grinning teeth scrawled in ink bite down and drain the colour out. 0.85x, heals Inkating for 25% of the damage dealt, and rubs one buff off the target (ATK up, DEF up, Guard, Taunt, Reflect or Haste).',
+  run:(u,t)=>{ const d=hit(u,t,.85); if(d) heal(u,d*.25); if(t.alive){ const b=t.st.find(x=>OVX.ik.buffs.includes(x.k)&&x.t<90); if(b){ t.st=t.st.filter(x=>x!==b); popup(t,'Erased: '+(LABEL[b.k]||b.k),'status'); refresh(t); } } } });
+Object.assign(SKILLS.inkredraw, {
+  desc:'Erases the wound and draws the ally back the way they were: heals 18% max HP plus 40% of the HP they lost since their own last turn (40% of their max HP at most). Cleanses Slow, Irradiated, Stun and Mark. The fresh lines hold: +12% DEF for 2 turns.',
+  run:(u,t)=>{ const lost=Math.max(0,(t._ikHp||t.hp)-t.hp); heal(t,Math.min(t.maxHp*OVX.ik.cap,t.maxHp*OVX.ik.base+lost*OVX.ik.back)); t._ikHp=t.hp; t.st=t.st.filter(x=>!['slow','burn','scorch','stun','mark'].includes(x.k)); refresh(t); addStatus(t,'defUp',2,.12); } });
+Object.assign(SKILLS.inkpage, {
+  desc:'Turns to a fresh page: the whole party heals 18% max HP and every bad status is rubbed off them, and every buff is rubbed off every enemy (ATK up, DEF up, Guard, Taunt, Reflect, Haste).',
+  run:u=>{ say(`${u.name} turns the page. Whatever was written on anyone is gone.`); livingParty().forEach(p=>{ heal(p,p.maxHp*OVX.ik.page); p.st=p.st.filter(x=>!OVX.ik.bad.includes(x.k)); refresh(p); });
+    opp(u).filter(f=>f.alive).forEach(f=>{ const n0=f.st.length; f.st=f.st.filter(x=>!(OVX.ik.buffs.includes(x.k)&&x.t<90)); if(f.st.length<n0){ popup(f,'Erased','status'); refresh(f); } }); } });
+Object.assign(SKILLS.ghstatic, {
+  desc:'Plays a dead channel at the target and records it. 0.9x, and the target is Recorded for 2 turns: every time it hits one of your fighters, the tape plays the hit back wrong and that fighter heals 8% max HP (+4% per Tape). +1 Tape.',
+  run:(u,t)=>{ hit(u,t,.9); if(t.alive) addStatus(t,'ghrec',...OVX.gh.rec); tapem(u,1); } });
+Object.assign(SKILLS.ghdead, { target:'ally', cast:false, fx:'sparkle',
+  desc:'Dead media manipulation: she rewinds the tape on one ally and plays it back. Needs 2 Tapes, spends all of them. That ally is cleansed of Slow, Mark, Burning, Venom, Soak, Blur and Frostbite and uses their last move again, for free, at (50% + 10% per Tape) power. If they have not moved yet this wave, they heal 15% max HP instead.',
+  run:(u,t)=>{ const T=u.tapes||0; u.tapes=0; if(!t||!t.alive) t=u; t.st=t.st.filter(x=>!GH_CLEAN.includes(x.k)); refresh(t);
+    const m=t._lastMv, sk=m&&SKILLS[m.k];
+    if(!sk){ heal(t,t.maxHp*OVX.gh.noMove); say(`${u.name} rewinds ${t===u?'her own':t.name+"'s"} tape. There is nothing on it yet.`); refresh(u); return; }
+    say(`${u.name} rewinds the tape. ${t===u?'She does':t.name+' does'} ${sk.name} again.`); popup(t,'Played back','status');
+    const lf=opp(t).filter(f=>f.alive), tg=sk.target==='enemy'?(m.t&&m.t.alive&&m.t.team!==t.team?m.t:lf.slice().sort((a,b)=>a.hp-b.hp)[0]):sk.target==='ally'?(m.t&&m.t.alive&&m.t.team===t.team?m.t:ovLow()):sk.target==='self'?t:undefined;
+    if(sk.target==='enemy'&&!tg){ refresh(u); return; }
+    const c0=cur, k0=curSkill, f0=curFx; cur=t; DS=OVX.gh.base+OVX.gh.perTape*T; curSkill=m.k; curFx=sk.fx||null;
+    try{ sk.run(t,tg); }catch(e){} finally{ DS=1; cur=c0; curSkill=k0; curFx=f0; } refresh(t); refresh(u); } });
+Object.assign(SKILLS.thclaw, { desc:'A quick warning swipe, just to keep enemies honest. 0.8x.', run:(u,t)=>{ hit(u,t,OVX.th.swipe); } });
+Object.assign(SKILLS.thwatch, {
+  desc:'The eye behind her hair watches over one ally. Heals 18% max HP, gives Guard (half damage) for 1 turn, and covers them in thorns for 2 turns: every enemy that hits them takes 35% of the damage back, and they heal 7% max HP each time.',
+  run:(u,t)=>{ heal(t,t.maxHp*OVX.th.heal); addStatus(t,'guard',1,1); addStatus(t,'ththorn',OVX.th.turns,OVX.th.back); } });
+Object.assign(SKILLS.thrend, {
+  desc:'Claws pull back to cover the whole party. Everyone heals 8% max HP and gets +30% DEF and thorns for 2 turns: every enemy that hits them takes 35% of the damage back, and they heal 7% max HP each time.',
+  run:u=>{ livingParty().forEach(p=>{ heal(p,p.maxHp*OVX.th.party); addStatus(p,'defUp',2,.3); addStatus(p,'ththorn',OVX.th.turns,OVX.th.back); }); } });
+Object.assign(SKILLS.bbinfect, {
+  desc:'0.5x, and moss grows inside the enemy for 3 turns: every time it hits one of your fighters, moss bursts out of it. It takes 6% of its max HP (3% on a boss), and the fighter it hit heals 11% max HP.' });
+Object.assign(LABEL, { ghrec:'Recorded', ththorn:'Thorns' });
+Object.assign(STATUS_DESC, { ghrec:'Ghost has it on tape: every fighter it hits heals 8% max HP afterwards.', ththorn:'Covered in Thorn\'s thorns: whoever hits this fighter takes 35% of the damage back, and this fighter heals 7% max HP each time.',
+  bbinf:'Moss is growing inside it: every time it hits one of your fighters, it takes 6% of its max HP (3% on a boss) and that fighter heals.' });
+try { COUNTER_FIELDS.push('_lastMv'); } catch (e) {}
+{
+  const _ttV271 = takeTurn;
+  takeTurn = async function (u) {
+    try {
+      if (u && u.team === 'party' && u.alive && !u.tempCopy) {
+        u._ikHp = u.hp;   /* Inkating's Redraw: what they looked like at the start of their last turn */
+        if (u.key === 'tearwing' && (u.tears || 0) > 0 && foes.some(f => f.alive)) { const a = ovLow(); if (a && a.hp < a.maxHp) { ovAs(u, () => heal(a, a.maxHp * OVX.tw.weep * u.tears * twMul(u) * (u.twBoost || 1))); popup(u, 'Weeps', 'status'); } }
+      }
+    } catch (e) {}
+    return _ttV271.apply(this, arguments);
+  };
+  const _sbV271 = submit;   /* Ghost's Dead Media: remember everyone's last move */
+  submit = function (ch) {
+    try { if (ch && cur && cur.team === 'party' && SKILLS[ch.skill] && !/^ult_|^ghdead$|^w8accuse$|^laststand$/.test(ch.skill)) cur._lastMv = { k:ch.skill, t:ch.target || null }; } catch (e) {}
+    return _sbV271.call(this, ch);
+  };
+  const _hitV271 = hit;
+  hit = function (att, tgt, mult, o) {
+    const r = _hitV271.call(this, att, tgt, mult, o);
+    try {
+      if (r > 0 && att && att.team === 'enemy' && att.st && tgt && tgt.team === 'party' && !globalThis.__ovIn) {
+        globalThis.__ovIn = 1;
+        try {
+          const rec = att.st.find(s => s.k === 'ghrec');   /* Ghost: the tape plays the hit back wrong */
+          if (rec && tgt.alive) { const g = party.find(p => p.key === GH_KEY && p.alive); ovAs(g, () => heal(tgt, tgt.maxHp * rec.v * (1 + .04 * ((g && g.tapes) || 0)))); }
+          if (att.alive && att.st.some(s => s.k === 'bbinf')) {   /* Blackbird: moss bursts out of the enemy that hit you */
+            const bb = party.find(p => p.key === 'blackbird' && p.alive && !p.tempCopy);
+            popup(att, 'Moss bursts', 'status'); damage(att, Math.max(1, Math.round(att.maxHp * (att.boss ? OVX.bb.boss : OVX.bb.burst))), 'rad');
+            if (tgt.alive) ovAs(bb, () => heal(tgt, tgt.maxHp * (OVX.bb.heal)));
+          }
+        } finally { globalThis.__ovIn = 0; }
+      }
+    } catch (e) {}
+    return r;
+  };
+  const _dmV271 = damage;
+  damage = function (u, d, kind) {
+    const was = u && u.alive, src = _hitAtt && _hitAtt.team === 'enemy' ? _hitAtt : null, d0 = d;
+    const r = _dmV271.call(this, u, d, kind);
+    try {
+      if (was && u.team === 'party' && d0 > 0 && src && !u.tempCopy) {
+        const tw = party.find(p => p.key === 'tearwing' && p.alive && !p.tempCopy);   /* Tearwing weeps for them */
+        if (tw) { if (!u.alive || u.hp <= 0) tearm(tw, OVX.tw.fall); else if (d0 >= u.maxHp * OVX.tw.hurt) tearm(tw, 1); }
+        const th = u.st.find(s => s.k === 'ththorn');   /* Thorn's thorns */
+        if (th && src.alive && !globalThis.__thIn) { globalThis.__thIn = 1; try { popup(u, 'Thorns', 'status'); _dmV271.call(this, src, Math.max(1, Math.round(d0 * th.v)), 'impact');
+          if (u.alive && u.hp > 0) { const t = party.find(p => p.key === 'thorn' && p.alive); ovAs(t, () => heal(u, u.maxHp * OVX.th.sip)); } } finally { globalThis.__thIn = 0; } }
+      }
+    } catch (e) {}
+    return r;
+  };
+  const _apV271 = autoPick;   /* Ghost needs her own plan: a Save on whoever is in danger, a replay of the best move, Dead Air otherwise */
+  autoPick = function (u) {
+    try {
+      if (u && u.key === GH_KEY && resolveChoice && CFG.auto && !foes.some(f => f.alive && f.tell)) {
+        const ok = k => u.skills.includes(k) && !((u.cd[k] || 0) > 0) && !(SKILLS[k].can && SKILLS[k].can(u)), lf = foes.filter(f => f.alive && !f.phased);
+        const L = livingParty().filter(p => !p.tempCopy), low = ovLow(), T = u.tapes || 0;
+        if (low && ok('ghsave') && low.hp < low.maxHp * .65 && !L.some(p => p.st.some(s => s.k === 'saved'))) return submit({ skill:'ghsave', target:low });
+        if (ok('ghdead') && T >= 3 && lf.length) {
+          const score = p => { const m = p._lastMv, s = m && SKILLS[m.k]; if (!s || p === u) return -1; return (s.cd || 0) * 2 + (s.target === 'enemy' || s.target === 'all' ? 2 : 0) + p.atk / 10; };
+          const best = L.slice().sort((a, b) => score(b) - score(a))[0]; if (best && score(best) > 3) return submit({ skill:'ghdead', target:best });
+        }
+        if (low && ok('ghsave') && low.hp < low.maxHp * .45) return submit({ skill:'ghsave', target:low });
+        if (lf.length && ok('ghstatic')) return submit({ skill:'ghstatic', target:lf.filter(f => !f.st.some(s => s.k === 'ghrec')).sort((a, b) => b.atk - a.atk)[0] || lf[0] });
+      }
+    } catch (e) {}
+    return _apV271.apply(this, arguments);
+  };
+}
 </script>
 <div id="jsStat" style="position:fixed;left:8px;bottom:8px;z-index:99998;font:12px monospace;color:#9d96a6;background:#000a;padding:3px 7px;border-radius:4px;max-width:90vw">Loading game...</div>
 <noscript><div style="position:fixed;left:0;right:0;top:30%;z-index:99999;background:#300;color:#fff;padding:16px;font:16px sans-serif;text-align:center">JavaScript is off or blocked here. Open this file in Chrome or Firefox (not a file preview or in-app viewer).</div></noscript>

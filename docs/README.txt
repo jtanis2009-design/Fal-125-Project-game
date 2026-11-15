@@ -1,6 +1,19 @@
-FAL-125 README. Current version: v270 (file fal125_battle_prototype-v270.html). Newest entries first.
+FAL-125 README. Current version: v271 (file fal125_battle_prototype-v271.html). Newest entries first.
 Folders: docs (this file, ROADMAP, Needed, TEST_LAB, design notes), tools (headless test and audit scripts, see TEST_LAB.txt), data (FAL125_Character_Book.xlsx), sprites.
 Read docs/Needed.txt every time a playable character is added. docs/ROADMAP.txt holds only what is still to build.
+
+V271 (FIVE HEALERS STOP PLAYING LIKE THEIR TWINS: TEARWING, INKATING, GHOST, THORN, BLACKBIRD)
+The author ran the game through a review that listed 12 pairs of fighters that looked alike. Checked against the real moves, 6 pairs really shared the shape of their moves and 6 only sounded alike. The author asked to change one fighter of each real pair, except Renku / Void. Search "V271". Numbers in OVX.
+Names, looks, lore, stats, move names, chips, ultimates and enhancements all stay. Only how the moves work changed.
+- TEARWING (was a twin of Clown.x33, who is unchanged). She weeps when her friends are hurt. She no longer gets Tears from her own moves: +1 Tear when an ally takes a big hit (8% of their max HP or more), +2 when an ally falls. At the start of each of her turns her Tears fall on the most hurt ally (3% max HP per Tear, and the Tears are not used up). Bleeding Tear is now a plain attack that makes the enemy Bleed. Bandage Wrap only gives a Tear if it took a bad status off. Sorrow Flood is the same.
+- INKATING (was a twin of Serpentine, who is unchanged). He is the eraser. Ink Siphon also rubs one buff off the enemy. Redraw gives back more to an ally who has just been hurt (18% plus 40% of what they lost since their own last turn). Fresh Page heals the party, rubs every bad status off them and every buff off the enemy.
+- GHOST (was a twin of Kaleido, who is unchanged). Dead Air records the enemy: for 2 turns, every fighter it hits heals 8% afterwards (no more Blur and instant heal). Dead Media now targets ONE ally: they are cleansed and use their last move again, for free, at 50% + 10% per Tape power. Save File is the same. Auto-play has its own plan for her.
+- THORN (was a twin of Eyianix, who is unchanged). She has thorns. Hidden Eye heals 18% (was 25%), keeps the Guard, and covers the ally in thorns for 2 turns: whoever hits them takes 35% of the damage back, and the ally heals 7% each time. Claw Guard gives the party DEF and thorns (and heals 8%, was 18%). Raking Swipe is 0.8x (was 0.6x). Her passive is the same.
+- BLACKBIRD (one move was the same as Mushroom's, who is unchanged). Moss Infection no longer eats the enemy every turn. Whenever the infected enemy hits one of your fighters, moss bursts out of it: it takes 6% of its max HP (3% on a boss) and the fighter it hit heals 11%.
+- LEFT ALONE: Renku / Void (the author's choice), and the six pairs that only sound alike: Tangler / Blackbird, Nose / Marrowline, Radiant / Nukasaurus, Hound Dog / Kitsuna, Hollowpoint / Kaleido, Felo de se / Smiley.
+- STRENGTH, before / after (same teams, 60 early runs and 24 late runs): Tearwing wave 5.8 / 7.8 early, 79% / 88% late. Inkating 6.1 / 6.3, 79% / 79%. Ghost 9.8 / 9.0, 92% / 88%. Thorn 8.8 / 9.9, 75% / 75%. Blackbird 9.7 / 9.6, 96% / 96%. Tearwing is a little stronger than before (she was one of the weakest healers).
+- Still true: Clown.x33, Kaleido, Mushroom and some others share one pattern (a weak hit that gives a stack, a single heal, a team heal that needs 3 stacks). That could be a later pass.
+New test tools/fal125_overlap_test.js (22 checks); the Blackbird check in fal125_healers4_test.js was updated.
 
 V270 (BOSS HELPERS FIT THEIR WORLD + CLOWN'S MASSACRE: CLOWN.X25 AND CLOWN.X33 BOSSES + SOUNDTRACK PASS)
 Search "V270" (one block at the end of the main game script; the music changes are inside the Sound part, search "V270 MUSIC").

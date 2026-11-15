@@ -42,7 +42,8 @@ let bad = 0; const ok = (c, m) => { console.log((c ? '✓ ' : '✗ ') + m); if (
   S.bbspray.run(bb); ok([bb, c1, c2].every(p => has(p, 'bbmoss')), 'Moss Spray makes everyone Mossy');
   c1.hp = 50; await turn(c1); ok(c1.hp > 50, 'Mossy heals at the start of their turn');
   T.setCur(bb); S.bbinfect.run(bb, x); ok(has(x, 'bbinf'), 'Moss Infection');
-  c1.hp = c1.maxHp; bb.hp = bb.maxHp; c2.hp = 50; const xh = x.hp; await turn(x); ok(x.hp <= xh - 450 && c2.hp > 50, 'the infected enemy loses 5% max HP and the most hurt ally heals');
+  c1.hp = c1.maxHp; bb.hp = bb.maxHp; c2.hp = 50; const xh = x.hp; await turn(x); ok(x.hp === xh, 'V271: Moss Infection no longer eats the enemy every turn');
+  T.setCur(x); c2.hp = 50; const xh2 = x.hp; T.hit(x, c2, .1); ok(x.hp <= xh2 - 500 && c2.hp > 50 - 30, 'when the infected enemy hits a fighter, moss bursts out of it (6% max HP) and that fighter is healed');
   c1.maxHp = 3000; T.setCur(bb); c1.hp = 1; S.bbwhip.run(bb, x); const f3 = c1.hp - 1; c2.alive = false; c1.hp = 1; S.bbwhip.run(bb, x); const f2 = c1.hp - 1; c2.alive = true; c1.maxHp = c1.hp = 3000;
   ok(f3 > f2, 'Wants Friends: heals more with more allies standing (' + f3 + ' vs ' + f2 + ')');
   const alt = mkE(); alt.alt = true; alt.hp = 5; c1.hp = 50; T.setSides([bb, c1, c2], [alt, mkE()]); bb.bbGrief = 0; T.setCur(c1); T.damage(alt, 99, 'impact');
