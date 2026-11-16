@@ -10866,7 +10866,7 @@ WORLD_DATA[CASINO_W].bosses.push('casino_bookmaker', 'casino_ghost', 'casino_aud
 const menuTrack = () => (WORLD_DATA[CFG.world] || WORLD_DATA[0]).theme || 'menu';
 var PRO_ON_WD = null;
 const WD = () => PRO_ON_WD || WORLD_DATA[CFG.world] || WORLD_DATA[0];
-const worldTag = w => (WORLD_DATA[w] && WORLD_DATA[w].side) ? 'Side quest' : 'World ' + (w + 1);   /* the Casino is a pure endless side quest, not a numbered world */
+const worldTag = w => (WORLD_DATA[w] && WORLD_DATA[w].preview) ? 'Preview' : (WORLD_DATA[w] && WORLD_DATA[w].side) ? 'Side quest' : 'World ' + (w + 1);   /* the Casino is a pure endless side quest, not a numbered world */
 /* enemies kept out of The Archive (add keys here if one misbehaves outside its own world) */
 const ARCHIVE_BAN = new Set([]);
 const poolFor = d => Object.keys(WD().unlock).filter(k => WD().unlock[k] <= d);
@@ -19804,7 +19804,7 @@ async function allyEncounter(i) {
   await recruitJoin(c, rl, `${c.name} is now in your Story roster (${storyRoster().length}/${CHARACTERS.length}). Add them to your team on the select screen before your next world.`);
   return null;
 }
-function worldOpen(w) { return !!WORLD_DATA[w] && (WORLD_DATA[w].side || CFG.unlockAll || !isStory() || w <= (SAVE.unlocked || 0)); }
+function worldOpen(w) { return !!WORLD_DATA[w] && (WORLD_DATA[w].side || WORLD_DATA[w].preview || CFG.unlockAll || !isStory() || w <= (SAVE.unlocked || 0)); }
 function buildRunLen() {
   if (CFG.runlen === 'archive') CFG.runlen = 'world';   /* V220: the Archive epilogue was replaced by the Prologue */
   if (isStory() && CFG.runlen !== 'world' && CFG.runlen !== 'archive' && !(WD() && WD().side)) { SAVE.freeRunlen = SAVE.freeRunlen || CFG.runlen; CFG.runlen = 'world'; }   /* V41: the Archive is the Story epilogue; side quests stay endless even in Story */
@@ -25662,6 +25662,234 @@ try {
     return _apV272.apply(this, arguments);
   };
 }
+/* V273 BLOCK START */
+/* ===== V273: THE EXPERIMENTAL RINGER (a new world, first playable version, kept OUT of the story for now).
+   Fal-125 shows off its "successful" experiments: obedient people, animals and revived dinosaurs, in a bright clean showroom.
+   Where it lives: the LAST slot of WORLD_DATA (index RGW), flagged preview:true and ringer:true. Nothing else is renumbered and no save is touched.
+   You reach it from the world row ("Preview: The Experimental Ringer") or the Test Lab. It does not unlock or change the story yet.
+   World rule, THE BELL: every enemy wears a Collar. Every 4th round the bell rings: every collared enemy strikes once, together, and your team calms down a little (heals).
+   Cut a collar (stun the enemy, or hit it for 40% of its HP in one blow) and it goes WILD: +25% ATK, ignores the bell, and sometimes lashes out at its own side.
+   Tune in RINGER. Enemy keys start with rg. Search "V273". ===== */
+const RINGER = { every:4, bell:.35, heal:.04, cut:.4, wild:.25, friend:.35 };
+const RG_CUT = Math.round(RINGER.cut * 100);
+const RG_BUFFS = ['atkUp', 'defUp', 'guard', 'haste', 'taunt', 'reflect', 'ward', 'cmd'];
+Object.assign(LABEL, { rgcollar:'Collared', rgwild:'Wild' });
+Object.assign(STATUS_DESC, {
+  rgcollar:'Wearing a Fal-125 collar. It obeys the bell: every 4th round it strikes with all the other collared enemies. Stun it, or hit it for ' + RG_CUT + '% of its HP in one blow, to cut the collar.',
+  rgwild:'The collar is cut. It hits harder (+25% ATK), ignores the bell, and sometimes lashes out at its own side.'
+});
+const rgOn = () => { try { return !(typeof PRO_ON_WD !== 'undefined' && PRO_ON_WD) && !!WORLD_DATA[CFG.world] && WORLD_DATA[CFG.world].ringer === true && !!RUN && CFG.runlen !== 'archive' && !RUN.quest; } catch (e) { return false; } };
+const rgS = () => RUN.rg || (RUN.rg = {});
+
+/* ---- drawn placeholders (bright showroom colours, every one wears a collar) ---- */
+const RGCOL = '<rect x="30" y="66" width="40" height="6" rx="3" fill="#e8eef0" stroke="#0b0a0d" stroke-width="2"/><circle cx="50" cy="73" r="3" fill="#ffd24a"/>';
+const RGA = (skin, body, legs, extra = '') => () => base(skin, body, legs, '', extra + RGCOL + '<circle cx="39" cy="44" r="4" fill="#111"/><circle cx="61" cy="44" r="4" fill="#111"/>');
+Object.assign(ART, {
+  rgusher: RGA('#f0d8c0', '#e8e8f0', '#b8c0d0', '<path d="M42 58 H58" stroke="#222" stroke-width="2"/>'),
+  rgcitizen: RGA('#e8cfb0', '#c8d8e0', '#8a9aa8', '<path d="M42 58 Q50 62 58 58" stroke="#222" stroke-width="2" fill="none"/>'),
+  rggreeter: RGA('#f4dcc4', '#f0f4f0', '#c0ccc0', '<path d="M38 56 Q50 70 62 56" stroke="#222" stroke-width="2.5" fill="none"/>'),
+  rgreferee: RGA('#e6cdb0', '#f4f4f4', '#3a3a44', '<rect x="30" y="68" width="40" height="30" fill="none" stroke="#222" stroke-width="2" stroke-dasharray="5 4"/>'),
+  rgcleaner: RGA('#e0c8a8', '#7fa8c8', '#4a6a88', '<rect x="72" y="50" width="5" height="60" fill="#8a6a3a"/>'),
+  rghound: RGA('#c8a878', '#b89868', '#8a6a3a', '<path d="M24 26 L34 14 L38 30Z M76 26 L66 14 L62 30Z" fill="#a88858" stroke="#0b0a0d" stroke-width="2"/>'),
+  rgbirds: RGA('#e8e0f0', '#d0c8e0', '#8a7aa8', '<circle cx="26" cy="30" r="10" fill="#e8e0f0" stroke="#0b0a0d" stroke-width="2"/><circle cx="74" cy="30" r="10" fill="#e8e0f0" stroke="#0b0a0d" stroke-width="2"/>'),
+  rgcat: RGA('#a8a8b8', '#9898a8', '#6a6a7a', '<path d="M26 22 L32 8 L42 20Z M74 22 L68 8 L58 20Z" fill="#8a8a9a" stroke="#0b0a0d" stroke-width="2"/>'),
+  rgcalf: RGA('#d8b898', '#c8a888', '#98785a', '<path d="M30 36 Q50 12 70 36" fill="#c8a888" stroke="#0b0a0d" stroke-width="2"/>'),
+  rgram: RGA('#a8c890', '#88a870', '#587048', '<path d="M24 38 Q50 -2 76 38Z" fill="#d8d0b8" stroke="#0b0a0d" stroke-width="2.5"/>'),
+  rgharvester: RGA('#a0c088', '#80a068', '#506838', '<path d="M18 80 L4 118 M26 80 L14 118 M82 80 L96 118 M74 80 L86 118" stroke="#e8e0d0" stroke-width="4" stroke-linecap="round"/>'),
+  rgherald: RGA('#88c8a8', '#68a888', '#487858', '<path d="M40 22 Q10 -4 18 22 Q24 30 40 30Z" fill="#a8d8c0" stroke="#0b0a0d" stroke-width="2"/>'),
+  rgswarm: RGA('#f0c860', '#e8a840', '#b07820', '<path d="M18 70 Q4 50 14 40 M82 70 Q96 50 86 40" stroke="#58c8e8" stroke-width="6" fill="none" stroke-linecap="round"/>'),
+  rglauncher: RGA('#c8a898', '#a88878', '#785848', '<path d="M6 60 L30 44 L30 70Z M94 60 L70 44 L70 70Z" fill="#b89888" stroke="#0b0a0d" stroke-width="2"/>'),
+  rgcharger: RGA('#b87868', '#985848', '#683828', '<path d="M32 22 L26 6 M68 22 L74 6" stroke="#e8e0d0" stroke-width="5" stroke-linecap="round"/>'),
+  rgpump: RGA('#c8e0d0', '#90c8a8', '#508068', '<rect x="38" y="76" width="24" height="18" rx="4" fill="#58e898" opacity=".7"/>'),
+  rggun: RGA('#d0d4dc', '#a8b0bc', '#68707c', '<rect x="60" y="56" width="34" height="8" rx="3" fill="#585f6a"/>'),
+  rgeggs: RGA('#f4ecd8', '#e8dcc0', '#b8a888', '<ellipse cx="36" cy="82" rx="8" ry="11" fill="#fff8e8" stroke="#0b0a0d" stroke-width="2"/><ellipse cx="64" cy="82" rx="8" ry="11" fill="#fff8e8" stroke="#0b0a0d" stroke-width="2"/>'),
+  rgchick: RGA('#f8e070', '#f0d048', '#d0a028', '<path d="M46 52 L54 52 L50 60Z" fill="#e88830"/>'),
+  rgcaptain: RGA('#f0d8c0', '#f0f0f8', '#8890a8', '<path d="M30 14 H70 L64 28 H36Z" fill="#c82838" stroke="#0b0a0d" stroke-width="2.5"/><path d="M82 58 Q94 62 90 76 L78 76Z" fill="#ffd24a" stroke="#0b0a0d" stroke-width="2"/>'),
+  rghead: RGA('#e6cdb0', '#f8f8f8', '#2a2a34', '<path d="M30 14 H70 V26 H30Z" fill="#222"/><path d="M34 20 H66" stroke="#fff" stroke-width="3"/>'),
+  rgmatron: RGA('#f0dcc8', '#e8f0f0', '#a8c0c8', '<path d="M26 18 Q50 -2 74 18 L68 30 H32Z" fill="#f8f8f8" stroke="#0b0a0d" stroke-width="2.5"/><circle cx="84" cy="88" r="10" fill="#fff8e8" stroke="#0b0a0d" stroke-width="2"/>'),
+  rgmothers: RGA('#c8c8d0', '#d8b898', '#887868', '<path d="M12 50 L12 120 M88 50 L88 120" stroke="#8a8a96" stroke-width="5"/><path d="M12 70 H30 M88 70 H70" stroke="#8a8a96" stroke-width="4"/>'),
+  rgapex: RGA('#b06858', '#884838', '#583028', '<path d="M24 20 L12 -2 L36 14Z M76 20 L88 -2 L64 14Z" fill="#e8e0d0" stroke="#0b0a0d" stroke-width="2"/><rect x="26" y="66" width="48" height="9" rx="4" fill="#e8eef0" stroke="#0b0a0d" stroke-width="2"/>')
+});
+
+/* ---- the enemies. Humans and staff, animals, the revived dinosaurs ("costume DNA": modern animals edited to look the part), and lab machines ---- */
+const rgCollared = u => foes.filter(f => f.alive && f !== u && f.rgCollar).length;
+const rgStrip = t => { if (!t || !t.st) return 0; const n = t.st.filter(s => RG_BUFFS.includes(s.k)).length; if (n) { t.st = t.st.filter(s => !RG_BUFFS.includes(s.k)); try { refresh(t); } catch (e) {} } return n; };
+Object.assign(ENEMIES, {
+  rgusher:{ key:'rgusher', name:'Ringside Usher', color:'#e8e8f0', hp:70, atk:9, def:4, spd:10, type:'Human', intent:()=> 'Rings the bell early',
+    ai(u){ const t=foeTarget(); say(`${u.name} lifts a little hand bell and rings it. Everything with a collar looks up.`); rgS().early = true; hit(u,t,.6,{fx:'impact'}); } },
+  rgcitizen:{ key:'rgcitizen', name:'Compliant Citizen', color:'#c8d8e0', hp:85, atk:9, def:5, spd:8, type:'Human', intent:()=> 'Follows orders (stronger with collared friends)',
+    ai(u){ const t=foeTarget(), n=Math.min(3,rgCollared(u)); say(`${u.name} does what the others do. It is very good at it.`); hit(u,t,.9+.2*n,{fx:'impact'}); } },
+  rggreeter:{ key:'rggreeter', name:'Smiling Greeter', color:'#f0f4f0', hp:60, atk:0, def:5, spd:7, type:'Human', intent:u=> weakFoe(u)?'Welcome (heals an ally)':'Smiles',
+    ai(u){ const w=weakFoe(u)||foes.filter(f=>f.alive&&f!==u).sort((a,b)=>a.hp/a.maxHp-b.hp/b.maxHp)[0]; if(w){ say(`${u.name} smiles and says "Welcome!" ${w.name} looks better.`); heal(w,w.maxHp*.14); } else say(`${u.name} smiles at you. It has never stopped.`); } },
+  rgreferee:{ key:'rgreferee', name:'Trial Referee', color:'#f4f4f4', hp:80, atk:10, def:6, spd:11, type:'Human', intent:()=> 'Whistle (hits, slows)',
+    ai(u){ const t=foeTarget(); say(`${u.name} blows the whistle. "Foul."`); hit(u,t,1.0,{fx:'zap'}); if(t.alive) addStatus(t,'slow',1,.3); } },
+  rgcleaner:{ key:'rgcleaner', name:'Floor Cleaner', color:'#7fa8c8', hp:100, atk:9, def:7, spd:6, type:'Human', intent:u=> foes.some(f=>f!==u&&f.alive&&f.st.some(s=>['burn','venom','slow','mark','bleed','soak'].includes(s.k)))?'Mops up (cleanses an ally)':'Mop swing',
+    ai(u){ const a=foes.find(f=>f!==u&&f.alive&&f.st.some(s=>['burn','venom','slow','mark','bleed','soak'].includes(s.k))); if(a){ a.st=a.st.filter(s=>!['burn','venom','slow','mark','bleed','soak'].includes(s.k)); heal(a,a.maxHp*.1); say(`${u.name} mops ${a.name} clean. Nothing was ever there.`); refresh(a); } else { const t=foeTarget(); say(`${u.name} swings the mop at ${tName(t)}.`); hit(u,t,1.0,{fx:'impact'}); } } },
+  rghound:{ key:'rghound', name:'Collar Hound', color:'#c8a878', hp:90, atk:12, def:4, spd:13, type:'Hybrid', intent:u=> foes.some(f=>f.alive&&['rgusher','rgcaptain','handler'].includes(f.key))?'Bites hard (its trainer is here)':'Bites (lost without its trainer)',
+    ai(u){ const t=foeTarget(), tr=foes.some(f=>f.alive&&['rgusher','rgcaptain','handler'].includes(f.key)); say(tr?`${u.name} bites ${tName(t)}. The trainer watches.`:`${u.name} bites ${tName(t)}, and looks round for someone to tell it to stop.`); hit(u,t,tr?1.4:.8,{fx:'bite'}); } },
+  rgbirds:{ key:'rgbirds', name:'Three-Bird Vote', color:'#d0c8e0', hp:75, atk:11, def:3, spd:14, type:'Hybrid',
+    intent(u){ try{ if(!u.vote||!u.vote.alive){ const l=livingParty(); u.vote=l.length?pick(l):null; } return u.vote?`Votes for ${u.vote.name}`:'Votes'; }catch(e){ return 'Votes'; } },
+    ai(u){ let t=u.vote; if(!t||!t.alive) t=foeTarget(); u.vote=null; say(`Two heads agree. ${u.name} dives at ${tName(t)}.`); hit(u,t,1.4,{fx:'slash'}); } },
+  rgcat:{ key:'rgcat', name:'Ear-Bug Cat', color:'#a8a8b8', hp:70, atk:13, def:3, spd:15, type:'Hybrid', intent:()=> 'Bites (sometimes ignores the order)',
+    ai(u){ if(Math.random()<.5){ const all=[...livingParty(),...foes.filter(f=>f.alive&&f!==u)].sort((a,b)=>a.hp/a.maxHp-b.hp/b.maxHp), t=all[0]; say(`${u.name} ignores the order and goes for whoever is hurt most: ${t.name}.`); hit(u,t,1.2,{fx:'bite'}); } else { const t=foeTarget(); say(`${u.name} bites ${tName(t)}. For once it listens.`); hit(u,t,1.2,{fx:'bite'}); } } },
+  rgcalf:{ key:'rgcalf', name:'Wool Calf', color:'#d8b898', hp:160, atk:5, def:9, spd:4, type:'Hybrid', intent:()=> 'Soft wall (guards an ally)',
+    ai(u){ const a=foes.filter(f=>f.alive&&f!==u).sort((a,b)=>a.hp/a.maxHp-b.hp/b.maxHp)[0]; if(a){ say(`${u.name} leans against ${a.name}. It is very soft, and very much in the way.`); addStatus(a,'guard',1,1); } else { const t=foeTarget(); say(`${u.name} nudges ${tName(t)}. It does not know what else to do.`); hit(u,t,.6,{fx:'impact'}); } } },
+  rgram:{ key:'rgram', name:'Dome Ram', color:'#a8c890', hp:140, atk:15, def:9, spd:6, type:'Hybrid', intent:u=> (u.n||0)%2===0?'Lowers its head':'Head-butt (huge hit, stuns itself)',
+    ai(u){ u.n=(u.n||0)+1; if(u.n%2===1){ say(`${u.name} lowers its thick bone dome.`); addStatus(u,'defUp',2,.3); } else { const t=foeTarget(); say(`${u.name} rams ${tName(t)} with everything it has, and sees stars.`); hit(u,t,2.0,{fx:'impact'}); addStatus(u,'stun',1,1); } } },
+  rgharvester:{ key:'rgharvester', name:'Harvester', color:'#a0c088', hp:170, atk:16, def:8, spd:5, type:'Hybrid', intent:()=> 'Reach Rake (strips a buff)',
+    ai(u){ const b=livingParty().slice().sort((a,b)=>b.st.filter(s=>RG_BUFFS.includes(s.k)).length-a.st.filter(s=>RG_BUFFS.includes(s.k)).length)[0]||foeTarget(); say(`${u.name} rakes at ${tName(b)} with claws as long as a man. It was built to pull down leaves.`); hit(u,b,1.3,{fx:'slash'}); if(b.alive&&rgStrip(b)) say(`${b.name} loses everything that was helping.`); } },
+  rgherald:{ key:'rgherald', name:'Herald', color:'#88c8a8', hp:110, atk:6, def:6, spd:9, type:'Hybrid', intent:u=> (u.n||0)%2===0?'Crest call (rings the bell, ATK up)':'Low note (hits, slows)',
+    ai(u){ u.n=(u.n||0)+1; if(u.n%2===1){ say(`${u.name} sings through its hollow crest. It sounds exactly like the bell.`); rgS().early=true; foes.filter(f=>f.alive&&f.rgCollar).forEach(f=>addStatus(f,'atkUp',2,.15)); } else { const t=foeTarget(); say(`${u.name} drops to a low note. ${tName(t)} feels it in the chest.`); hit(u,t,.7,{fx:'burst'}); if(t.alive) addStatus(t,'slow',1,.25); } } },
+  rgswarm:{ key:'rgswarm', name:'Glint Swarm', color:'#f0c860', hp:80, atk:10, def:3, spd:16, type:'Hybrid', intent:()=> 'Flurry (3 quick hits)',
+    ai(u){ say(`${u.name} flashes across the room, four wings each, all the colours at once.`); for(let i=0;i<3;i++){ const t=foeTarget(); if(!t) break; hit(u,t,.45,{fx:'slash'}); } } },
+  rglauncher:{ key:'rglauncher', name:'Launcher', color:'#c8a898', hp:95, atk:17, def:4, spd:12, type:'Hybrid', intent:u=> (u.n||0)%2===0?'Launches (hard to hit)':'Dives (huge hit)',
+    ai(u){ u.n=(u.n||0)+1; if(u.n%2===1){ say(`${u.name} drops off the rail and into the air.`); addStatus(u,'defUp',1,.6); } else { const t=foeTarget(); say(`${u.name} folds its wings and dives at ${tName(t)}.`); hit(u,t,2.2,{fx:'slash'}); } } },
+  rgcharger:{ key:'rgcharger', name:'Charger', color:'#b87868', hp:120, atk:17, def:2, spd:14, type:'Hybrid', intent:()=> 'Gore (huge hit)',
+    ai(u){ const t=foeTarget(); say(`${u.name} charges ${tName(t)} horns first. Its arms are far too small to matter.`); hit(u,t,1.7,{fx:'impact'}); } },
+  rgpump:{ key:'rgpump', name:'Serum Pump', color:'#90c8a8', hp:110, atk:0, def:8, spd:5, type:'Other', intent:()=> 'Pumps serum (heals an ally)',
+    ai(u){ const w=foes.filter(f=>f.alive&&f!==u).sort((a,b)=>a.hp/a.maxHp-b.hp/b.maxHp)[0]; if(w){ say(`${u.name} hums, and a green line runs into ${w.name}.`); heal(w,w.maxHp*.2); } else { say(`${u.name} hums to itself.`); heal(u,u.maxHp*.05); } } },
+  rggun:{ key:'rggun', name:'Sedation Gun', color:'#a8b0bc', hp:70, atk:11, def:6, spd:9, type:'Other', intent:()=> 'Darts the strongest (slows)',
+    ai(u){ const t=livingParty().slice().sort((a,b)=>b.atk-a.atk)[0]||foeTarget(); say(`${u.name} turns on ${tName(t)} and fires a dart. It was made for the ones who think.`); hit(u,t,.8,{fx:'zap'}); if(t.alive) addStatus(t,'slow',1,.35); } },
+  rgeggs:{ key:'rgeggs', name:'Egg Rack', color:'#e8dcc0', hp:90, atk:0, def:10, spd:3, type:'Other', intent:u=> ((u.n||0)+1)%3===0?'An egg hatches':'Warm lamps',
+    ai(u){ u.n=(u.n||0)+1; if(u.n%3===0){ say(`An egg on ${u.name} cracks open.`); if(foes.filter(f=>f.alive).length<5) summon('rgchick'); } else { say(`The lamps over ${u.name} hum.`); heal(u,u.maxHp*.05); } } },
+  rgchick:{ key:'rgchick', name:'Hatchling', color:'#f8e070', hp:30, atk:7, def:2, spd:14, type:'Hybrid', intent:()=> 'Peck',
+    ai(u){ const t=foeTarget(); say(`${u.name} pecks ${tName(t)}. It follows whoever was nearest when it hatched.`); hit(u,t,1.0,{fx:'bite'}); } }
+});
+Object.assign(COST, { rgusher:3, rgcitizen:2, rggreeter:2, rgreferee:3, rgcleaner:3, rghound:3, rgbirds:3, rgcat:2, rgcalf:3, rgram:4, rgharvester:4, rgherald:4, rgswarm:3, rglauncher:4, rgcharger:4, rgpump:3, rggun:3, rgeggs:3 });
+Object.assign(CAP, { rgusher:1, rggreeter:2, rgreferee:1, rgcleaner:1, rghound:2, rgbirds:1, rgcalf:1, rgram:1, rgharvester:1, rgherald:1, rglauncher:1, rgcharger:1, rgpump:1, rggun:1, rgeggs:1 });
+const UNLOCKR = { rgcitizen:0, rggreeter:0, rgcat:1, rgusher:2, rghound:3, rgbirds:4, rgreferee:5, rgcalf:6, rgcleaner:7, rgpump:8, rggun:9, rgram:10, rgswarm:10, rgeggs:11, rglauncher:12, rgharvester:13, rgherald:15, rgcharger:16 };
+
+/* ---- the five floor bosses ---- */
+BOSS7('rgcaptain', 'The Usher Captain', '#f0f0f8', 420, 13, 7, 10, 'Human', [
+  { i:'Rings the bell (hits all, calls it early)', t:'rgbell', m:.35, s:'The Captain rings the big bell. Every collar in the room pulls tight.' },
+  { i:'Baton (big hit)', t:'hit', m:1.5, s:'The Captain points. The baton comes down where he pointed.' },
+  { i:'Calls the ushers (summons)', t:'summon', p:['rgusher', 'rgcitizen'], s:'"Seats, please." More people in pale uniforms file in.' }]);
+BOSS7('rgreferee_b', 'The Head Referee', '#f8f8f8', 600, 15, 9, 11, 'Human', [
+  { i:'Foul! (hits all, slows)', t:'all', m:.4, s:'A long whistle. "Foul." Nobody saw what you did.', st:['slow', 1, .25] },
+  { i:'Penalty (big hit)', t:'hit', m:1.6, s:'"Penalty, against you." The Referee does not say why.' },
+  { i:'Trial over (strips every buff)', t:'rgstrip', m:1.0, s:'"Trial over. Reset." Every bonus in the room is wiped, yours and theirs.' },
+  { i:'Instant replay (DEF up, heals)', t:'def', f:.06, s:'The Referee replays it on the big screen, and it goes better this time.' }], { spriteKey:'rghead' });
+BOSS7('rgmatron', 'Hatchery Matron', '#e8f0f0', 780, 15, 10, 8, 'Human', [
+  { i:'Egg tray (summons)', t:'summon', p:['rgchick', 'rgchick', 'rgcat'], s:'The Matron wheels out a tray. Something small is already hatching.' },
+  { i:'Warm lamps (heals her brood)', t:'flock', f:.12, s:'"There, there." The lamps come on. The whole brood looks better.' },
+  { i:'Scald (big hit)', t:'hit', m:1.6, s:'A bottle warmer, flung. She was not aiming at the bottle.' }]);
+BOSS7('rgmothers', 'The Wire and Cloth Mothers', '#d8b898', 980, 16, 12, 9, 'Hybrid', [
+  { i:'Cloth: holds the young (heals the brood)', t:'flock', f:.14, s:'The soft one gathers the young in. They stop being afraid.' },
+  { i:'Wire: cold embrace (hits all, slows)', t:'all', m:.45, s:'The wire one holds out its arms. It has never been warm, and it never knew.', st:['slow', 1, .25] },
+  { i:'Neither can let go (huge hit)', t:'hit', m:1.9, s:'Both reach for the same child. The child is you.' },
+  { i:'Cloth: hides the brood (DEF up)', t:'def', f:.04, s:'The cloth one turns its back, and the wire one stands in front of it.' }]);
+BOSS7('rgapex', 'The Collared Apex', '#b06858', 1700, 19, 13, 9, 'Hybrid', [
+  { i:'Tail sweep (hits all)', t:'all', m:.5, s:'The Apex turns, and the tail clears the whole row.' },
+  { i:'Gore (huge hit)', t:'hit', m:2.0, s:'The Apex lowers its head. Its handler has just stopped shouting.' },
+  { i:'Roar (calls the bell, summons)', t:'rgbell', m:.3, s:'The roar is the bell, only bigger. Something small crawls out from under the stands.' },
+  { i:'Collar strain (ATK up, heals)', t:'atk', v:.3, f:.04, s:'The collar creaks. The Apex pulls against it, and for a moment it almost looks like thinking.' }], { final:true });
+FINAL_GUARDS.rgapex = ['rgusher', 'rghound', 'rgchick'];
+(() => { const E = ENEMIES.rgapex, base0 = E.ai; E.ai = u => { base0(u); if (u.alive && (u.phase2 || u.n % 3 === 0)) { say(`${u.name} strains against the collar!`); livingParty().forEach(p => hit(u, p, u.phase2 ? .4 : .25, { fx:'burst' })); } }; })();
+Object.assign(COST, { rgchick:1 });
+Object.assign(P2_V270, { rgcaptain:'rgusher', rgreferee_b:'rgcitizen', rgmatron:'rgchick', rgmothers:'rgcalf', rgapex:null });
+Object.keys(P2_V270).filter(k => /^rg/.test(k)).forEach(k => { const v = P2_V270[k]; if (ENEMIES[k]) ENEMIES[k].p2sum = v === null ? 'none' : (ENEMIES[v] ? v : 'none'); });   /* the V270 table is read once at load, so the Ringer bosses set their helper here */
+
+/* ---- two new boss moves: ring the bell early, and wipe every buff ---- */
+const _bmV273 = bossMove;
+bossMove = function (u, m) {
+  try {
+    if (m && m.t === 'rgbell') { say(m.s); rgS().early = true; if (m.m) livingParty().forEach(p => hit(u, p, m.m, { fx:'burst' })); if (u.key === 'rgapex' && foes.filter(f => f.alive).length < 4) summon('rgchick'); return; }
+    if (m && m.t === 'rgstrip') { say(m.s); [...party, ...foes].forEach(x => { if (x.alive) { rgStrip(x); } }); const t = foeTarget(); if (t) hit(u, t, m.m || 1.0, { fx:'impact' }); return; }
+  } catch (e) {}
+  return _bmV273.apply(this, arguments);
+};
+
+/* ---- the world: five floors, a bright clean showroom ---- */
+const RGSCENES = [
+  () => SCENE('#dfe8e2', '#bccabf', '#bff0d0', rng(8, i => `<rect x="${30 + i * 150}" y="170" width="70" height="12" fill="#a8b8ac"/><rect x="${40 + i * 150}" y="182" width="6" height="40" fill="#8a9a8e"/><rect x="${94 + i * 150}" y="182" width="6" height="40" fill="#8a9a8e"/>`) + rng(3, i => `<rect x="${90 + i * 400}" y="40" width="160" height="120" fill="#f4faf6" stroke="#9ab0a0" stroke-width="4"/><ellipse cx="${170 + i * 400}" cy="100" rx="60" ry="50" fill="url(#g)">${FLICK(4 + i)}</ellipse>`)),
+  () => SCENE('#e8e4d8', '#c8c0aa', '#ffe8a0', `<rect x="300" y="150" width="600" height="14" fill="#a89870"/><path d="M420 0 L360 160 H840 L780 0Z" fill="url(#g)" opacity=".7">${FLICK(6)}</path>` + rng(9, i => `<rect x="${20 + i * 135}" y="210" width="52" height="30" rx="5" fill="#b8a888" stroke="#8a7a58" stroke-width="3"/>`)),
+  () => SCENE('#f0e8dc', '#d8ccb8', '#ffe0c0', rng(7, i => `<rect x="${24 + i * 170}" y="140" width="110" height="60" fill="#e0d4be" stroke="#a89878" stroke-width="4"/><path d="M${24 + i * 170} 140 V100 M${134 + i * 170} 140 V100" stroke="#a89878" stroke-width="4"/>`) + rng(10, i => `<ellipse cx="${60 + i * 118}" cy="${262 + (i % 3) * 14}" rx="18" ry="24" fill="#fff6e4" stroke="#b8a888" stroke-width="3"/>`)),
+  () => SCENE('#bcd8ee', '#9ab890', '#e8ffd0', `<rect width="1200" height="320" fill="#bcd8ee"/>` + rng(5, i => `<ellipse cx="${100 + i * 260}" cy="${60 + (i % 2) * 40}" rx="90" ry="22" fill="#f4f8fc" opacity=".8"/>`) + rng(24, i => `<rect x="${i * 52}" y="170" width="8" height="150" fill="#6a7a6a"/>`) + `<path d="M0 200 H1200 M0 250 H1200" stroke="#6a7a6a" stroke-width="5"/>` + rng(5, i => `<rect x="${60 + i * 240}" y="330" width="130" height="14" rx="6" fill="#7a6a4a"/>`)),
+  () => SCENE('#e2e2ea', '#c4c4d0', '#ffd0d0', `<ellipse cx="600" cy="400" rx="520" ry="70" fill="#9a9aaa" opacity=".6"/><ellipse cx="600" cy="400" rx="440" ry="52" fill="#b8b8c6"/>` + rng(28, i => `<rect x="${i * 44}" y="${120 + (i % 4) * 14}" width="30" height="${70 + (i % 3) * 10}" rx="12" fill="#cfcfda" stroke="#8a8a9a" stroke-width="3"/><circle cx="${i * 44 + 15}" cy="${116 + (i % 4) * 14}" r="13" fill="#e0d2c0" stroke="#8a7a6a" stroke-width="3"/>`) + `<path d="M0 0 H1200" stroke="#ff4a4a" stroke-width="4" opacity=".5">${FLICK(2)}</path>`)
+];
+const RGW = WORLD_DATA.length;
+WORLD_DATA.push({ name:'The Experimental Ringer', preview:true, ringer:true, noScare:true,
+  fsc:[1.1, 1.22, 1.36, 1.5, 1.65], bosses:['rgcaptain', 'rgreferee_b', 'rgmatron', 'rgmothers', 'rgapex'],
+  floors:['The Intake Gate', 'The Demonstration Floor', 'The Nursery', 'The Breeding Yard', 'The Ring'], unlock:UNLOCKR, twists:['surge', 'elite', 'toxic'],
+  win:'The Collared Apex falls',
+  note:'PREVIEW (not in the story yet). Fal-125 shows off its successful experiments: obedient people, animals and revived dinosaurs, in a bright clean showroom. World special, The Bell: every enemy wears a collar, and every 4th round the bell rings and all collared enemies strike together (your team calms down and heals a little). Stun an enemy, or hit it for 40% of its HP in one blow, to cut its collar: it goes Wild, hits harder, ignores the bell and sometimes attacks its own side.',
+  end:'The Collared Apex goes down on the sand of the Ring, and for the first time all day nothing rings. The crowd of still people does not clap. It does not do anything. Below the Ring a pipe is open, and the smell coming up from it is the opposite of clean.',
+  scene:f => RGSCENES[Math.max(0, Math.min(4, f))](), theme:'theme4',
+  music:{ floor:['haven1', 'haven2', 'free1', 'hollow1', 'free2'], boss:['havenb1', 'havenb2', 'boss_proto', 'boss_announcer', 'final5'], final2:'final5b' } });
+
+/* ---- the Bell ---- */
+function rgCut(u, why) {
+  try {
+    if (!u || !u.alive || !u.rgCollar) return;
+    u.rgCollar = false; u.rgWild = true; u.st = u.st.filter(s => s.k !== 'rgcollar');
+    addStatus0(u, 'rgwild', 99, 1); addStatus0(u, 'atkUp', 99, RINGER.wild);
+    popup(u, 'COLLAR CUT', 'status'); say(`The collar on ${u.name} snaps (${why}). It does not know what to do with that.`); refresh(u);
+    try { rgChip(); } catch (e) {}
+  } catch (e) {}
+}
+function rgCollarAll() {
+  try { foes.forEach(f => { if (f.alive && !f.boss && !f.rgCollar && !f.rgWild) { f.rgCollar = true; addStatus0(f, 'rgcollar', 99, 1); } }); } catch (e) {}
+}
+async function rgRing() {
+  const s = rgS(); s.early = false; s.rings = (s.rings || 0) + 1;
+  const col = foes.filter(f => f.alive && f.rgCollar);
+  say('THE BELL RINGS.'); try { Sound.sfx('encounter'); } catch (e) {}
+  if (col.length) { say(col.length > 1 ? 'Every collar pulls at once. Everything that is still obedient strikes together.' : 'The one collar that still works pulls tight.');
+    for (const f of col) { if (!f.alive || !party.some(p => p.alive)) break; const t = foeTarget(); if (t) hit(f, t, RINGER.bell, { fx:'burst' }); await sleep(120); } }
+  else say('The bell rings. Nobody answers it.');
+  livingParty().forEach(p => { if (!p.tempCopy) heal(p, p.maxHp * RINGER.heal); });
+  say('The chime settles over your side. It almost feels kind. Everyone heals a little.');
+  await sleep(250);
+}
+function rgChip() {
+  try {
+    const a = $('#arena'); if (!a) return; let c = document.getElementById('rgBar');
+    if (!rgOn()) { if (c) c.style.display = 'none'; return; }
+    if (!c) { c = document.createElement('div'); c.id = 'rgBar'; a.appendChild(c);
+      const st = document.createElement('style'); st.textContent = `#rgBar{position:absolute;right:10px;top:8px;z-index:5;max-width:46%;font:600 12px/1.3 var(--ui,system-ui,sans-serif);color:var(--gold);background:rgba(10,9,12,.72);border:1px solid var(--line);border-radius:10px;padding:4px 9px;text-align:right;cursor:help}#rgBar small{display:block;font-weight:400;color:#ddd;opacity:.9;font-size:11px}#rgBar.hot{border-color:#ff5a4a;color:#ff8a7a}@media (max-width:640px){#rgBar{font-size:10px;padding:3px 6px;right:4px;top:auto;bottom:4px;max-width:60%}#rgBar small{font-size:9.5px}}.unit.enemy .chips .chip{}`; document.head.appendChild(st);
+      c.title = 'The Bell: every 4th round all collared enemies strike together and your team heals a little. Stun an enemy, or hit it for ' + RG_CUT + '% of its HP at once, to cut its collar.'; c.onclick = () => { try { say('World special, THE BELL: ' + c.title); } catch (e) {} }; }
+    const s = rgS(), k = RINGER.every - 1 - (Math.max(1, round) - 1) % RINGER.every, now = k === 0 || s.early, n = foes.filter(f => f.alive && f.rgCollar).length;
+    c.style.display = ''; c.classList.toggle('hot', now);
+    c.innerHTML = 'THE BELL' + `<small>${now ? 'rings at the end of this round' : 'rings in ' + (k + 1) + ' rounds'} · ${n} collared</small>`;
+  } catch (e) {}
+}
+{
+  const _swV273 = startWave;
+  startWave = function (i) { const r = _swV273.apply(this, arguments); try { if (rgOn()) { const s = rgS(); s.early = false; rgCollarAll(); if (!s.told) { s.told = 1; say('World special, THE BELL: every enemy wears a collar. Every 4th round the bell rings and all collared enemies strike together, and your team heals a little. Cut a collar (stun it, or one big hit) and it goes Wild.'); } rgChip(); } else rgChip(); } catch (e) {} return r; };
+  const _rsV273 = V17.roundStart;
+  V17.roundStart = function () { const r = _rsV273.apply(this, arguments); try { if (rgOn()) { rgCollarAll(); const s = rgS(); if (!s.told) { s.told = 1; say('World special, THE BELL: every enemy wears a collar. Every 4th round the bell rings and all collared enemies strike together, and your team heals a little. Cut a collar (stun it, or hit it for ' + RG_CUT + '% of its HP in one blow) and it goes Wild.'); } rgChip(); } } catch (e) {} return r; };
+  const _reV273 = V17.roundEnd;
+  V17.roundEnd = async function () { const r = await _reV273.apply(this, arguments); if (r) return r; try { if (rgOn() && foes.some(f => f.alive) && party.some(p => p.alive)) { const s = rgS(); if (round % RINGER.every === 0 || s.early) await rgRing(); rgChip(); } } catch (e) {} return r; };
+  const _hitV273 = hit;
+  hit = function (att, tgt, mult, o) {
+    try {
+      if (rgOn() && att && tgt && att.team === 'enemy' && att.rgWild && tgt.team === 'party' && Math.random() < RINGER.friend) {
+        const fs = foes.filter(f => f.alive && f !== att); if (fs.length) { tgt = pick(fs); say(`${att.name} lashes out at ${tgt.name}!`); } }
+    } catch (e) {}
+    const d = _hitV273.call(this, att, tgt, mult, o);
+    try { if (rgOn() && att && tgt && att.team === 'party' && tgt.team === 'enemy' && tgt.rgCollar && tgt.alive && d >= tgt.maxHp * RINGER.cut) rgCut(tgt, 'one hard hit'); } catch (e) {}
+    return d;
+  };
+  const _asV273 = addStatus;
+  addStatus = function (u, k, t, v) { try { if (k === 'stun' && rgOn() && u && u.team === 'enemy' && u.rgCollar && u.alive && !u.boss) rgCut(u, 'stunned'); } catch (e) {} return _asV273.apply(this, arguments); };
+}
+/* the world row gets a Preview button, and the Preview world is always open (it is not in the story yet) */
+{
+  const _brlV273 = buildRunLen;
+  buildRunLen = function () {
+    const r = _brlV273.apply(this, arguments);
+    try {
+      const wr = $('#worldRow'); if (wr && !wr.querySelector('.rgPrev')) {
+        const b = document.createElement('button'); b.className = 'wcard arch side rgPrev' + (CFG.world === RGW ? ' on' : ''); b.title = 'Preview: The Experimental Ringer, a new world that is not in the story yet. Obedient experiments, revived dinosaurs, and the Bell.';
+        b.innerHTML = '<span class="wn">Preview</span><span class="wt">The Experimental Ringer</span>';
+        b.onclick = () => { CFG.world = RGW; CFG.runlen = 'world'; store(); rollRun(); setBg(0); buildRunLen(); Sound.music(menuTrack()); };
+        wr.appendChild(b); }
+      if (CFG.world === RGW) { const n = $('#worldNote'); if (n) n.textContent = WORLD_DATA[RGW].name + '. ' + WORLD_DATA[RGW].floors.length + ' floors with a boss at the end of each: ' + WORLD_DATA[RGW].bosses.map(k => ENEMIES[k].name).join(', ') + '. ' + WORLD_DATA[RGW].note; }
+    } catch (e) {}
+    return r;
+  };
+}
+/* V273 BLOCK END */
 </script>
 <div id="jsStat" style="position:fixed;left:8px;bottom:8px;z-index:99998;font:12px monospace;color:#9d96a6;background:#000a;padding:3px 7px;border-radius:4px;max-width:90vw">Loading game...</div>
 <noscript><div style="position:fixed;left:0;right:0;top:30%;z-index:99999;background:#300;color:#fff;padding:16px;font:16px sans-serif;text-align:center">JavaScript is off or blocked here. Open this file in Chrome or Firefox (not a file preview or in-app viewer).</div></noscript>
