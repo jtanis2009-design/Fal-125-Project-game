@@ -1,6 +1,16 @@
-FAL-125 README. Current version: v274 (file fal125_battle_prototype-v274.html). Newest entries first.
+FAL-125 README. Current version: v275 (file fal125_battle_prototype-v275.html). Newest entries first.
 Folders: docs (this file, ROADMAP, Needed, TEST_LAB, design notes), tools (headless test and audit scripts, see TEST_LAB.txt), data (FAL125_Character_Book.xlsx), sprites.
 Read docs/Needed.txt every time a playable character is added. docs/ROADMAP.txt holds only what is still to build.
+
+V275 (CLEAN-UP: DEAD CODE REMOVED FROM THE WHOLE GAME)
+The author asked for a look at the entire game. Nothing changes in how the game plays or looks. Claude searched with a code checker, looked at every hit by hand, and only removed what nothing uses. After the clean-up every sprite in the game was compared one by one with the old file: all 324 are identical.
+- OLD SPRITES THAT WERE REPLACED LATER (the file is 290,000 characters smaller): the first versions of Sna, Fuja, Vor, Lovesick, Anigari, Devic, Flick, Iris (two old ones), Sunshine and Rue were embedded, and then a newer picture was embedded for the same name further down, so the old one never showed. The old ones are gone.
+- OLD WAVE-MAKING TABLES: BUDGET, TIER and BOSS_PAIRS (from the first wave builder, replaced long ago by the per-world unlock lists and COST).
+- UNUSED SMALL HELPERS: hpNeed, pyNeed, tfNeed (old "how many stacks" helpers), gripm, minem (old Grip and Mines counters from before V240), gtOf, owName, CIRC_SCENE_F, scBody, proDeed, proKey, auraOf, PAL7, EYES7, slotSummary, archiveOpen, achN and BYTE_CHANCE.
+- TWO SETTINGS THAT WERE SET TWICE: Blackbird's Moss Infection description (the old wording was overwritten by the V271 one) and the Amalgam's guards (overwritten by the World 8 alternates). Only the one that counts is left. The game still shows the same text and guards.
+- A few unused local variables were removed where nothing else happens on that line.
+- LEFT ALONE ON PURPOSE: RR_LIMIT (reroll limits per difficulty, written in the comments as a setting to tune), BM_API (the test tools use it), and about 15 unused variables that sit next to code that draws random numbers or has side effects (removing them could change a seeded run).
+All older tests were run again and pass.
 
 V274 (CLEAN-UP: DEAD CODE REMOVED FROM THE EXPERIMENTAL RINGER)
 Nothing changes in the game. Removed an empty style rule and a duplicate Bell announcement (it is now said once, at the first round) from the V273 block, and a meaningless check from the Ringer test. Ringer test and world specials test still pass.
