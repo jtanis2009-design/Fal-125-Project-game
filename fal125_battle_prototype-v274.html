@@ -25846,7 +25846,7 @@ function rgChip() {
     const a = $('#arena'); if (!a) return; let c = document.getElementById('rgBar');
     if (!rgOn()) { if (c) c.style.display = 'none'; return; }
     if (!c) { c = document.createElement('div'); c.id = 'rgBar'; a.appendChild(c);
-      const st = document.createElement('style'); st.textContent = `#rgBar{position:absolute;right:10px;top:8px;z-index:5;max-width:46%;font:600 12px/1.3 var(--ui,system-ui,sans-serif);color:var(--gold);background:rgba(10,9,12,.72);border:1px solid var(--line);border-radius:10px;padding:4px 9px;text-align:right;cursor:help}#rgBar small{display:block;font-weight:400;color:#ddd;opacity:.9;font-size:11px}#rgBar.hot{border-color:#ff5a4a;color:#ff8a7a}@media (max-width:640px){#rgBar{font-size:10px;padding:3px 6px;right:4px;top:auto;bottom:4px;max-width:60%}#rgBar small{font-size:9.5px}}.unit.enemy .chips .chip{}`; document.head.appendChild(st);
+      const st = document.createElement('style'); st.textContent = `#rgBar{position:absolute;right:10px;top:8px;z-index:5;max-width:46%;font:600 12px/1.3 var(--ui,system-ui,sans-serif);color:var(--gold);background:rgba(10,9,12,.72);border:1px solid var(--line);border-radius:10px;padding:4px 9px;text-align:right;cursor:help}#rgBar small{display:block;font-weight:400;color:#ddd;opacity:.9;font-size:11px}#rgBar.hot{border-color:#ff5a4a;color:#ff8a7a}@media (max-width:640px){#rgBar{font-size:10px;padding:3px 6px;right:4px;top:auto;bottom:4px;max-width:60%}#rgBar small{font-size:9.5px}}`; document.head.appendChild(st);
       c.title = 'The Bell: every 4th round all collared enemies strike together and your team heals a little. Stun an enemy, or hit it for ' + RG_CUT + '% of its HP at once, to cut its collar.'; c.onclick = () => { try { say('World special, THE BELL: ' + c.title); } catch (e) {} }; }
     const s = rgS(), k = RINGER.every - 1 - (Math.max(1, round) - 1) % RINGER.every, now = k === 0 || s.early, n = foes.filter(f => f.alive && f.rgCollar).length;
     c.style.display = ''; c.classList.toggle('hot', now);
@@ -25855,7 +25855,7 @@ function rgChip() {
 }
 {
   const _swV273 = startWave;
-  startWave = function (i) { const r = _swV273.apply(this, arguments); try { if (rgOn()) { const s = rgS(); s.early = false; rgCollarAll(); if (!s.told) { s.told = 1; say('World special, THE BELL: every enemy wears a collar. Every 4th round the bell rings and all collared enemies strike together, and your team heals a little. Cut a collar (stun it, or one big hit) and it goes Wild.'); } rgChip(); } else rgChip(); } catch (e) {} return r; };
+  startWave = function (i) { const r = _swV273.apply(this, arguments); try { if (rgOn()) { rgS().early = false; rgCollarAll(); } rgChip(); } catch (e) {} return r; };
   const _rsV273 = V17.roundStart;
   V17.roundStart = function () { const r = _rsV273.apply(this, arguments); try { if (rgOn()) { rgCollarAll(); const s = rgS(); if (!s.told) { s.told = 1; say('World special, THE BELL: every enemy wears a collar. Every 4th round the bell rings and all collared enemies strike together, and your team heals a little. Cut a collar (stun it, or hit it for ' + RG_CUT + '% of its HP in one blow) and it goes Wild.'); } rgChip(); } } catch (e) {} return r; };
   const _reV273 = V17.roundEnd;

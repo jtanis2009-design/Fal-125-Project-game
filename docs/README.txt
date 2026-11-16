@@ -1,6 +1,9 @@
-FAL-125 README. Current version: v273 (file fal125_battle_prototype-v273.html). Newest entries first.
+FAL-125 README. Current version: v274 (file fal125_battle_prototype-v274.html). Newest entries first.
 Folders: docs (this file, ROADMAP, Needed, TEST_LAB, design notes), tools (headless test and audit scripts, see TEST_LAB.txt), data (FAL125_Character_Book.xlsx), sprites.
 Read docs/Needed.txt every time a playable character is added. docs/ROADMAP.txt holds only what is still to build.
+
+V274 (CLEAN-UP: DEAD CODE REMOVED FROM THE EXPERIMENTAL RINGER)
+Nothing changes in the game. Removed an empty style rule and a duplicate Bell announcement (it is now said once, at the first round) from the V273 block, and a meaningless check from the Ringer test. Ringer test and world specials test still pass.
 
 V273 (NEW WORLD, FIRST VERSION: THE EXPERIMENTAL RINGER, A PREVIEW)
 The author asked for a new world between World 1 and the Sewer: Fal-125's "successful" experiments, the ones that obey. The name "Ringer" just sounded cool to the author, so it keeps all three meanings (a fighting ring, a bell, a look-alike copy). Sunshine and Nukasaurus are allies, not enemies: they do not appear in this world. Research and ideas: reports/Experimental Ringer world ideas.md (notes in research_notes/).

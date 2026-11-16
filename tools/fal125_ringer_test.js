@@ -18,7 +18,7 @@ let bad = 0; const ok = (c, m) => { console.log((c ? '✓ ' : '✗ ') + m); if (
   const all = [...keys, ...WD.bosses, 'rgchick'];
   ok(all.every(k => typeof G.ENEMIES[k].intent === 'function' && typeof G.ENEMIES[k].ai === 'function' && run('ART')[G.ENEMIES[k].spriteKey || k]), 'every Ringer enemy has an intent, a move and a drawing');
   ok(run('worldTag(' + W + ')') === 'Preview' && run('worldTag(0)') === 'World 1', 'it is labelled Preview, other worlds keep their names');
-  ok(run('worldOpen(' + W + ')') && run('CFG.world = ' + W + '; rgOn() === false || true'), 'the preview world is always open');
+  ok(run('worldOpen(' + W + ')'), 'the preview world is always open');
   const mk = k => T.makeUnit(G.CHARACTERS_BY(k), 'party');
   const mkE = (k, hp) => { const f = T.makeUnit(G.ENEMIES[k], 'enemy'); if (hp) f.maxHp = f.hp = hp; return f; };
   const world = () => run(`CFG.world = ${W}; CFG.runlen = 'world'; RUN = newRun(); wave = 0; round = 1;`);
