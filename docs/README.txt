@@ -11,7 +11,7 @@ This is STEP 1 of the safe plan in that report: the world is built at the END of
 - 5 BOSSES: The Usher Captain, The Head Referee, Hatchery Matron, The Wire and Cloth Mothers, and the final boss The Collared Apex (with guards and a Final Surge). Two new boss moves: ring the bell early, and wipe every buff.
 - BALANCE (Hard, level 4, cy+inkating+shamoon, 20 runs): World 1 65% cleared, The Ringer 25%, Sewer 5%. With the strong starting team every world is a 100% clear at level 6, as before.
 - NOT DONE YET (next steps): the "revive with a pause" third phase for the Apex, the story scenes and recruit lines, Archive entries ("Approved" / "Rejected" cards), chips and skins, real sprites and music, Prototype Zero's link. Then Step 2 (give every world a name key instead of a number) and Step 3 (move the Ringer to second place and fix old saves once). See the report.
-New test tools/fal125_ringer_test.js (26 checks, with 2 auto-played runs). All older tests still pass.
+New test tools/fal125_ringer_test.js (24 checks, with 2 auto-played runs). All older tests still pass.
 
 V272 (BUFFS FOR THE WEAKEST HEALERS AND SNA, FROM A FULL BALANCE TEST)
 The author asked whether a ChatGPT tier list was accurate. Claude tested every fighter instead (60 early runs and 24 late runs each, in a team that suits their role). The tier list was partly right, but wrong on several big points (most tanks are NOT all equally strong; Demure and Eyianix are among the strongest, not the weakest). The full ranking is in docs/BALANCE_TEST.txt. The author asked to make only the weak healers and Sna stronger, and nobody weaker. Search "V272". Numbers in BUFF272 and CD272.
