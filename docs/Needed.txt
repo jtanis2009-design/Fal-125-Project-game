@@ -3,12 +3,12 @@ NEEDED  (read this every time a new playable character is added)
 RULE: every new playable character MUST get a new row in data/FAL125_Character_Book.xlsx (sheet "Characters"). Always. No exceptions.
 
 How to add the row
-1. Use the next free ID (same number as the character's id in the game script, e.g. 0068 = ID 68). The next free ID is 126. New universe (V245): numbers on the drawing sheets are NOT used; every new fighter takes the next free ID.
+1. Use the next free ID (same number as the character's id in the game script, e.g. 0068 = ID 68). The next free ID is 129. New universe (V245): numbers on the drawing sheets are NOT used; every new fighter takes the next free ID.
 2. Fill the Book columns: ID, Name, Ability, Ability+, Containment Level, Scent, Threat LV, Type, Awakened.
 3. Ability+ is "???" when there is no extra ability to know about.
 4. Fill Role, HP, ATK, DEF and SPD from the character's entry in the CHARACTERS list in the game script.
 5. Put "Book" in the Source column once the details are yours. Use "Generated" only for drafts that still need your review.
-6. Extend the formula ranges on the Summary sheet if the new row goes past the last row (the counts now read Characters rows 2 to 126; the next new fighter is ID 126, row 127).
+6. Extend the formula ranges on the Summary sheet if the new row goes past the last row (the counts now read Characters rows 2 to 129; the next new fighter is ID 129, row 130).
 
 Also needed for each new playable character
 - Add the fighter to CHARACTERS in the game script.
