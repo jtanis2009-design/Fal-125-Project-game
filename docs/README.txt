@@ -1,6 +1,21 @@
-FAL-125 README. Current version: v279 (file fal125_battle_prototype-v279.html). Newest entries first.
+FAL-125 README. Current version: v280 (file fal125_battle_prototype-v280.html). Newest entries first.
 Folders: docs (this file, ROADMAP, Needed, TEST_LAB, design notes), tools (headless test and audit scripts, see TEST_LAB.txt), data (FAL125_Character_Book.xlsx), sprites.
 Read docs/Needed.txt every time a playable character is added. docs/ROADMAP.txt holds only what is still to build.
+
+V280 (NEW FIGHTER: HEMO, DAMAGE, BLOOD FLOW)
+The author's own character (sheet "Hemo (Phobia)", sheet number 5964 not used, dated June 16th, note "Fear of blood"). The author chose Damage and said "Tap = 1 touch". He is 0125 in the game.
+- LOOK (from the drawing): a huge round mop of brown hair, two red eyes, red stitch marks and red thorns all over his head and body, a blue skirt with red stripes, bandaged white arms and legs with grey metal and chains, black armoured legs.
+- TAPS: every time he touches an enemy it is one Tap. Taps stay from wave to wave, up to 20. Touching an enemy that is already Bleeding gives one extra Tap (blood everywhere).
+- THORN TOUCH (no cooldown): 1.0x on one enemy, +1 Tap.
+- BRUSH PAST (cooldown 2): 0.45x on EVERY enemy, +1 Tap for each enemy touched.
+- BLOOD FLOW (cooldown 2, needs at least 1 Tap): spends ALL his Taps on one beam of deadly blood. Each Tap is 5% power, 20 Taps is 100% power (6.0x): 5 Taps = 1.5x, 10 Taps = 3.0x.
+- ULTIMATE (once every 5 waves) Blood Flood: a beam through every enemy (2.4x each), then his Taps go back to 0. ENHANCEMENT: Thorn Touch can hit twice. Three chips: Sharp Thorns, Sticky Hands, Deadly Flow. Two skins, 6 Archive entries, Mastery text, recruit scenes, story lines for every world, one optional mission (A Blood Bank).
+- Auto-play fires the beam at 8 or more Taps (or 5 on a boss or a lone enemy), brushes past when there are 2 or more enemies, and touches Bleeding enemies first.
+- BALANCE (same teams as the old tests): early test (level 1, Hard, 60 runs) average wave 10.2 (Red Walker 9.1, Marrow 10.5, Punchline 12.8). Late test (24 runs) 88% cleared (Red Walker 83%, Punchline 88%, Marrow 100%).
+- GUESSES BY CLAUDE (say if wrong): his type (Demon) and Containment Level (High), the lore lines, and his voice. The author's own words are the sheet, the name, Damage, and Tap = 1 touch.
+- NOT USED: the separate spiky black head with a red-striped mouth drawn on the left of the sheet (what is it?).
+- SPRITE: only a drawn placeholder for now (a brown head with red eyes and thorns, blue body). The Character Book has his row (row 126), Needed.txt says the next free ID is 126.
+New test tools/fal125_hemo_test.js (15 checks, with 2 auto-played runs).
 
 V279 (SPRITE CHECK: WHITE LEFTOVERS CLEANED)
 The author asked to look at every sprite in the game and remove white background parts. Claude checked all 346 embedded pictures and all 125 PNG files in sprites/: first by computer (any picture with a white or opaque background, white connected to the edge, white lines on the edge), then by eye on contact sheets and zoomed crops against a dark background.
