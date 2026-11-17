@@ -1,6 +1,17 @@
-FAL-125 README. Current version: v278 (file fal125_battle_prototype-v278.html). Newest entries first.
+FAL-125 README. Current version: v279 (file fal125_battle_prototype-v279.html). Newest entries first.
 Folders: docs (this file, ROADMAP, Needed, TEST_LAB, design notes), tools (headless test and audit scripts, see TEST_LAB.txt), data (FAL125_Character_Book.xlsx), sprites.
 Read docs/Needed.txt every time a playable character is added. docs/ROADMAP.txt holds only what is still to build.
+
+V279 (SPRITE CHECK: WHITE LEFTOVERS CLEANED)
+The author asked to look at every sprite in the game and remove white background parts. Claude checked all 346 embedded pictures and all 125 PNG files in sprites/: first by computer (any picture with a white or opaque background, white connected to the edge, white lines on the edge), then by eye on contact sheets and zoomed crops against a dark background.
+- RESULT: no sprite has a whole white background. Four small leftovers were found and fixed:
+  - BLACKBIRD attack and knocked-out poses: a white patch under his feet (the inside of the old ground shadow that the cut-out missed) is gone. The sheet was cut again with the shadow treated as background. His HEALING pose picture (not used yet) was cut again the same way.
+  - CLOWN.X3: a thin grey line down the right edge of the picture is gone.
+  - SPOTTER: a faint whitish smear left of his big eye-head is gone.
+  Every other sprite is byte for byte the same as before (checked one by one).
+- LEFT ALONE ON PURPOSE: white that is part of the art (white hair, coats, teeth, shoes, the white core of attack slashes, the white outlines on the little "bit" icons). Removing those would damage the pictures. Some painted enemies also have a very thin light rim from the old cut-out; it is hardly visible and cleaning it also thinned the line art, so it was not touched.
+- NOT WHITE BUT WORTH KNOWING: The Rat King (ratking) is the only picture with no transparency at all: it has a dark green-black rectangle behind it. The shopkeeper poses (kp_vendor_*, kp_outposter_*) still have the bright green guide outline the author drew around them. Both can be removed if wanted.
+Poses test passes.
 
 V278 (THE AUTHOR'S OWN SPRITES: CASPIC, SOUNDEMON AND LYCION'S RAGE FORM)
 - CASPIC: the black-haired boy in the blue hoodie, with a big white eye, a purple gauntlet on one arm and a dark red spiky borrowed arm on the other. New attack pose (swinging the red arm) and knocked-out pose (flipped over on his back).
