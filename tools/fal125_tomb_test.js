@@ -13,7 +13,7 @@ let bad = 0; const ok = (c, m) => { console.log((c ? '✓ ' : '✗ ') + m); if (
   const mk = k => T.makeUnit(G.CHARACTERS_BY(k), 'party');
   const turn = u => { T.addStatus(u, 'stun', 1, 1); return H.drive(run(`(async(u)=>{ try{ await takeTurn(u); }catch(e){ globalThis.__err=String(e); } })`)(u)); };
   run('RUN = newRun()');
-  const c = G.CHARACTERS_BY('tomb'); ok(c && c.role === 'Tank' && c.id === '0116' && c.build === 'Gasoline' && c.skills.every(s => S[s]) && S.ult_tomb, 'Tomb exists: Tank, 0116, 3 moves and an ultimate');
+  const c = G.CHARACTERS_BY('tomb'); ok(c && c.role === 'Tank' && c.id === '0116' && c.build === 'Retaliator' && c.skills.every(s => S[s]) && S.ult_tomb, 'Tomb exists: Tank, 0116, 3 moves and an ultimate');
   ok(!G.CHARACTERS.some(x => x.key === 'outposter'), 'Outposter is not a fighter');
   const ids = G.CHARACTERS.map(x => x.id); ok(new Set(ids).size === ids.length, 'every fighter has a different number');
   const t = mk('tomb'), al = mk('sna'), e = mkE(), e2 = mkE(); T.setSides([t, al], [e, e2]); T.setCur(t);

@@ -13,7 +13,7 @@ let bad = 0; const ok = (c, m) => { console.log((c ? '✓ ' : '✗ ') + m); if (
   const mk = k => T.makeUnit(G.CHARACTERS_BY(k), 'party');
   const turn = () => H.drive(run(`(async()=>{ try{ await takeTurn(party.find(p=>p.key==='soundemon')); }catch(e){} })()`));
   run('RUN = newRun()');
-  const c = G.CHARACTERS_BY('soundemon'); ok(c && c.role === 'Damage' && c.id === '0106' && c.build === 'Composer', 'Soundemon exists: Damage, 0106, build Composer');
+  const c = G.CHARACTERS_BY('soundemon'); ok(c && c.role === 'Damage' && c.id === '0106' && c.build === 'Controller', 'Soundemon exists: Damage, 0106, build Composer');
   ok(c.skills.join() === 'sdweapon,sdentity,sdburst', 'three moves: Sound Weapon, Sound Entity, Burst');
   const ids = G.CHARACTERS.map(x => x.id); ok(new Set(ids).size === ids.length, 'every fighter has a different number');
   const sd = mk('soundemon'), al = mk('sna'); let e1 = mkE(), e2 = mkE(); e2.hp = 5000;

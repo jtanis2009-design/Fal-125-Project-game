@@ -13,7 +13,7 @@ let bad = 0; const ok = (c, m) => { console.log((c ? '✓ ' : '✗ ') + m); if (
   run('RUN = newRun()');
   const c = G.CHARACTERS_BY('hemo'); ok(c && c.role === 'Damage' && c.id === '0125' && c.name === 'Hemo' && c.skills.every(s => S[s]) && S.ult_hemo, 'Hemo exists: Damage, 0125, 3 moves and an ultimate');
   const ids = G.CHARACTERS.map(x => x.id); ok(new Set(ids).size === ids.length, 'every fighter has a different number');
-  ok(run("BUILDS['Phobic'] && BUILDS['Phobic'].role === 'Damage'") && c.build === 'Phobic', 'his build exists');
+  ok(run("BUILDS['Execute'] && BUILDS['Execute'].role === 'Damage'") && c.build === 'Execute', 'his build is the general Execute build');
   ok(run("IDENT.hemo && PARTY_QUIPS.hemo.length === 2 && STORY_EXTRA.hemo && RL.hemo.length === 2 && ARC_LORE.hemo.length === 6 && MAST_TEXT.hemo && SKIN_DEFS.hemo.length === 2"), 'identity, quips, story lines, recruit scenes, Archive, Mastery and 2 skins are there');
   const h = mk('hemo'), al = mk('sna'), e = mkE(), e2 = mkE(), e3 = mkE(); T.setSides([h, al], [e, e2, e3]); T.setCur(h);
   S.hmtouch.run(h, e); ok(h.hmTaps === 1, 'Thorn Touch is one Tap');

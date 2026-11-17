@@ -1,6 +1,17 @@
-FAL-125 README. Current version: v280 (file fal125_battle_prototype-v280.html). Newest entries first.
+FAL-125 README. Current version: v281 (file fal125_battle_prototype-v281.html). Newest entries first.
 Folders: docs (this file, ROADMAP, Needed, TEST_LAB, design notes), tools (headless test and audit scripts, see TEST_LAB.txt), data (FAL125_Character_Book.xlsx), sprites.
 Read docs/Needed.txt every time a playable character is added. docs/ROADMAP.txt holds only what is still to build.
+
+V281 (BUILDS ARE GENERAL AGAIN: 20 SHARED BUILDS INSTEAD OF ONE FOR EACH FIGHTER)
+The author liked that every new fighter got a new build, but asked to clean it up so all fighters fall under a small set of general builds (the "secondary role" under Tank / Damage / Healer, like before). Before: 54 builds, 35 of them with only one fighter. Now: 20 builds, every one shared. Nothing about how any fighter plays changed: their own moves and passives are the same, only the label under the role changed.
+- DAMAGE (10): Burst, Charger, Controller, Bomber, Duelist, Execute, Hunter, Leech, Plague, Sweeper.
+- HEALER (5): Medic, Warden, Amplifier, Debuffer, Leech.
+- TANK (6): Guardian, Protector, Disruptor, Bruiser, Regenerator, Retaliator.
+- WHO MOVED (36 fighters). Damage: Radiant and Slinder to Plague; Gutter to Hunter; Soundemon, Hole and Punchline to Controller; Marrowline, Cloak and Triggerfinger to Bomber; The Red Walker and Voltage 77 to Duelist; Bloodspike, Naginata and Hemo to Execute; Demure to Sweeper; Gloom to Burst. Healer: Caspic, Bearable, Luckster, Nane and Tearwing to Medic; Ano and Tangler to Warden; Blackbird to Leech; Rainbow Ripper to Amplifier. Tank: Uquna and Outbreak to Disruptor; Dollion and Stitchheart to Protector; Lifewire and Vein Ripper to Regenerator; Lycion and Xainbow to Bruiser; Tomb, Ixis and Parda to Retaliator.
+- WHY CLAUDE PICKED THEM: each fighter went to the general build whose idea is closest (plants then detonates = Bomber, ties and shares hits = Protector, parries and spits back = Retaliator, and so on). If you would put someone elsewhere, tell Claude.
+- WHAT ELSE CHANGED: the old one-fighter builds are gone from the Codex Roles tab, and the recommended playstyles no longer use names nobody has (Reactor, Detonator, Reaper, Impaler, Minelayer, Containment, Heartbound, Provoker, Sound Medic, Weeping Medic: they read as their general build). The Roles tab now also lists Leech under Healer (it only showed under Damage before). The draft screen's "Already 2 of this build" warning will show up a little more often, because more fighters share a build.
+- RULE FROM NOW ON: a new fighter takes one of these 20 builds. No new builds. Seven character tests that checked the old build names were updated.
+All older tests pass.
 
 V280 (NEW FIGHTER: HEMO, DAMAGE, BLOOD FLOW)
 The author's own character (sheet "Hemo (Phobia)", sheet number 5964 not used, dated June 16th, note "Fear of blood"). The author chose Damage and said "Tap = 1 touch". He is 0125 in the game.

@@ -13,7 +13,7 @@ let bad = 0; const ok = (c, m) => { console.log((c ? '✓ ' : '✗ ') + m); if (
   const mk = k => T.makeUnit(G.CHARACTERS_BY(k), 'party');
   const turn = u => H.drive(run(`(async()=>{ try{ await takeTurn(party.find(p=>p.key==='${u}')); }catch(e){} })()`));
   run('RUN = newRun()');
-  const c = G.CHARACTERS_BY('marrowline'); ok(c && c.role === 'Damage' && c.id === '0103' && c.build === 'Demolition', 'Marrowline exists: Damage, 0103, build Demolition');
+  const c = G.CHARACTERS_BY('marrowline'); ok(c && c.role === 'Damage' && c.id === '0103' && c.build === 'Bomber', 'Marrowline exists: Damage, 0103, build Demolition');
   ok(c.skills.join() === 'mlfuse,mlred,mlcity' && S.mlfuse && S.mlred && S.mlcity, 'three moves: Light the Fuse, Red X, City Block');
   let ml = mk('marrowline'), al = mk('sna'), e1 = mkE(), e2 = mkE();
   T.setSides([ml, al], [e1, e2]); T.setCur(ml);

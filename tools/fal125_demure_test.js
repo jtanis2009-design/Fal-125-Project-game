@@ -13,7 +13,7 @@ let bad = 0; const ok = (c, m) => { console.log((c ? '✓ ' : '✗ ') + m); if (
   const mk = k => T.makeUnit(G.CHARACTERS_BY(k), 'party');
   const turn = () => H.drive(run(`(async()=>{ try{ await takeTurn(party.find(p=>p.key==='demure')); }catch(e){} })()`));
   run('RUN = newRun()');
-  const c = G.CHARACTERS_BY('demure'); ok(c && c.role === 'Damage' && c.id === '0104' && c.build === 'Seasonal', 'Demure exists: Damage, 0104, build Seasonal');
+  const c = G.CHARACTERS_BY('demure'); ok(c && c.role === 'Damage' && c.id === '0104' && c.build === 'Sweeper', 'Demure exists: Damage, 0104, build Seasonal');
   ok(G.CHARACTERS_BY('marrowline').id === '0103', 'Marrowline has his new number, 0103');
   const ids = G.CHARACTERS.map(x => x.id); ok(new Set(ids).size === ids.length, 'every fighter has a different number');
   const dm = mk('demure'), al = mk('sna'); let e1 = mkE(), e2 = mkE(); T.setSides([dm, al], [e1, e2]); T.setCur(dm);

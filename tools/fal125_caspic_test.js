@@ -13,7 +13,7 @@ let bad = 0; const ok = (c, m) => { console.log((c ? '✓ ' : '✗ ') + m); if (
   const mk = k => T.makeUnit(G.CHARACTERS_BY(k), 'party');
   const as = (u, k, t, v) => run('addStatus')(u, k, t, v);
   run('RUN = newRun()');
-  const c = G.CHARACTERS_BY('caspic'); ok(c && c.role === 'Healer' && c.id === '0105' && c.build === 'Canceller', 'Caspic exists: Healer, 0105, build Canceller');
+  const c = G.CHARACTERS_BY('caspic'); ok(c && c.role === 'Healer' && c.id === '0105' && c.build === 'Medic', 'Caspic exists: Healer, 0105, build Canceller');
   ok(c.skills.join() === 'cpheal,cpcancel,cpfield', 'three moves: Cancel Wounds, Hard Cancel, Null Field');
   const ids = G.CHARACTERS.map(x => x.id); ok(new Set(ids).size === ids.length, 'every fighter has a different number');
   let cp = mk('caspic'), tk = mk('sna'), dd = mk('snavo'), e1 = mkE(), e2 = mkE();

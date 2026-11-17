@@ -13,7 +13,7 @@ let bad = 0; const ok = (c, m) => { console.log((c ? '✓ ' : '✗ ') + m); if (
   const mk = k => T.makeUnit(G.CHARACTERS_BY(k), 'party');
   const turn = u => { T.addStatus(u, 'stun', 1, 1); return H.drive(run(`(async(u)=>{ try{ await takeTurn(u); }catch(e){ globalThis.__err=String(e); } })`)(u)); };
   run('RUN = newRun()');
-  const c = G.CHARACTERS_BY('hole'); ok(c && c.role === 'Damage' && c.id === '0115' && c.build === 'Holes' && c.skills.every(s => S[s]) && S.ult_hole, 'Hole exists: Damage, 0115, 3 moves and an ultimate');
+  const c = G.CHARACTERS_BY('hole'); ok(c && c.role === 'Damage' && c.id === '0115' && c.build === 'Controller' && c.skills.every(s => S[s]) && S.ult_hole, 'Hole exists: Damage, 0115, 3 moves and an ultimate');
   const ids = G.CHARACTERS.map(x => x.id); ok(new Set(ids).size === ids.length, 'every fighter has a different number');
   const h = mk('hole'), al = mk('sna'); let e1 = mkE(), e2 = mkE(); T.setSides([h, al], [e1, e2]); T.setCur(h);
   S.hobore.run(h, e1); ok(holes(e1) === 1, 'Bore digs a hole');

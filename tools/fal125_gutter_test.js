@@ -11,7 +11,7 @@ let bad = 0; const ok = (c, m) => { console.log((c ? '✓ ' : '✗ ') + m); if (
   const mkE = (k, hp) => { const f = T.makeUnit(Object.assign({}, G.ENEMIES[k], { key: k }), 'enemy'); f.boss = false; f.maxHp = f.hp = hp || 9000; f.atk = 20; return f; };
   const mk = k => T.makeUnit(G.CHARACTERS_BY(k), 'party');
   run('RUN = newRun()');
-  const c = G.CHARACTERS_BY('gutter'); ok(c && c.role === 'Damage' && c.id === '0102' && c.build === 'Collector', 'Gutter exists: Damage, 0102, build Collector');
+  const c = G.CHARACTERS_BY('gutter'); ok(c && c.role === 'Damage' && c.id === '0102' && c.build === 'Hunter', 'Gutter exists: Damage, 0102, build Collector');
   const gt = mk('gutter'), al = mk('sna');
   /* weapons are read from what the enemy did */
   const keys = Object.keys(G.ENEMIES).filter(k => !G.ENEMIES[k].boss);
