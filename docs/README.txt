@@ -1,6 +1,17 @@
-FAL-125 README. Current version: v275 (file fal125_battle_prototype-v275.html). Newest entries first.
+FAL-125 README. Current version: v276 (file fal125_battle_prototype-v276.html). Newest entries first.
 Folders: docs (this file, ROADMAP, Needed, TEST_LAB, design notes), tools (headless test and audit scripts, see TEST_LAB.txt), data (FAL125_Character_Book.xlsx), sprites.
 Read docs/Needed.txt every time a playable character is added. docs/ROADMAP.txt holds only what is still to build.
+
+V276 (THE AUTHOR'S OWN SPRITES AND POSES: THE RED WALKER, LYCION, TOMB, TANGLER, XAINBOW, DOLLION)
+Six fighters had temporary pixel sprites drawn by Claude. The author made real ones in Gemini, each with an attack pose and a knocked-out pose. Every picture was cut out of its white background (white that is inside the picture, like teeth and shoes, was kept), scaled to 620 px tall, and put in the game and in sprites/. The attack and knocked-out poses show up in battle on their own (same system as V268).
+- THE RED WALKER: the bearded soldier with the green and red shield. The new one is wider than the old one because of the shield.
+- LYCION: the skull with the pink X, cape and bandaged hands. Only the normal form is new. His Rage Form still uses the temporary sprite and has no poses (no new Rage Form picture yet).
+- TOMB: the black-haired zombie boy with red eyes and bloody hands.
+- TANGLER: the red and white stitched doll. The sheet had a third pose, a healing pose with green and gold sparkles. The game has no slot for it yet, so it is saved as sprites/tangler_heal.png and not used.
+- XAINBOW: the rainbow patchwork doll with orange eyes.
+- DOLLION: the doll-boy with purple hair, spiral eyes and a huge grin.
+Picture-to-fighter match was done by colour and look (red and white = Tangler, rainbow = Xainbow, purple hair = Dollion, skull = Lycion, zombie boy = Tomb). Tell Claude if any is the wrong way round.
+Poses test now lists all ten fighters with poses. Poses, healers4, tanks4, trio, tomb and the red walker tests pass.
 
 V275 (CLEAN-UP: DEAD CODE REMOVED FROM THE WHOLE GAME)
 The author asked for a look at the entire game. Nothing changes in how the game plays or looks. Claude searched with a code checker, looked at every hit by hand, and only removed what nothing uses. After the clean-up every sprite in the game was compared one by one with the old file: all 324 are identical.
