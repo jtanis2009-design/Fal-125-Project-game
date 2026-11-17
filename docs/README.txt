@@ -1,6 +1,14 @@
-FAL-125 README. Current version: v276 (file fal125_battle_prototype-v276.html). Newest entries first.
+FAL-125 README. Current version: v277 (file fal125_battle_prototype-v277.html). Newest entries first.
 Folders: docs (this file, ROADMAP, Needed, TEST_LAB, design notes), tools (headless test and audit scripts, see TEST_LAB.txt), data (FAL125_Character_Book.xlsx), sprites.
 Read docs/Needed.txt every time a playable character is added. docs/ROADMAP.txt holds only what is still to build.
+
+V277 (THE AUTHOR'S OWN SPRITES AND POSES: BLACKBIRD, VEIN RIPPER, PARDA)
+Three more temporary sprites replaced by the author's Gemini ones, each with an attack pose and a knocked-out pose (same work as V276).
+- BLACKBIRD: the black crow with spiral red eyes, a horned head, moss and bright feathers on the shoulders, and long bone claws. His sheet had three poses with labels (DEATH, HEALING, ATTACK). The labels and the pale ground shadows were cut off. The green HEALING pose has no slot in the game yet, so it is saved as sprites/blackbird_heal.png and not used.
+- VEIN RIPPER: the stitched purple and white doll with the spikes, one orange eye and a torn red eye socket, and the coloured veins on his chest.
+- PARDA: the grey wolf-cat doll with the red face mask, patchwork sleeves and a huge grin.
+Picture-to-fighter match was done by look (crow = Blackbird, coloured veins = Vein Ripper, wolf doll = Parda). Tell Claude if any is the wrong way round.
+After this the only fighters still on temporary sprites are Caspic, Soundemon, Bearable and Lycion's Rage Form. Poses test lists thirteen fighters with poses.
 
 V276 (THE AUTHOR'S OWN SPRITES AND POSES: THE RED WALKER, LYCION, TOMB, TANGLER, XAINBOW, DOLLION)
 Six fighters had temporary pixel sprites drawn by Claude. The author made real ones in Gemini, each with an attack pose and a knocked-out pose. Every picture was cut out of its white background (white that is inside the picture, like teeth and shoes, was kept), scaled to 620 px tall, and put in the game and in sprites/. The attack and knocked-out poses show up in battle on their own (same system as V268).
