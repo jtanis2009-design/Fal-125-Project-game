@@ -1,6 +1,13 @@
-FAL-125 README. Current version: v277 (file fal125_battle_prototype-v277.html). Newest entries first.
+FAL-125 README. Current version: v278 (file fal125_battle_prototype-v278.html). Newest entries first.
 Folders: docs (this file, ROADMAP, Needed, TEST_LAB, design notes), tools (headless test and audit scripts, see TEST_LAB.txt), data (FAL125_Character_Book.xlsx), sprites.
 Read docs/Needed.txt every time a playable character is added. docs/ROADMAP.txt holds only what is still to build.
+
+V278 (THE AUTHOR'S OWN SPRITES: CASPIC, SOUNDEMON AND LYCION'S RAGE FORM)
+- CASPIC: the black-haired boy in the blue hoodie, with a big white eye, a purple gauntlet on one arm and a dark red spiky borrowed arm on the other. New attack pose (swinging the red arm) and knocked-out pose (flipped over on his back).
+- SOUNDEMON: this is the redraw he was waiting for. A round pale mask with scratches, a black half with one red visor, a stitched grin, a white shirt with the number tag 5947 and a blue band on the arm, a black spiked cloak and red clawed hands. New attack and knocked-out poses.
+- LYCION'S RAGE FORM: the cracked skull in pink-red flames with the burning cape, when he takes the mask off. The picture only has the idle pose, so the Rage Form has no attack or knocked-out pose yet.
+Picture-to-fighter match: the boy in the blue hoodie is Caspic (the "stolen ability disks and borrowed arms" boy, 17 years old), the masked figure with the number tag is Soundemon (colour red, winner of Hide and Bleed). Tell Claude if they are the wrong way round.
+Only Bearable is still on a temporary sprite. Poses test lists fifteen fighters with poses.
 
 V277 (THE AUTHOR'S OWN SPRITES AND POSES: BLACKBIRD, VEIN RIPPER, PARDA)
 Three more temporary sprites replaced by the author's Gemini ones, each with an attack pose and a knocked-out pose (same work as V276).
