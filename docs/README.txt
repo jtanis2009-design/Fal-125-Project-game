@@ -1,6 +1,12 @@
-FAL-125 README. Current version: v286 (file fal125_battle_prototype-v286.html). Newest entries first.
+FAL-125 README. Current version: v287 (file fal125_battle_prototype-v287.html). Newest entries first.
 Folders: docs (this file, ROADMAP, Needed, TEST_LAB, design notes), tools (headless test and audit scripts, see TEST_LAB.txt), data (FAL125_Character_Book.xlsx), sprites.
 Read docs/Needed.txt every time a playable character is added. docs/ROADMAP.txt holds only what is still to build.
+
+V287 (THE AUTHOR'S OWN SPRITES FOR DOG HUNTER, COPYRIGHT, DOOMMASTER, TOON AND LIMIT)
+Five fighters now use your own Gemini drawings, each with an idle, an attack and a knocked-out picture. Looks only, nothing else changed.
+- Dog Hunter: the stitched teddy-dog with claws. Copyright: the grey furry creature with two different eyes (its sheet had all three poses on one picture). Doommaster: the black-haired fighter with red eyes and red claws. Toon: the pale girl in the dark sweater (the words ATTACK and DEATH on her sheet were cut away). Limit: the red yarn body with one big eye.
+- If I matched a picture to the wrong fighter, tell me which one and I will swap them.
+- Only Bearable and Kuikya are still on drawn placeholders. Files: sprites/<name>.png, <name>_atk.png, <name>_ko.png. Search "V287".
 
 V286 (THE LAST FOUR FIGHTERS: DOOMMASTER, COPYRIGHT, DOG HUNTER AND KUIKYA)
 The author's last four sheets, "my 4 least favorite of the entire book, so they go last". With these, all twelve characters the author planned after The Red Walker are in the game. The author confirmed: "Doommaster is its name, Doom Punch the ability"; "Copyright is a copyright-based character"; "Dog Hunter should be related to Dog Hound (Hound Dog)"; and "pick whatever role fits best". So THE ROLES ARE CLAUDE'S PICK, and the abilities of Copyright and Dog Hunter (their sheets have none) are Claude's draft.
