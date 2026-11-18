@@ -1,6 +1,13 @@
-FAL-125 README. Current version: v284 (file fal125_battle_prototype-v284.html). Newest entries first.
+FAL-125 README. Current version: v285 (file fal125_battle_prototype-v285.html). Newest entries first.
 Folders: docs (this file, ROADMAP, Needed, TEST_LAB, design notes), tools (headless test and audit scripts, see TEST_LAB.txt), data (FAL125_Character_Book.xlsx), sprites.
 Read docs/Needed.txt every time a playable character is added. docs/ROADMAP.txt holds only what is still to build.
+
+V285 (THE AUTHOR'S OWN SPRITES AND POSES: CHASER AND FURNACE)
+Two more temporary sprites replaced by the author's Gemini ones, each with an attack pose (left of the sheet) and a knocked-out pose (right).
+- CHASER: the round head, one half pale with a black socket and the other half black with a yellow spiral eye, a zipper-like grin, a yellow smiley button on his chest, a spiked collar, striped black body, and the red-bladed knife. Attack: a knife slash with a red-white arc. Knocked out: lying on his side with an X for the eye and little spirals above him. One small white gap in the idle picture (between his knife, hand and leg, a leftover of the white background) was made see-through.
+- FURNACE: the dark red skinless body, covering his eyes with his hands in the idle picture. Attack: his eyes glow red and he breathes a stream of fire. Knocked out: slumped over, smoking and burnt out, with scattered ash.
+Picture-to-fighter match was done by look. Tell Claude if any is the wrong way round.
+Only Bearable, Toon and Limit are still on temporary sprites. Poses test lists twenty-one fighters with poses.
 
 V284 (THE AUTHOR'S OWN SPRITES AND POSES: THE PAINTER, GLACIER, HEMO, UNBREAKABLE)
 Four more temporary sprites replaced by the author's Gemini ones, each with an attack pose (the figure on the left of the sheet) and a knocked-out pose (on the right). Same cut-out work as V276 to V278: white background removed, scaled to 620 px tall, put in the game and in sprites/.
