@@ -1,6 +1,9 @@
-FAL-125 README. Current version: v287 (file fal125_battle_prototype-v287.html). Newest entries first.
+FAL-125 README. Current version: v288 (file fal125_battle_prototype-v288.html). Newest entries first.
 Folders: docs (this file, ROADMAP, Needed, TEST_LAB, design notes), tools (headless test and audit scripts, see TEST_LAB.txt), data (FAL125_Character_Book.xlsx), sprites.
 Read docs/Needed.txt every time a playable character is added. docs/ROADMAP.txt holds only what is still to build.
+
+V288 (THE AUTHOR'S OWN SPRITES FOR KUIKYA AND BEARABLE)
+Kuikya now has your own idle, attack and knocked-out pictures (the grey ball head with red eyes). Bearable has your own idle picture (the stitched doll with the orange sweater, the button eye and the wind-up key). The blurry grey smudge next to Bearable on the sheet was cut away. Bearable's attack and knocked-out pictures will come later when Gemini lets you make them: add sprites/bearable_atk.png and bearable_ko.png and the two EMBED lines. Looks only. Now NO fighter is on a drawn placeholder any more. Search "V288".
 
 V287 (THE AUTHOR'S OWN SPRITES FOR DOG HUNTER, COPYRIGHT, DOOMMASTER, TOON AND LIMIT)
 Five fighters now use your own Gemini drawings, each with an idle, an attack and a knocked-out picture. Looks only, nothing else changed.
