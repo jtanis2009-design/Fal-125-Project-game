@@ -1,6 +1,15 @@
-FAL-125 README. Current version: v283 (file fal125_battle_prototype-v283.html). Newest entries first.
+FAL-125 README. Current version: v284 (file fal125_battle_prototype-v284.html). Newest entries first.
 Folders: docs (this file, ROADMAP, Needed, TEST_LAB, design notes), tools (headless test and audit scripts, see TEST_LAB.txt), data (FAL125_Character_Book.xlsx), sprites.
 Read docs/Needed.txt every time a playable character is added. docs/ROADMAP.txt holds only what is still to build.
+
+V284 (THE AUTHOR'S OWN SPRITES AND POSES: THE PAINTER, GLACIER, HEMO, UNBREAKABLE)
+Four more temporary sprites replaced by the author's Gemini ones, each with an attack pose (the figure on the left of the sheet) and a knocked-out pose (on the right). Same cut-out work as V276 to V278: white background removed, scaled to 620 px tall, put in the game and in sprites/.
+- THE PAINTER: the long-haired figure covered in red, blue and purple paint, with a paint-dripping brush. Attack: swinging the brush with a streak of paint. Knocked out: lying on the floor, the brush dropped in a puddle of paint.
+- GLACIER: the blue fur-lined hood, dark face with green glowing eyes and a wide toothy grin with a red mark on the cheek, and the grey and blue jacket. Attack: a claw swipe with ice slashes. Knocked out: lying down with smoke or steam coming off him.
+- HEMO: the round brown stitched head covered in red thorns, red eyes inside dark sockets, white bandaged arms, a blue top and heavy black boots. Attack: a red burst of blood from his arm. Knocked out: the head lying on its side with an X for an eye and a swirl.
+- UNBREAKABLE: spiky black hair, round goggle-glasses with red star eyes, a huge toothy grin, a striped top, red-crossed legs and the spiked ball arm. Attack: swinging the Black Star with a red streak. Knocked out: lying down, the ball beside him.
+Picture-to-fighter match was done by look and by the order you sent them. Tell Claude if any is the wrong way round.
+Still on temporary sprites: Bearable, Toon, Limit, Chaser and Furnace. Poses test lists nineteen fighters with poses.
 
 V283 (FOUR NEW FIGHTERS: GLACIER, UNBREAKABLE, CHASER AND FURNACE)
 The author's sheets of May and June 2025 (Glacier 5967, Unbreakable 5966, Chaser 5965, Furnace 5963; the sheet numbers are not used). The author asked Claude to suggest a Healer wherever it could work, and chose: Glacier Healer, Unbreakable Tank, Chaser Damage (a Healer Chaser would not fit), and the "Cauterise" healer idea for Furnace.
