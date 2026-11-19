@@ -1,6 +1,11 @@
-FAL-125 README. Current version: v289 (file fal125_battle_prototype-v289.html). Newest entries first.
+FAL-125 README. Current version: v290 (file fal125_battle_prototype-v290.html). Newest entries first.
 Folders: docs (this file, ROADMAP, Needed, TEST_LAB, design notes), tools (headless test and audit scripts, see TEST_LAB.txt), data (FAL125_Character_Book.xlsx), sprites.
 Read docs/Needed.txt every time a playable character is added. docs/ROADMAP.txt holds only what is still to build.
+
+V290 (WHITE BACKGROUND LEFTOVERS CLEANED)
+Every sprite in the game was checked again for white background left inside the picture (gaps between an arm and the body, between a slash and a hand, and so on). Six pictures had some, and the white is now see-through:
+- The Painter's attack (between the brush stroke and his legs), Glacier's attack (between the ice slash and his arm), Unbreakable's knocked-out pose (between the star's points), Devic's knocked-out pose (three gaps between the vines), Stitchheart's attack (between the tail and the body, and inside the claw) and Spiral's attack (beside the claws).
+- White that is part of a drawing (eyes, teeth, Uquna's hair, Ronin's bandages and claws) was left alone. Looks only. Search "V290".
 
 V289 (NEW SPRITES FOR SPIRAL, GLITCH, SEAM, UQUNA, SNA, DEVIC, RONIN AND STITCHHEART)
 Eight fighters now use your new Gemini drawings, each with an idle, an attack and a knocked-out picture. Looks only.
