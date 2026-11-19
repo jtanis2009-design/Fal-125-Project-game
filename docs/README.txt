@@ -1,6 +1,13 @@
-FAL-125 README. Current version: v288 (file fal125_battle_prototype-v288.html). Newest entries first.
+FAL-125 README. Current version: v289 (file fal125_battle_prototype-v289.html). Newest entries first.
 Folders: docs (this file, ROADMAP, Needed, TEST_LAB, design notes), tools (headless test and audit scripts, see TEST_LAB.txt), data (FAL125_Character_Book.xlsx), sprites.
 Read docs/Needed.txt every time a playable character is added. docs/ROADMAP.txt holds only what is still to build.
+
+V289 (NEW SPRITES FOR SPIRAL, GLITCH, SEAM, UQUNA, SNA, DEVIC, RONIN AND STITCHHEART)
+Eight fighters now use your new Gemini drawings, each with an idle, an attack and a knocked-out picture. Looks only.
+- Spiral (key whorl): black-red body with the blindfold and the spiral on his belly. Glitch: the red round head with one eye and the black-red wings. Seam: the red-haired girl in teal with the purple checkerboard "missing texture" patches. Uquna: the white-haired monster with claws. Sna: the half-red face with orange hair. Devic: the purple and green plant monster. Ronin: the hooded fighter with the hair bun and claws. Stitchheart: the purple stitched cat with the red heart tail.
+- THE OLD PICTURES ARE KEPT: each of the eight has a free skin called "Previous Sprite" (open the skins of the fighter and pick it). Sna keeps his "Horror Drawing" skin as well.
+- Glitch's picture is wide because of the wings, so it is shown a little smaller than the others.
+- If I matched a picture to the wrong fighter, tell me. Search "V289".
 
 V288 (THE AUTHOR'S OWN SPRITES FOR KUIKYA AND BEARABLE)
 Kuikya now has your own idle, attack and knocked-out pictures (the grey ball head with red eyes). Bearable has your own idle picture (the stitched doll with the orange sweater, the button eye and the wind-up key). The blurry grey smudge next to Bearable on the sheet was cut away. Bearable's attack and knocked-out pictures will come later when Gemini lets you make them: add sprites/bearable_atk.png and bearable_ko.png and the two EMBED lines. Looks only. Now NO fighter is on a drawn placeholder any more. Search "V288".
