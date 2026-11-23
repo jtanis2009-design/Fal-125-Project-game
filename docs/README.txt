@@ -1,6 +1,12 @@
-FAL-125 README. Current version: v293 (file fal125_battle_prototype-v293.html). Newest entries first.
+FAL-125 README. Current version: v294 (file fal125_battle_prototype-v294.html). Newest entries first.
 Folders: docs (this file, ROADMAP, Needed, TEST_LAB, design notes), tools (headless test and audit scripts, see TEST_LAB.txt), data (FAL125_Character_Book.xlsx), sprites.
 Read docs/Needed.txt every time a playable character is added. docs/ROADMAP.txt holds only what is still to build.
+
+V294 (NEW SPRITES FOR SERPENTINE AND WALKER, TULU'S HAIR FIXED)
+- Tulu: the white background left between the wires of his hair is now see-through. His white face is untouched.
+- Serpentine: new picture (the spotted, bandaged body with the big red eye and the claw-mouth arm), with an attack and a knocked-out picture. The bright white gaps between the hair strands and between the claw's teeth were cut out.
+- Walker: new picture (the half black, half stitched-brown face in the blue fur-trimmed coat with claws), with an attack and a knocked-out picture.
+- The old Serpentine and Walker pictures are kept as the free skin "Previous Sprite". Looks only. Search "V294".
 
 V293 (NEW SPRITES FOR HUSH AND MARROWLINE, HUSH'S METAL SUIT IN THE LORE)
 - Hush: new picture, the dark metal suit with the round toothed opening, with an attack and a knocked-out picture. The white gaps between the arms and the legs were made see-through.
