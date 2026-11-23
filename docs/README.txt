@@ -1,6 +1,12 @@
-FAL-125 README. Current version: v294 (file fal125_battle_prototype-v294.html). Newest entries first.
+FAL-125 README. Current version: v295 (file fal125_battle_prototype-v295.html). Newest entries first.
 Folders: docs (this file, ROADMAP, Needed, TEST_LAB, design notes), tools (headless test and audit scripts, see TEST_LAB.txt), data (FAL125_Character_Book.xlsx), sprites.
 Read docs/Needed.txt every time a playable character is added. docs/ROADMAP.txt holds only what is still to build.
+
+V295 (NEW SPRITES FOR SNAVO AND RENKU)
+- Snavo: new picture (black messy hair, purple spiral eye, green and teal jacket, four biting tentacles), with an attack and a knocked-out picture. The white between the tentacles was cut out.
+- Renku: new picture (red stitched round head with a huge grin, two blades, green boots), with an attack and a knocked-out picture. The white inside the chain rings on his arms was cut out, and the knocked-out pose keeps the hand and blade he dropped. The words ATTACK / DEATH on both sheets were cut off.
+- Snavo is the first fighter you meet in Story mode, so this is the first new face players see.
+- The old pictures are kept as the free skin "Previous Sprite". Looks only. Search "V295".
 
 V294 (NEW SPRITES FOR SERPENTINE AND WALKER, TULU'S HAIR FIXED)
 - Tulu: the white background left between the wires of his hair is now see-through. His white face is untouched.
