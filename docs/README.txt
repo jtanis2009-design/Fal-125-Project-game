@@ -1,6 +1,12 @@
-FAL-125 README. Current version: v290 (file fal125_battle_prototype-v290.html). Newest entries first.
+FAL-125 README. Current version: v291 (file fal125_battle_prototype-v291.html). Newest entries first.
 Folders: docs (this file, ROADMAP, Needed, TEST_LAB, design notes), tools (headless test and audit scripts, see TEST_LAB.txt), data (FAL125_Character_Book.xlsx), sprites.
 Read docs/Needed.txt every time a playable character is added. docs/ROADMAP.txt holds only what is still to build.
+
+V291 (NEW SPRITES FOR GOODBYE, RADIANT AND TULU)
+- Goodbye: the blue furry monster with the big grin, with an attack and a knocked-out picture.
+- Radiant: the wolf-eared fighter, half skull, with green thorns, with an attack and a knocked-out picture. The white background between the thorns and between his ribs was made see-through, and the words ATTACK POSE / DEATH POSE were cut off.
+- Tulu: the half black, half white face with the red eye, the yellow rope and the claws (only the idle picture for now).
+- The old pictures are kept: each of the three has the free skin "Previous Sprite". Looks only. Search "V291".
 
 V290 (WHITE BACKGROUND LEFTOVERS CLEANED)
 Every sprite in the game was checked again for white background left inside the picture (gaps between an arm and the body, between a slash and a hand, and so on). Six pictures had some, and the white is now see-through:
