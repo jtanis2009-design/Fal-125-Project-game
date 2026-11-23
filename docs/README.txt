@@ -1,6 +1,16 @@
-FAL-125 README. Current version: v297 (file fal125_battle_prototype-v297.html, needs the img folder next to it). Newest entries first.
+FAL-125 README. Current version: v298 (file fal125_battle_prototype-v298.html, needs the img folder next to it). Newest entries first.
 Folders: docs (this file, ROADMAP, Needed, TEST_LAB, design notes), tools (headless test and audit scripts, see TEST_LAB.txt), data (FAL125_Character_Book.xlsx), sprites.
 Read docs/Needed.txt every time a playable character is added. docs/ROADMAP.txt holds only what is still to build.
+
+V298 (MUSIC TRIO.v2: DETHTECH, IZUMI IS DEAD AND ANHERO)
+Three new fighters, based on the three artists the author picked (like Music trio.v1: Creep, Claire and Still-06). The author chose the roles and gave Claude full creative control, so the looks and kits are CLAUDE'S DESIGN. No lyrics are used.
+- DETHTECH (0137, Damage, Virtual). A hunched kid in a static hoodie whose face is a cracked phone screen with a grinning skull. He is sure everyone is trying to kill him. PARANOIA (max 5): +1 when an enemy hits him or the ally beside him, and +1 for every Brainrot; each is +7% damage. Brainrot (1.1x, the enemy deals 15% less for 2 turns), Dead Pixel (1.5x, and 0.7x on every other Rotted enemy), D.O.A. (spends all Paranoia on one big hit; a kill keeps half). Ultimate: Blue Screen.
+- IZUMI IS DEAD (0138, Healer, Anomaly). A pale girl in a school uniform with a cracked halo that never lights and a cloud of blue butterflies. BUTTERFLIES heal 5% at the start of each turn for 3 turns. Pin (0.7x + a Butterfly on the most hurt ally), Open Wings (22% heal + Butterfly), Fill the Sky (team 10% + Butterflies). ALREADY DEAD: once per wave a knockout leaves her at 1 HP and every Butterfly bursts into a team heal. Ultimate: Butterflies Fill the Sky.
+- ANHERO (0139, Tank, Human). A lanky teen in marker-drawn cardboard armour, a hospital-blanket cape and a trash-can-lid shield. Nobody asked him to be a hero. STAND IN: once per round he jumps in front of a single hit meant for an ally under 50% HP, for 35% less. VALOR (max 5): +1 per hit taken for someone or while Taunting, +5% DEF each. Lid Bash (1.0x, Taunt), Not Today (2 turns of taking an ally's hits for them), Last Line (spends Valor: big self heal and team DEF). Ultimate: Hero Time.
+- MUSIC TRIO.v2: while another member stands, each of the three hits 5% harder and takes 5% less damage.
+- Each has 3 chips, 2 skins, an enhancement, Archive entries, Mastery text, recruit scenes, story lines for every world (and the Ringer), and an optional mission. Character Book rows 138-140; the next free ID is 140.
+- BALANCE (average wave, same reference teams): DethTech 9.8 (Hound Dog 9.9, Doommaster 10.3), izumi is dead 18.4 (Thorn 17.8), Anhero 17.7 (Whiplash 16.9, Kuikya 17.9). Late game: 96%, 83%, 100%. DethTech and Anhero were buffed once after the first test.
+- SPRITES: temporary drawn placeholders. Ready-to-use Gemini prompts (idle, attack and knocked-out) are in docs/MUSIC_TRIO_V2_PROMPTS.txt. Search "V298".
 
 V297 (THE EXPERIMENTAL RINGER IS WORLD 2 OF THE STORY)
 - The Ringer is no longer a preview. In Story mode the order is now: World 1 Containment Facility, World 2 The Experimental Ringer, World 3 Sewer Network, World 4 Beyond the Facility ... World 9 The Climax. Every world card, note, unlock message and the story recap use the new numbers.
