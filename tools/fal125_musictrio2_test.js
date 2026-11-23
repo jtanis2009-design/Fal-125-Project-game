@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 'use strict';
-/* fal125_musictrio2_test.js: checks Music trio.v2, V298: DethTech (0137, Damage), izumi is dead (0138, Healer) and Anhero (0139, Tank).
+/* fal125_musictrio2_test.js: checks Music trio.v2 as reworked in V300: Tape-21 (0137, Damage), Luv-4 (0138, Healer) and Skatebored (0139, Tank).
+   Keys stay dethtech, izumi and anhero (from V298) so saves keep their progress.
    USAGE: node fal125_musictrio2_test.js [--html game.html] [--runs 2] */
 const vm = require('vm'); const { load, findHtml } = require('./fal125_headless.js');
 const a = process.argv.slice(2), i0 = a.indexOf('--html'), html = findHtml(i0 >= 0 ? a[i0 + 1] : null), i1 = a.indexOf('--runs'), runs = i1 >= 0 ? +a[i1 + 1] : 2;
@@ -8,56 +9,53 @@ let bad = 0; const ok = (c, m) => { console.log((c ? '✓ ' : '✗ ') + m); if (
 (async () => {
   const H = load({ html, seed: 4 }), G = H.G, T = G.RXT, run = c => vm.runInContext(c, H.sb);
   const has = (u, k) => u.st.some(s => s.k === k), S = G.SKILLS;
-  const ek = Object.keys(G.ENEMIES).find(k => !G.ENEMIES[k].boss);
+  const ek = 'husk';
   const mkE = (hp) => { const f = T.makeUnit(Object.assign({}, G.ENEMIES[ek]), 'enemy'); f.boss = false; f.maxHp = f.hp = hp || 9000; f.atk = 30; return f; };
   const mk = k => T.makeUnit(G.CHARACTERS_BY(k), 'party');
   run('RUN = newRun(); round = 1');
-  const want = [['dethtech', 'Damage', '0137', 'Burst', 'Virtual'], ['izumi', 'Healer', '0138', 'Medic', 'Anomaly'], ['anhero', 'Tank', '0139', 'Protector', 'Human']];
-  want.forEach(([k, r, id, b, ty]) => { const c = G.CHARACTERS_BY(k); ok(c && c.role === r && c.id === id && c.build === b && c.type === ty && c.skills.every(s => S[s]) && S['ult_' + k], `${c && c.name}: ${r}, ${id}, ${b}, ${ty}, 3 moves and an ultimate`); });
+  const want = [['dethtech', 'Tape-21', 'Damage', '0137', 'Plague', 'Virtual'], ['izumi', 'Luv-4', 'Healer', '0138', 'Warden', 'Anomaly'], ['anhero', 'Skatebored', 'Tank', '0139', 'Guardian', 'Human']];
+  want.forEach(([k, n, r, id, b, ty]) => { const c = G.CHARACTERS_BY(k); ok(c && c.name === n && c.role === r && c.id === id && c.build === b && c.type === ty && c.skills.every(s => S[s]) && S['ult_' + k], `${n}: ${r}, ${id}, ${b}, ${ty}, 3 moves and an ultimate`); });
   const ids = G.CHARACTERS.map(x => x.id); ok(new Set(ids).size === ids.length, 'every fighter has a different number');
   ok(want.every(([k]) => run(`IDENT.${k} && PARTY_QUIPS.${k}.length === 2 && STORY_EXTRA.${k} && RL.${k}.length === 2 && ARC_LORE.${k}.length === 6 && MAST_TEXT.${k} && SKIN_DEFS.${k}.length === 2`)), 'identity, quips, story lines, recruit scenes, Archive, Mastery and 2 skins for all three');
   ok(['dth', 'izm', 'anh'].every(p => [1, 2, 3].every(n => run(`!!CHIP['${p}${n}']`))), 'nine chips are defined');
-  ok(run("['dtPara','anValor','izSaved'].every(k => COUNTER_FIELDS.includes(k))"), 'Paranoia, Valor and Already Dead reset every wave');
-  /* DETHTECH */
+  ok(run("['skMis','lvSaved'].every(k => COUNTER_FIELDS.includes(k))"), 'Misery and Dying For You reset every wave');
+  /* TAPE-21 */
   const d = mk('dethtech'), al = mk('sna'), e1 = mkE(), e2 = mkE(); T.setSides([d, al], [e1, e2]); T.setCur(d);
-  S.dtrot.run(d, e1); ok(has(e1, 'dtrot') && e1.hp < 9000, 'Brainrot hits and Rots the enemy');
-  const rotDmg = () => { const q = mk('sna'), w = mkE(); T.setSides([q], [w]); T.setCur(w); let s = 0; for (let i = 0; i < 20; i++) { q.hp = q.maxHp; T.hit(w, q, 1); s += q.maxHp - q.hp; } return s; };
-  const plain = rotDmg(); const q2 = mk('sna'), w2 = mkE(); T.setSides([q2], [w2]); T.addStatus(w2, 'dtrot', 99, .15); T.setCur(w2); let rs = 0; for (let i = 0; i < 20; i++) { q2.hp = q2.maxHp; T.hit(w2, q2, 1); rs += q2.maxHp - q2.hp; }
-  ok(rs < plain * .95, 'a Rotted enemy deals less damage (' + rs + ' vs ' + plain + ')');
-  T.setSides([d, al], [e1, e2]); T.setCur(d); T.addStatus(e2, 'dtrot', 2, .15); e1.hp = e2.hp = 9000; S.dtpixel.run(d, e1); ok(e1.hp < 9000 && e2.hp < 9000, 'Dead Pixel hits the target and every other Rotted enemy');
-  ok(!!S.dtdoa.can(d), 'D.O.A. needs Paranoia');
-  const de = mkE(); de.atk = 30; T.setSides([d, al], [de]); T.setCur(de); d.dtPara = 0; T.hit(de, d, .2); d.hp = d.maxHp; T.hit(de, al, .2); al.hp = al.maxHp; ok(d.dtPara === 2, 'Paranoia grows when he or the ally beside him is hit (' + d.dtPara + ')');
-  const doa = n => { const q = mk('dethtech'), w = mkE(); q.atk = 20; T.setSides([q, al], [w]); T.setCur(q); let s = 0; for (let i = 0; i < 20; i++) { q.dtPara = n; w.hp = 9000; S.dtdoa.run(q, w); s += 9000 - w.hp; } return s; };
-  ok(doa(5) > doa(2) * 1.4, 'more Paranoia, harder D.O.A. (' + doa(5) + ' vs ' + doa(2) + ')');
-  const dk = mk('dethtech'), small = mkE(5); T.setSides([dk, al], [small]); T.setCur(dk); dk.dtPara = 4; S.dtdoa.run(dk, small); ok(!small.alive && dk.dtPara === 2, 'a D.O.A. kill keeps half the Paranoia');
-  const du = mk('dethtech'), u1 = mkE(), u2 = mkE(); T.setSides([du, al], [u1, u2]); T.setCur(du); S.ult_dethtech.run(du); ok(u1.hp < 9000 && has(u2, 'dtrot') && du.dtPara === 5, 'Blue Screen: every enemy hit and Rotted, full Paranoia');
-  /* IZUMI IS DEAD */
+  S.tpshot.run(d, e1); ok((e1.hp < 9000 || e2.hp < 9000) && has(d, 'soak'), 'Shot in the Dark hits an enemy and Soaks him');
+  S.tpsick.run(d, e1); ok(has(d, 'venom') && has(d, 'burn'), 'Still Sick! gives him Venom and Burn');
+  const dmgWith = n => { const q = mk('dethtech'), w = mkE(); q.atk = 20; T.setSides([q, al], [w]); T.setCur(q); q.st = []; ['slow', 'venom', 'soak', 'mark', 'bleed', 'burn'].slice(0, n).forEach(k => T.addStatus(q, k, 5, .01)); let s = 0; for (let i = 0; i < 20; i++) { w.hp = 9000; T.hit(q, w, 1); s += 9000 - w.hp; } return s; };
+  ok(dmgWith(3) > dmgWith(0) * 1.2, 'Still Sick!: more bad statuses on him, harder hits (' + dmgWith(3) + ' vs ' + dmgWith(0) + ')');
+  ok(!!S.tppave.can(mk('dethtech')), 'The Pavement needs a bad status on him');
+  const p1 = mk('dethtech'), pt = mkE(); T.setSides([p1, al], [pt]); T.setCur(p1); T.addStatus(p1, 'venom', 3, .03); T.addStatus(p1, 'slow', 3, .2); S.tppave.run(p1, pt);
+  ok(has(pt, 'venom') && has(pt, 'slow') && !has(p1, 'venom') && !has(p1, 'slow') && pt.hp < 9000, 'The Pavement throws his statuses onto the enemy and hits it');
+  const u1 = mk('dethtech'), x1 = mkE(), x2 = mkE(); T.setSides([u1, al], [x1, x2]); T.setCur(u1); T.addStatus(u1, 'venom', 3, .03); S.ult_dethtech.run(u1); ok(x1.hp < 9000 && has(x2, 'venom') && has(u1, 'venom'), 'ngmi: every enemy hit and given his statuses, he keeps his');
+  /* LUV-4 */
   const z = mk('izumi'), za = mk('sna'), zb = mk('fuja'), ze = mkE(); T.setSides([z, za, zb], [ze]); T.setCur(z);
-  za.hp = Math.round(za.maxHp * .4); S.izpin.run(z, ze); ok(ze.hp < 9000 && has(za, 'izfly'), 'Pin hits and a Butterfly lands on the most hurt ally');
-  zb.hp = Math.round(zb.maxHp * .5); const zb0 = zb.hp; S.izwings.run(z, zb); ok(zb.hp > zb0 && has(zb, 'izfly'), 'Open Wings heals and gives a Butterfly');
-  za.hp = zb.hp = Math.round(za.maxHp * .5); S.izswarm.run(z); ok([z, za, zb].every(p => has(p, 'izfly')), 'Fill the Sky gives everyone a Butterfly');
-    const zz = mk('izumi'), zp = mk('sna'), zq = mkE(); zq.atk = 30; T.setSides([zz, zp], [zq]); T.addStatus(zp, 'izfly', 3, .05); zp.hp = Math.round(zp.maxHp * .5); const zp0 = zp.hp; zz.hp = 3; T.setCur(zq); T.hit(zq, zz, 5);
-  ok(zz.alive && zz.hp < zz.maxHp * .3 && zz.izSaved === 1 && zp.hp > zp0, 'Already Dead: a lethal hit leaves her at 1 HP and the Butterflies burst into a heal');
-  zz.hp = 3; T.hit(zq, zz, 5); ok(!zz.alive, 'but only once per wave');
-  const zu = mk('izumi'), zv = mk('sna'); zv.hp = Math.round(zv.maxHp * .4); T.addStatus(zv, 'slow', 2, .3); T.setSides([zu, zv], [mkE()]); T.setCur(zu); const zv0 = zv.hp; S.ult_izumi.run(zu); ok(zv.hp > zv0 && !has(zv, 'slow') && has(zv, 'izfly'), 'Butterflies Fill the Sky: heals, cleanses and gives Butterflies');
-  /* ANHERO */
-  const an = mk('anhero'), aa = mk('sna'), ab = mk('fuja'), ae = mkE(); ae.atk = 30; T.setSides([an, aa, ab], [ae]); T.setCur(an);
-  S.anlid.run(an, ae); ok(ae.hp < 9000 && has(an, 'taunt'), 'Lid Bash hits and Taunts');
-  run('round = 7'); aa.hp = Math.round(aa.maxHp * .4); const aa0 = aa.hp, an0 = an.hp; T.setCur(ae); T.hit(ae, aa, 1); ok(aa.hp === aa0 && an.hp < an0 && an.anValor === 1, 'Stand In: he takes the hit for a hurt ally, and gains Valor');
-  const aa1 = aa.hp; T.hit(ae, aa, 1); ok(aa.hp < aa1, 'Stand In works once per round');
-  run('round = 8'); ab.hp = ab.maxHp; T.setCur(an); S.annot.run(an, ab); ok(has(ab, 'annot') && has(an, 'defUp'), 'Not Today guards an ally and gives him DEF');
-  const ab0 = ab.hp, an1 = an.hp; T.setCur(ae); T.hit(ae, ab, 1); T.hit(ae, ab, 1); ok(ab.hp === ab0 && an.hp < an1, 'a guarded ally takes no single-target hits: they go to Anhero');
-  const al2 = mk('anhero'), ma = mk('sna'), mb = mk('fuja'); T.setSides([al2, ma, mb], [mkE()]); al2.anValor = 4; al2.hp = Math.round(al2.maxHp * .4); const an2 = al2.hp; T.setCur(al2); S.anline.run(al2); ok(al2.hp > an2 && al2.anValor === 0 && has(ma, 'defUp') && has(mb, 'defUp'), 'Last Line spends Valor, heals him and gives the team DEF');
-  const vt = v => { const q = mk('anhero'), w = mkE(); T.setSides([q], [w]); T.setCur(w); let s = 0; for (let i = 0; i < 20; i++) { q.anValor = v; q.hp = q.maxHp; T.hit(w, q, 1); s += q.maxHp - q.hp; } return s; };
-  ok(vt(5) < vt(0), 'Valor makes him harder to hurt (' + vt(5) + ' vs ' + vt(0) + ')');
-  const ah = mk('anhero'), ax = mk('sna'); T.setSides([ah, ax], [mkE()]); T.setCur(ah); S.ult_anhero.run(ah); ok(has(ax, 'annot') && has(ah, 'guard') && ah.anValor === 5, 'Hero Time: guards everyone, Guard and full Valor');
+  za.hp = Math.round(za.maxHp * .4); const za0 = za.hp; S.lvbite.run(z, ze); ok(ze.hp < 9000 && za.hp > za0, 'Emo Vampires Near You!: bites and heals the most hurt ally');
+  const hb = () => { const q = mk('sna'); q.hp = Math.round(q.maxHp * .3); const h0 = q.hp; T.setSides([z, q], [ze]); S.lvheart.run(z, q); return q.hp - h0; };
+  const aliveHeal = hb(); S.lvdoa.run(z); ok(z.lvDead && has(z, 'hidden'), 'Dead or Alive: she goes Dead and Hidden');
+  ok(!!S.lvbite.can(z), 'she cannot bite while Dead');
+  const deadHeal = hb(); ok(deadHeal > aliveHeal * 1.4, 'she heals much better while Dead (' + deadHeal + ' vs ' + aliveHeal + ')');
+  const tq = mk('sna'); tq.hp = Math.round(tq.maxHp * .5); T.setSides([z, tq], [ze]); const tq0 = tq.hp; z.lvT = 1; try { await H.drive(run('(u => takeTurn(u))')(z)); } catch (e) {} ok(tq.hp > tq0 && !z.lvDead, 'while Dead the team heals at the start of her turn, and she comes back when her turns run out');
+  const zr = mk('izumi'), zs = mk('sna'); T.setSides([zr, zs], [ze]); T.setCur(zr); S.lvdoa.run(zr); zs.hp = Math.round(zs.maxHp * .5); const zs0 = zs.hp; S.lvdoa.run(zr); ok(!zr.lvDead && zs.hp > zs0, 'coming back early heals the team');
+  const zu = mk('izumi'), zv = mk('sna'); zv.hp = Math.round(zv.maxHp * .4); T.addStatus(zv, 'slow', 2, .3); T.setSides([zu, zv], [mkE()]); T.setCur(zu); const zv0 = zv.hp; S.ult_izumi.run(zu); ok(zv.hp > zv0 && !has(zv, 'slow') && zu.lvDead, 'Butterflies Will Fill the Sky Once Again: heals, cleanses, and she goes Dead');
+  /* SKATEBORED */
+  const sk = mk('anhero'), sa = mk('sna'), sb = mk('fuja'), se = mkE(); se.atk = 30; T.setSides([sk, sa, sb], [se]); T.setCur(sk);
+  S.skout.run(sk, se); ok(se.hp < 9000 && has(sk, 'taunt'), 'Out To Lunch hits and Taunts');
+  T.setCur(se); sa.hp = sa.maxHp; T.hit(se, sa, .3); ok(sk.skMis === 1, 'Misery grows when an ally takes a hit');
+  T.setCur(sk); T.addStatus(sb, 'venom', 3, .03); S.skroll.run(sk, sb); ok(has(sb, 'skcover') && !has(sb, 'venom'), 'Wasted Youth covers an ally and knocks a bad status off');
+  const sb0 = sb.hp, sk0 = sk.hp; T.setCur(se); T.hit(se, sb, 1); ok(sb.hp === sb0 && sk.hp < sk0, 'single attacks on a covered ally go to him');
+  const s2 = mk('anhero'), m1 = mk('sna'), m2 = mk('fuja'); T.setSides([s2, m1, m2], [mkE()]); s2.skMis = 4; s2.hp = Math.round(s2.maxHp * .4); const s20 = s2.hp; T.setCur(s2); S.sksick.run(s2);
+  ok(s2.hp > s20 && s2.skMis === 0 && has(s2, 'taunt') && has(m1, 'defUp') && has(m2, 'defUp'), 'Sick Of It spends Misery: heals, Taunts and gives the team DEF');
+  const vt = v => { const q = mk('anhero'), w = mkE(); T.setSides([q], [w]); T.setCur(w); let s = 0; for (let i = 0; i < 20; i++) { q.skMis = v; q.hp = q.maxHp; T.hit(w, q, 1); s += q.maxHp - q.hp; } return s; };
+  ok(vt(6) < vt(0), 'Misery makes him harder to hurt (' + vt(6) + ' vs ' + vt(0) + ')');
+  const s3 = mk('anhero'), y1 = mkE(), y2 = mkE(), ya = mk('sna'); T.setSides([s3, ya], [y1, y2]); T.setCur(s3); S.ult_anhero.run(s3); ok(y1.hp < 9000 && y2.hp < 9000 && has(ya, 'guard') && s3.skMis === 6, 'For The Hell Of It: every enemy hit, team Guard, full Misery');
   /* the trio bond */
-  const solo = () => { const q = mk('dethtech'), w = mkE(); q.atk = 20; T.setSides([q, mk('sna')], [w]); T.setCur(q); let s = 0; for (let i = 0; i < 30; i++) { w.hp = 9000; T.hit(q, w, 1); s += 9000 - w.hp; } return s; };
-  const duo = () => { const q = mk('dethtech'), w = mkE(); q.atk = 20; T.setSides([q, mk('izumi')], [w]); T.setCur(q); let s = 0; for (let i = 0; i < 30; i++) { w.hp = 9000; T.hit(q, w, 1); s += 9000 - w.hp; } return s; };
-  ok(duo() > solo(), 'Music trio.v2: they hit harder together (' + duo() + ' vs ' + solo() + ')');
+  const sum = mate => { const q = mk('dethtech'), w = mkE(); q.atk = 20; T.setSides([q, mk(mate)], [w]); T.setCur(q); let s = 0; for (let i = 0; i < 30; i++) { w.hp = 9000; T.hit(q, w, 1); s += 9000 - w.hp; } return s; };
+  ok(sum('izumi') > sum('sna'), 'Music trio.v2: they hit harder together');
   /* auto-play */
   let errs = 0; const P = ['dethtech', 'izumi', 'anhero', 'fuja'], xpMap = {}; P.forEach(k => xpMap[k] = 600);
   for (let i = 0; i < runs; i++) { H.reseed(9800 + i); try { await H.run(P, { world:0, runlen:'world', diff:'Normal', xp:0, xpMap, chips:[], smart:true, story:true, wave:1, foes:[] }); } catch (e2) { errs++; console.log('  run error: ' + String(e2.message).slice(0, 160)); } }
   ok(!errs, runs + ' auto-played full runs with all three finish with no errors');
-  console.log(bad ? `\n${bad} problem(s).` : '\nMusic trio.v2 (DethTech, izumi is dead, Anhero) OK.'); process.exit(bad ? 1 : 0);
+  console.log(bad ? `\n${bad} problem(s).` : '\nMusic trio.v2 (Tape-21, Luv-4, Skatebored) OK.'); process.exit(bad ? 1 : 0);
 })();

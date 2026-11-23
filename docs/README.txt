@@ -1,6 +1,15 @@
-FAL-125 README. Current version: v299 (file fal125_battle_prototype-v299.html, needs the img folder next to it). Newest entries first.
+FAL-125 README. Current version: v300 (file fal125_battle_prototype-v300.html, needs the img folder next to it). Newest entries first.
 Folders: docs (this file, ROADMAP, Needed, TEST_LAB, design notes), tools (headless test and audit scripts, see TEST_LAB.txt), data (FAL125_Character_Book.xlsx), sprites.
 Read docs/Needed.txt every time a playable character is added. docs/ROADMAP.txt holds only what is still to build.
+
+V300 (MUSIC TRIO.v2 REWORKED: TAPE-21, LUV-4 AND SKATEBORED)
+The author felt the V298 versions just took the artists' names. Now, like Still-06 (from the album Stillborn Superstar), each name comes from a release or song, every move is a song title, and each plays like nothing else in its role. Their save keys did not change, so anyone who already played them keeps their levels and Mastery. Song titles about self-harm were left out on purpose.
+- TAPE-21 (0137, Damage, Virtual; from DethTech: the EP DETHTAPE and the song "twenty one"). A kid whose face is a cracked cassette tape. STILL SICK!: he WANTS bad statuses on himself: each one (Slow, Venom, Burn, Mark, Soak, Blur, Bleed) makes him hit 18% harder. Shot in the Dark (1.5x on a random enemy, he gets Soaked), Still Sick! (1.4x, he gives himself Venom and a little Burn), The Pavement (throws every bad status on him onto one enemy, 0.8x plus 0.35x per status, and he is clean again). Ultimate: ngmi (every enemy gets a copy of all his statuses).
+- LUV-4 (0138, Healer, Anomaly; from izumi is dead: the song "dying 4 ur luv"). The pale schoolgirl, now with small vampire fangs. DEAD OR ALIVE: Alive she bites (Emo Vampires Near You!: 1.0x, the most hurt ally heals 100% of it). Dead (3 of her turns) she cannot be picked by single attacks, cannot bite, heals 75% better, the team heals 8% the moment she dies and 9% at the start of each of her turns. With Broken Hearts (heal 25% + ATK), Dead or Alive (switch). Ultimate: Butterflies Will Fill the Sky Once Again.
+- SKATEBORED (0139, Tank, Human; from Anhero: the song "Skatebored" on the album ANHERO). A bored skater kid with a beanie and a battered skateboard for a shield. MISERY (max 6): +1 every time an ally is hit, +5% DEF each. Out To Lunch (1.0x, Taunt), Wasted Youth (covers an ally for 2 turns, their single attacks go to him for 30% less, and knocks a bad status off them), Sick Of It (spends Misery: heals him, Taunts, team DEF). Ultimate: For The Hell Of It (the song Anhero made with DethTech).
+- Still Music trio.v2: while another member stands, each hits 5% harder and takes 5% less damage. New chips, story lines, recruit scenes, Archive and Mastery text for all three; the Character Book rows were renamed.
+- BALANCE (average wave, same reference teams): Tape-21 9.3 (Hound Dog 10.2, The Red Walker 9.1), Luv-4 14.4 (Copyright 11, Thorn 16.9), Skatebored 18.8 (Whiplash 17.5). Late game: 92%, 79%, 96%.
+- New Gemini prompts for all three (idle, attack, knocked out) are in docs/MUSIC_TRIO_V2_PROMPTS.txt. Search "V300".
 
 V299 (ELITE ENEMIES GET TRAITS)
 - Every elite enemy (the ones with the gold star) now has one random trait, shown as a gold chip under it:
