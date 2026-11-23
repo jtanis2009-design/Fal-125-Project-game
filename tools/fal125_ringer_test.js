@@ -29,7 +29,7 @@ let bad = 0; const ok = (c, m) => { console.log((c ? '✓ ' : '✗ ') + m); if (
   p[0].hp = 100; run('round = 3'); await H.drive(run('V17.roundEnd()')); ok(p[0].hp === 100 && !run('RUN.rg.rings'), 'no bell on round 3');
   run('round = 4'); await H.drive(run('V17.roundEnd()')); ok(run('RUN.rg.rings') === 1 && p[0].hp !== 100, 'the bell rings on round 4: collared enemies strike, your team heals');
   /* cutting a collar */
-  const big = mkE('rgcitizen', 1000); T.setSides(p, [big]); run('rgCollarAll()'); p[0].atk = 200; T.setCur(p[0]); T.hit(p[0], big, 3);
+  const big = mkE('rgcitizen', 1300);   /* V296: Sna (Hybrid) is no longer weak against Humans, so the hit is bigger */ T.setSides(p, [big]); run('rgCollarAll()'); p[0].atk = 200; T.setCur(p[0]); T.hit(p[0], big, 3);
   ok(big.rgWild && !big.rgCollar && has(big, 'rgwild') && has(big, 'atkUp'), 'one hard hit (40% of its HP) cuts the collar: it goes Wild with +ATK');
   const sm = mkE('rgcitizen', 99999); T.setSides(p, [sm]); run('rgCollarAll()'); T.hit(p[0], sm, .01); ok(sm.rgCollar, 'a small hit does not cut it');
   T.addStatus(sm, 'stun', 1, 1); ok(sm.rgWild && !sm.rgCollar, 'a stun cuts it too');

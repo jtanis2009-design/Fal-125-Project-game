@@ -1,6 +1,21 @@
-FAL-125 README. Current version: v295 (file fal125_battle_prototype-v295.html). Newest entries first.
+FAL-125 README. Current version: v296 (file fal125_battle_prototype-v296.html, needs the img folder next to it). Newest entries first.
 Folders: docs (this file, ROADMAP, Needed, TEST_LAB, design notes), tools (headless test and audit scripts, see TEST_LAB.txt), data (FAL125_Character_Book.xlsx), sprites.
 Read docs/Needed.txt every time a playable character is added. docs/ROADMAP.txt holds only what is still to build.
+
+V296 (FAST LOADING AND THE NEW TYPE CIRCLE)
+FAST LOADING
+- The game file was 37 MB because every picture was packed inside it. The pictures now live in the new img/ folder (one file each) and the game file is about 3 MB, so the web page opens many times faster, also on phones. The game looks exactly the same.
+- The game file and the img/ folder must stay together. To play offline, download both (or the whole project folder), not only the HTML file.
+- At the start of each wave the game fetches the pictures of everyone on the field (including attack and knocked-out poses), so a pose never flashes empty.
+- The start page (index.html) waits at most 1.5 seconds for GitHub before it opens the newest version.
+- The sprites/ folder is still there as a spare copy; the game only uses it for a picture that is missing from img/.
+THE NEW TYPES
+- "Other" is gone. There are now NINE types in ONE circle, each beats the next (+30% damage, and -20% the other way):
+  Angel > Demon > Human > Animalistic > Hybrid > Machine > Virtual > Anomaly > Cosmic > Angel
+- Hybrid now means one thing, your rule: a demon mixed with flesh. Animalistic = beasts and animal bodies. Machine = built things (wires, metal, scrap, cords). Virtual = digital, glitch and broadcast things. Anomaly = impossible things with no body type. Cosmic = black holes, void and light.
+- 61 fighters and about 150 enemies changed type. The full list, what changed and the ones Claude was unsure about are in docs/TYPES.txt. THIS IS CLAUDE'S DRAFT: tell Claude which fighters to move.
+- New preset team "Wild Pack" (all Animalistic). "Hybrid Menagerie" is now Vor, Ronin, Snavo and Monstro. The Type filter on the select screen, the legend, the Codex, the tutorial and the Fighter Files all use the new types. The Character Book's Type column was updated.
+- Balance: the story team clears the same as before (worlds 1, 2, 3, 5 and 7 tested on Hard, all within normal chance). Search "V296".
 
 V295 (NEW SPRITES FOR SNAVO AND RENKU)
 - Snavo: new picture (black messy hair, purple spiral eye, green and teal jacket, four biting tentacles), with an attack and a knocked-out picture. The white between the tentacles was cut out.

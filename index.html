@@ -16,14 +16,15 @@
 /* Opens the newest game file (fal125_battle_prototype-vNNN.html) in this repository.
    It asks GitHub for the file list and picks the highest version number.
    If that fails, it opens FALLBACK. Update FALLBACK when you bump the version (Claude does this with every version). */
-const FALLBACK = 'fal125_battle_prototype-v295.html';
+const FALLBACK = 'fal125_battle_prototype-v296.html';
 const REPO = 'jtanis2009-design/Fal-125-Project-game';
 const go = f => { location.replace(f + location.hash); };
 const show = f => { document.getElementById('msg').innerHTML = 'Opening <a href="' + f + '">' + f + '</a>&hellip;'; };
 (async () => {
   let file = FALLBACK;
   try {
-    const r = await fetch('https://api.github.com/repos/' + REPO + '/contents/', { cache:'no-store' });
+    const ac = new AbortController(); setTimeout(() => ac.abort(), 1500);   /* V296: never wait more than 1.5 s for the file list */
+    const r = await fetch('https://api.github.com/repos/' + REPO + '/contents/', { cache:'no-store', signal:ac.signal });
     if (r.ok) {
       const best = (await r.json()).map(x => x.name)
         .map(n => ({ n, v: +((n.match(/^fal125_battle_prototype-v(\d+)\.html$/i) || [])[1] || 0) }))
