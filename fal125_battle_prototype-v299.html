@@ -27144,6 +27144,109 @@ try {   /* units made later (alternates, wild copies, summons, quest foes) are f
     };
   } catch (e) {}
 })();
+/* V299: ELITE TRAITS. Every elite enemy (the gold-named ones from the Elite twist, Heat, Wanted posters and the new chance below) now has ONE trait:
+   VAMPIRIC heals 30% of the damage it deals.          SPLITTING splits into two smaller copies (40% HP, 70% ATK) when it falls.
+   SHIELDED a shield soaks the first 30% of its HP.     HASTY +50% speed, it acts sooner.
+   THORNY hits back for 0.3x when a single attack hits it.   VOLATILE explodes when it falls: every fighter takes 8% max HP (Guard halves it).
+   New: from World 2 on (story order), each normal wave on floor 2 or later has a 12% chance that one enemy is an elite. Elites already pay double coins.
+   Tune in ELT. Search "V299". */
+const ELT = { hpTrait:1.35, chance:.12, vamp:.30, shield:.30, haste:1.5, thorn:.30, boom:.08, splitHp:.40, splitAtk:.70, maxFoes:6 };
+const ELT_TRAITS = {
+  vamp:  { n:'Vampiric',  d:'Heals 30% of the damage it deals.' },
+  split: { n:'Splitting', d:'Splits into two smaller copies when it falls.' },
+  shield:{ n:'Shielded',  d:'A shield soaks the first 30% of its max HP. Break the shield first.' },
+  hasty: { n:'Hasty',     d:'+50% speed: it acts sooner.' },
+  thorn: { n:'Thorny',    d:'Hits back for 0.3x every time a single attack hits it. Big single hits are best.' },
+  boom:  { n:'Volatile',  d:'Explodes when it falls: every fighter takes 8% of their max HP (Guard halves it).' }
+};
+try {
+  Object.keys(ELT_TRAITS).forEach(k => { LABEL['tr_' + k] = ELT_TRAITS[k].n; STATUS_DESC['tr_' + k] = 'Elite trait. ' + ELT_TRAITS[k].d; });
+  if (typeof TWIST_NAMES !== 'undefined') TWIST_NAMES.elite = 'Elite enemy: tougher and stronger, with a random trait';
+} catch (e) {}
+function eltGive(e, k) {
+  try {
+    if (!e || e.trait || e.boss) return;
+    k = k || pick(Object.keys(ELT_TRAITS)); e.trait = k;
+    const T = ELT_TRAITS[k], old = e.name; e.name = T.n + ' ' + e.name.replace(/^Elite /, '');   /* the gold star already says Elite */
+    if (e.elite) { const f = ELT.hpTrait / 1.5; e.maxHp = Math.max(1, Math.round(e.maxHp * f)); e.hp = Math.min(e.hp, e.maxHp); }   /* the trait is the danger: +35% HP instead of +50% */
+    if (k === 'shield') e.trShield = Math.round(e.maxHp * ELT.shield);
+    if (k === 'hasty') e.spd = Math.round(e.spd * ELT.haste);
+    if (e.el) { const nm = e.el.querySelector('.nm'), tn = nm && [...nm.childNodes].find(x => x.nodeType === 3 && x.data.includes(old.replace(/ Lv\d+$/, ''))); if (tn) tn.data = tn.data.replace(old, e.name); e.el.classList.add('elite'); refresh(e); }
+  } catch (err) {}
+}
+function eltMake(e) { e.name = 'Elite ' + e.name; e.maxHp = e.hp = Math.round(e.hp * 1.5); e.atk = Math.round(e.atk * 1.2); e.elite = true; }
+{
+  const _swV299 = startWave;
+  startWave = function (i) {
+    const r = _swV299.apply(this, arguments);
+    try {
+      const W = WD(), boss = foes.some(f => f.boss);
+      const mainish = W && !W.side && CFG.world !== 0 && CFG.runlen !== 'bossrush' && !(RUN && RUN.quest) && !(typeof PRO_ON_WD !== 'undefined' && PRO_ON_WD);
+      if (mainish && !boss && floorOf(i) >= 1 && !foes.some(f => f.elite) && Math.random() < ELT.chance) {
+        const c = foes.filter(f => f.alive && !f.boss && !f.summoned); if (c.length) { const e = pick(c); eltMake(e); }
+      }
+      foes.forEach(f => { if (f.elite && !f.trait) eltGive(f); });
+      foes.forEach(f => { if (f.elite && f.el) { f.el.classList.add('elite'); refresh(f); } });
+    } catch (e) {}
+    return r;
+  };
+  const _hitV299 = hit;
+  hit = function (att, tgt, mult, o) {
+    o = o || {};
+    const d = _hitV299.call(this, att, tgt, mult, o);
+    try {
+      if (att && att.team === 'enemy' && att.trait === 'vamp' && att.alive && d > 0) { heal(att, d * ELT.vamp); }
+      if (tgt && tgt.team === 'enemy' && tgt.trait === 'thorn' && tgt.alive && att && att.team === 'party' && att.alive && d > 0 && !o.chain && !o.eltThorn) {
+        popup(tgt, 'THORNS', 'status'); _hitV299.call(this, tgt, att, ELT.thorn, { chain:true, eltThorn:true, fx:'slash' });
+      }
+    } catch (e) {}
+    return d;
+  };
+  const _dmgV299 = damage;
+  damage = function (u, d, kind) {
+    try {
+      if (u && u.team === 'enemy' && u.trShield > 0 && d > 0 && u.alive) {
+        const a = Math.min(d, u.trShield); u.trShield -= a; d -= a; popup(u, 'Shield -' + Math.round(a), 'status');
+        if (u.trShield <= 0) { u.trShield = 0; popup(u, 'SHIELD BROKEN', 'status'); say(`${u.name}'s shield breaks.`); }
+        if (d <= 0) { refresh(u); return; }
+      }
+    } catch (e) {}
+    return _dmgV299.call(this, u, d, kind);
+  };
+  const _rfV299 = refresh;   /* the trait shows as a gold chip (with the shield left), not as a timed status */
+  refresh = function (u) {
+    const r = _rfV299.apply(this, arguments);
+    try {
+      if (u && u.team === 'enemy' && u.trait && u.el && ELT_TRAITS[u.trait]) {
+        const c = u.el.querySelector('.chips'), T = ELT_TRAITS[u.trait];
+        if (c && !c.querySelector('.eltTr')) c.insertAdjacentHTML('afterbegin', `<span class="chip eltTr" style="background:#8a6a1a;color:#fff6d8" title="${T.n}: ${T.d}" data-tip="${T.n}: ${T.d}">\u2605 ${T.n}${u.trait === 'shield' && u.trShield > 0 ? ' ' + Math.round(u.trShield) : ''}</span>`);
+      }
+    } catch (e) {}
+    return r;
+  };
+  const _killV299 = kill;
+  kill = function (u, msg) {
+    const wasAlive = u && u.alive;
+    const r = _killV299.apply(this, arguments);
+    try {
+      if (wasAlive && u.team === 'enemy' && !u.alive && u.trait === 'boom') {
+        say(`${u.name} explodes!`); fx(u, 'burst');
+        livingParty().forEach(p => { const n = Math.max(1, Math.round(p.maxHp * ELT.boom * (has(p, 'guard') ? .5 : 1))); damage(p, n, 'fire'); popup(p, '-' + n, 'dmg'); refresh(p); });
+      }
+      if (wasAlive && u.team === 'enemy' && !u.alive && u.trait === 'split' && !u._splitDone && ENEMIES[u.key] && foes.filter(f => f.alive).length < ELT.maxFoes) {
+        u._splitDone = true; say(`${u.name} splits in two!`);
+        for (let n = 0; n < 2; n++) {
+          const nu = makeUnit(Object.assign({}, ENEMIES[u.key]), 'enemy');
+          nu.maxHp = nu.hp = Math.max(1, Math.round(u.maxHp * ELT.splitHp)); nu.atk = Math.max(1, Math.round(u.atk * ELT.splitAtk));
+          nu.name = String(u.name).replace(/^Splitting /, '') + ' (half)'; nu.summoned = true; nu.elite = false; nu.trait = null;
+          nu.el = mkEl(nu); $('#enemySide').appendChild(nu.el); foes.push(nu); refresh(nu); try { V16.adopt(nu); } catch (e) {} popup(nu, 'SPLIT', 'status');
+        }
+        try { refreshIntents(); } catch (e) {}
+      }
+    } catch (e) {}
+    return r;
+  };
+}
 </script>
 <div id="jsStat" style="position:fixed;left:8px;bottom:8px;z-index:99998;font:12px monospace;color:#9d96a6;background:#000a;padding:3px 7px;border-radius:4px;max-width:90vw">Loading game...</div>
 <noscript><div style="position:fixed;left:0;right:0;top:30%;z-index:99999;background:#300;color:#fff;padding:16px;font:16px sans-serif;text-align:center">JavaScript is off or blocked here. Open this file in Chrome or Firefox (not a file preview or in-app viewer).</div></noscript>

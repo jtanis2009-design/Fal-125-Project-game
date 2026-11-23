@@ -12,7 +12,6 @@ ECONOMY
  6. Wishing well: coins for a random blessing or curse
  7. Loot beasts: rare enemy that flees after 3 rounds, drops chips
 ENEMIES
- 8. Enemy affixes on elites: Vampiric, Splitting, Shielded, Hasty
  9. Mimic enemies that copy one of your fighters' moves (the casino Mimic Slot is only a bite, it does not copy)
 10. Summoner nests: spawner that floods the field until killed (bosses already call reinforcements, this is a separate enemy)
 PROGRESSION / MENUS / QOL
@@ -22,6 +21,6 @@ DONE (version in brackets):
  Enemy adaptation, the counter-pick idea (v17), Branching routes (v38), Run Styles (v120), Hunt contracts + Bond Combo fix (v121), Achievements (v122),
  Move animations (v123), Confronting Yourself quest (v125), SCP enemy art + moves (v126), Sell chips for coins (v184), Quick party presets (saved presets on the select screen),
  Visual novel dialogue (v207), VN effects (v208), Battle banter box + knockout effects (v209), Boss phase banner + ultimate/Bond cut-ins + reveals (v210),
- Elemental reactions (visuals v212, rules v224), Character Mastery with lore for every fighter (v219, all written v223), Black Market (v222), Run Style audit (v225).
+ Elemental reactions (visuals v212, rules v224), Character Mastery with lore for every fighter (v219, all written v223), Black Market (v222), Run Style audit (v225), Elite traits (v299).
 Notes on what counted as done: "Branching map" is the V38 route system (Medical Wing, Containment Sector, Abandoned Barracks, Restricted Floor: fights, elites, infirmary, survivor events, trophies); shop stops are separate and there is no pure "treasure" node.
 "Small lore drops for every fighter's unlocks" is covered by the Mastery 2 lore entry (Lorebook > Fighter Files). Say so if you meant something else and it goes back on the list.

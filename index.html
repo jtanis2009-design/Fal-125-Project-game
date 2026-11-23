@@ -16,7 +16,7 @@
 /* Opens the newest game file (fal125_battle_prototype-vNNN.html) in this repository.
    It asks GitHub for the file list and picks the highest version number.
    If that fails, it opens FALLBACK. Update FALLBACK when you bump the version (Claude does this with every version). */
-const FALLBACK = 'fal125_battle_prototype-v298.html';
+const FALLBACK = 'fal125_battle_prototype-v299.html';
 const REPO = 'jtanis2009-design/Fal-125-Project-game';
 const go = f => { location.replace(f + location.hash); };
 const show = f => { document.getElementById('msg').innerHTML = 'Opening <a href="' + f + '">' + f + '</a>&hellip;'; };

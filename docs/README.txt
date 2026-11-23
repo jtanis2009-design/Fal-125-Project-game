@@ -1,6 +1,18 @@
-FAL-125 README. Current version: v298 (file fal125_battle_prototype-v298.html, needs the img folder next to it). Newest entries first.
+FAL-125 README. Current version: v299 (file fal125_battle_prototype-v299.html, needs the img folder next to it). Newest entries first.
 Folders: docs (this file, ROADMAP, Needed, TEST_LAB, design notes), tools (headless test and audit scripts, see TEST_LAB.txt), data (FAL125_Character_Book.xlsx), sprites.
 Read docs/Needed.txt every time a playable character is added. docs/ROADMAP.txt holds only what is still to build.
+
+V299 (ELITE ENEMIES GET TRAITS)
+- Every elite enemy (the ones with the gold star) now has one random trait, shown as a gold chip under it:
+  VAMPIRIC: heals 30% of the damage it deals.
+  SPLITTING: when it falls, two half-size copies take its place.
+  SHIELDED: a shield soaks the first 30% of its HP (the chip shows how much is left).
+  HASTY: +50% speed, it acts sooner.
+  THORNY: hits back for a little every time a single attack hits it (splash hits are safe).
+  VOLATILE: explodes when it falls, every fighter takes 8% of their max HP (Guard halves it).
+- Elites appear a bit more often: from World 2 on, each normal wave on floor 2 or later has a 12% chance of one elite. They still pay double coins.
+- Because the trait is the danger, a trait elite gets +35% HP instead of +50%.
+- Balance (story team, Hard): Worlds 2, 3 and 5 the same as before; World 7 a little harder (about 83% wins, was 87%). Search "V299".
 
 V298 (MUSIC TRIO.v2: DETHTECH, IZUMI IS DEAD AND ANHERO)
 Three new fighters, based on the three artists the author picked (like Music trio.v1: Creep, Claire and Still-06). The author chose the roles and gave Claude full creative control, so the looks and kits are CLAUDE'S DESIGN. No lyrics are used.
