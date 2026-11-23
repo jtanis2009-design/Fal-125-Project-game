@@ -1,6 +1,12 @@
-FAL-125 README. Current version: v292 (file fal125_battle_prototype-v292.html). Newest entries first.
+FAL-125 README. Current version: v293 (file fal125_battle_prototype-v293.html). Newest entries first.
 Folders: docs (this file, ROADMAP, Needed, TEST_LAB, design notes), tools (headless test and audit scripts, see TEST_LAB.txt), data (FAL125_Character_Book.xlsx), sprites.
 Read docs/Needed.txt every time a playable character is added. docs/ROADMAP.txt holds only what is still to build.
+
+V293 (NEW SPRITES FOR HUSH AND MARROWLINE, HUSH'S METAL SUIT IN THE LORE)
+- Hush: new picture, the dark metal suit with the round toothed opening, with an attack and a knocked-out picture. The white gaps between the arms and the legs were made see-through.
+- Hush's lore now says Fal-125 keeps her sealed inside a heavy metal suit because of how dangerous she can be (her move text, her Archive entries and her Mastery page). The game calls Hush "she": tell Claude if it should be "he".
+- Marrowline: new picture, the cannon head with the glowing mouth, with an attack (the cannon firing) and a knocked-out picture.
+- The old pictures are kept as the free skin "Previous Sprite". Search "V293".
 
 V292 (TULU'S POSES, NEW WEEPING ANGEL AND CREEP, RADIANT'S SWIPES FIXED)
 - Tulu now has his attack picture (lightning and a scythe) and his knocked-out picture (smoking, rope torn). The white background between the lightning, the scythe and his hair was made see-through.
