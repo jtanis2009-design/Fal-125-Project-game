@@ -9163,7 +9163,7 @@ function weeklyReward(dly, cleared) {
 async function weeklyRun() {
   if (CFG.diff === 'Nuzlocke') { await evtAsk('Weekly gauntlet', 'The weekly gauntlet is not available on a Nuzlocke save.', [{ label:'OK' }]); return; }
   const D = weeklyInfo(), world = D.world, crew = D.crew, got = SAVE.weekly && SAVE.weekly.key === D.key ? SAVE.weekly : { best:0 };
-  const text = `Resets every Monday. World ${world + 1}: ${WORLDS[world]}. Endless, Normal difficulty, enemies +25% HP and +15% ATK.\n${D.arch.name}: ${crew.map(c => c.name).join(', ')}.\nRule: ${D.rule.name}. ${D.rule.d}\nBoon: ${D.boon.name}. ${D.boon.d}\nYour best this week: ${got.best || 0} waves. Bonus Tokens at 25 and 50 waves. You get a score code to share.`;
+  const text = `Resets every Monday. World ${wNum(world)}: ${WORLDS[world]}. Endless, Normal difficulty, enemies +25% HP and +15% ATK.\n${D.arch.name}: ${crew.map(c => c.name).join(', ')}.\nRule: ${D.rule.name}. ${D.rule.d}\nBoon: ${D.boon.name}. ${D.boon.d}\nYour best this week: ${got.best || 0} waves. Bonus Tokens at 25 and 50 waves. You get a score code to share.`;
   const pe = $('#evP'); pe.style.whiteSpace = 'pre-line'; const go = await evtAsk('Weekly gauntlet', text, [{ label:'Start' }, { label:'Back' }]); pe.style.whiteSpace = '';
   if (go) return;
   DAILY = { ...D, keep:{ world:CFG.world, diff:CFG.diff, runlen:CFG.runlen, ed:ENEMY_DAMAGE, picked:new Set(picked) } };
@@ -11373,7 +11373,13 @@ WORLD_DATA[CASINO_W].bosses.push('casino_bookmaker', 'casino_ghost', 'casino_aud
 const menuTrack = () => (WORLD_DATA[CFG.world] || WORLD_DATA[0]).theme || 'menu';
 var PRO_ON_WD = null;
 const WD = () => PRO_ON_WD || WORLD_DATA[CFG.world] || WORLD_DATA[0];
-const worldTag = w => (WORLD_DATA[w] && WORLD_DATA[w].preview) ? 'Preview' : (WORLD_DATA[w] && WORLD_DATA[w].side) ? 'Side quest' : 'World ' + (w + 1);   /* the Casino is a pure endless side quest, not a numbered world */
+/* V297: THE STORY ORDER. The Experimental Ringer keeps its slot at the END of WORLD_DATA (index RGW), so no saved world number changes,
+   but players meet it as World 2: Containment Facility (1), The Experimental Ringer (2), Sewer Network (3) ... The Climax (9).
+   wNum(w) = the number shown to the player. Code that tests "world === 1" still means the Sewer. Search "V297". */
+function rgIdx() { for (let i = 0; i < WORLD_DATA.length; i++) if (WORLD_DATA[i] && WORLD_DATA[i].ringer) return i; return -1; }
+function wNum(w) { const r = rgIdx(); if (r >= 0 && w === r) return 2; return (r >= 0 && w >= 1 && w < r) ? w + 2 : w + 1; }
+function storyOrder() { const r = rgIdx(), o = []; WORLD_DATA.forEach((W, i) => { if (W && !W.side && !W.ringer) o.push(i); }); if (r >= 0) o.splice(1, 0, r); return o; }
+const worldTag = w => (WORLD_DATA[w] && WORLD_DATA[w].preview) ? 'Preview' : (WORLD_DATA[w] && WORLD_DATA[w].side) ? 'Side quest' : 'World ' + wNum(w);   /* the Casino is a pure endless side quest, not a numbered world */
 /* enemies kept out of The Archive (add keys here if one misbehaves outside its own world) */
 const ARCHIVE_BAN = new Set([]);
 const poolFor = d => Object.keys(WD().unlock).filter(k => WD().unlock[k] <= d);
@@ -13504,9 +13510,11 @@ function showEnd(win) {
   const gained = RUN.xp, ups = wiped ? [] : grantXp(); if (!wiped) saveRun(win);
   const ck = endCheckpoints(); const hh = heatEnd(win); const ex = extrasEnd(win); ck.text += hh.text + ex.text; const sh = wiped ? 0 : Math.round((RUN.waves * 3 + (win ? 30 : 0) + Math.floor(RUN.kills / 4) + ck.shards) * hh.mul) + ex.add; if (!wiped) { SAVE.shards = (SAVE.shards || 0) + sh; store(); }
   let trophy = ''; if (win && CFG.runlen === 'world') { SAVE.bw = SAVE.bw || {}; const fk = finalKey(CFG.world); SAVE.bw[fk] = (SAVE.bw[fk] || 0) + 1; store(); const tt = trophyOf(SAVE.bw[fk]); trophy = ` Boss wins: ${SAVE.bw[fk]}` + (tt ? ` (${tt[0]} trophy).` : '.'); }
-  const nextMain = WORLD_DATA[CFG.world + 1] && !WORLD_DATA[CFG.world + 1].side ? WORLD_DATA[CFG.world + 1] : null;
+  const _so = storyOrder(), _nx = _so[_so.indexOf(CFG.world) + 1], nextMain = (_so.includes(CFG.world) && _nx != null) ? WORLD_DATA[_nx] : null;   /* V297: follows the story order */
   let unl = ''; if (win && isStory() && CFG.runlen === 'world' && !nextMain) unl = ' Story complete!';
-  if (win && isStory() && CFG.runlen === 'world' && nextMain && (SAVE.unlocked || 0) < CFG.world + 1) { SAVE.unlocked = CFG.world + 1; store(); unl = ` World ${CFG.world + 2} unlocked: ${nextMain.name}!` + incNote(CFG.world + 1); }
+  if (win && isStory() && CFG.runlen === 'world' && nextMain && CFG.world === 0 && !SAVE.rgOpen && (SAVE.unlocked || 0) < 1) { SAVE.rgOpen = 1; store(); unl = ` World 2 unlocked: ${nextMain.name}!`; }   /* V297: World 1 opens the Ringer */
+  else if (win && isStory() && CFG.runlen === 'world' && nextMain && CFG.world === rgIdx() && (SAVE.unlocked || 0) < 1) { SAVE.unlocked = 1; store(); unl = ` World 3 unlocked: ${nextMain.name}!` + incNote(1); }   /* V297: the Ringer opens the Sewer */
+  else if (win && isStory() && CFG.runlen === 'world' && nextMain && CFG.world !== 0 && CFG.world !== rgIdx() && (SAVE.unlocked || 0) < CFG.world + 1) { SAVE.unlocked = CFG.world + 1; store(); unl = ` World ${wNum(CFG.world + 1)} unlocked: ${nextMain.name}!` + incNote(CFG.world + 1); }
   try { if (win) mastAward(party.map(u => u.key), 30); } catch (e) {}   /* V219 */
   clearCmd(''); Sound.music(null); Sound.sfx(win ? 'win' : 'lose');
   setTimeout(() => { try { if ($('#end').classList.contains('on')) Sound.music(win ? 'victory' : 'defeat'); } catch (e) {} }, win ? 1100 : 1700);   /* V45: let the jingle finish, then the end theme loops */
@@ -13714,8 +13722,8 @@ function makeRandomTile() {
    A "Story recap" button on the party screen (Story mode only), and it opens once by itself the first time you reach the party screen in a session
    with progress saved. It lists where you are, your last run, who you recruited and what the game remembers about your choices. */
 function storyRecap() {
-  const L = [], main = WORLD_DATA.filter(w => !w.side);
-  const cleared = Math.min(SAVE.unlocked || 0, main.length), nextW = main[Math.min(cleared, main.length - 1)];
+  const L = [], so = storyOrder(), main = so.map(i => WORLD_DATA[i]);   /* V297: story order, the Ringer is World 2 */
+  const cleared = Math.min((SAVE.unlocked || 0) >= 1 ? (SAVE.unlocked || 0) + 1 : (SAVE.rgOpen ? 1 : 0), main.length), nextW = main[Math.min(cleared, main.length - 1)];
   L.push(cleared >= main.length ? 'Story: every world cleared.' : `Story: ${cleared} of ${main.length} worlds cleared.`);
   if (cleared < main.length && nextW) L.push(`Next: World ${cleared + 1}, ${nextW.name}.` + (nextW.note ? '\n' + nextW.note : ''));
   const h = (SAVE.hist || []).find(r => r.mode === 'world');
@@ -20451,9 +20459,9 @@ function buildRunLen() {
   WORLDS.forEach((name, w) => {
     const b = document.createElement('button'), has = !!WORLD_DATA[w], open = worldOpen(w);
     b.className = 'wcard' + (CFG.world === w && CFG.runlen !== 'archive' ? ' on' : '') + (has && !open ? ' lock' : ''); b.title = has ? name + (open ? '' : ' (locked)') : 'Coming soon';
-    b.innerHTML = `<span class="wn">World ${w + 1}${has && !open ? ' \u00b7 locked' : ''}</span><span class="wt"></span>`; b.lastChild.textContent = has ? name : '???';
+    b.innerHTML = `<span class="wn">World ${wNum(w)}${has && !open ? ' \u00b7 locked' : ''}</span><span class="wt"></span>`; b.lastChild.textContent = has ? name : '???';
     if (!has) b.disabled = true;
-    b.onclick = () => { if (!open) { $('#worldNote').textContent = `Clear a Full run of World ${w} to unlock this.`; return; }
+    b.onclick = () => { if (!open) { $('#worldNote').textContent = `Clear a Full run of World ${wNum(w) - 1} to unlock this.`; return; }
       CFG.world = w; if (CFG.runlen === 'archive') CFG.runlen = 'world'; store(); rollRun(); setBg(0); buildRunLen(); Sound.music(menuTrack()); };
     wr.appendChild(b);
   });
@@ -20498,7 +20506,7 @@ function buildRunLen() {
   if (!isStory()) { const d = document.createElement('button'); d.className = 'tgl' + (CFG.draft ? ' on' : ''); d.innerHTML = '<i></i>Mutator Draft'; d.title = 'Before the run, pick one boon and one curse. Harsh curses pay +100 Hazard Pay coins.'; d.onclick = () => { CFG.draft = !CFG.draft; store(); buildRunLen(); }; box.appendChild(d); }
   heatUI(box); styleUI(box);
   { const cur = RL_MODES.find(m => m[0] === CFG.runlen); if (cur && !isStory()) { const p = document.createElement('p'); p.className = 'rdesc'; p.textContent = cur[2] + (CFG.draft ? '. Mutator Draft is on: pick a boon and a curse before the run.' : '.'); box.appendChild(p); } }
-  $('#worldNote').textContent = WD().side ? WD().name + '. ' + (WD().note || '') : `World ${CFG.world + 1}: ${WD().name}. ${WD().floors.length} floors with a boss at the end of each: ${WD().bosses.map(k => ENEMIES[k].name).join(', ')}.` + (WD().note ? ' ' + WD().note : '');
+  $('#worldNote').textContent = WD().side ? WD().name + '. ' + (WD().note || '') : `World ${wNum(CFG.world)}: ${WD().name}. ${WD().floors.length} floors with a boss at the end of each: ${WD().bosses.map(k => ENEMIES[k].name).join(', ')}.` + (WD().note ? ' ' + WD().note : '');
   { let qn = $('#quirkNote'); if (!qn) { qn = document.createElement('p'); qn.id = 'quirkNote'; qn.className = 'note'; $('#worldNote').after(qn); } qn.textContent = WQK.note(); qn.style.display = qn.textContent ? '' : 'none'; }   /* V37 */
   let tn = $('#trophyNote'); if (!tn) { tn = document.createElement('p'); tn.id = 'trophyNote'; tn.className = 'note'; $('#worldNote').after(tn); }
   tn.innerHTML = `${ENEMIES[finalKey(CFG.world)].name} trophy: ${trophyHTML((SAVE.bw || {})[finalKey(CFG.world)] || 0)}`;
@@ -22109,7 +22117,7 @@ function updDaily() {
 async function dailyRun() {
   if (CFG.diff === 'Nuzlocke') { await evtAsk('Daily run', 'The daily run is not available on a Nuzlocke save.', [{ label:'OK' }]); return; }
   const D = dailyInfo(), world = D.world, crew = D.crew, st = dailyStreak(), got = SAVE.daily && SAVE.daily.key === D.key ? (SAVE.daily.claimed || []) : [];
-  const text = `World ${world + 1}: ${WORLDS[world]}. Endless, Normal difficulty.\n${D.arch.name}: ${crew.map(c => c.name).join(', ')}.\nRule: ${D.rule.name}. ${D.rule.d}\nBoon: ${D.boon.name}. ${D.boon.d}\nGoals: ${DAILY_GOALS.map(g => g + ' waves' + (got.includes(g) ? ' (done)' : '')).join(', ')} = +1 Token each.` + (st ? `\nStreak: ${st} day${st > 1 ? 's' : ''}. Every 7th day is worth +2 Tokens.` : '\nPlay every day to build a streak: every 7th day is worth +2 Tokens.');
+  const text = `World ${wNum(world)}: ${WORLDS[world]}. Endless, Normal difficulty.\n${D.arch.name}: ${crew.map(c => c.name).join(', ')}.\nRule: ${D.rule.name}. ${D.rule.d}\nBoon: ${D.boon.name}. ${D.boon.d}\nGoals: ${DAILY_GOALS.map(g => g + ' waves' + (got.includes(g) ? ' (done)' : '')).join(', ')} = +1 Token each.` + (st ? `\nStreak: ${st} day${st > 1 ? 's' : ''}. Every 7th day is worth +2 Tokens.` : '\nPlay every day to build a streak: every 7th day is worth +2 Tokens.');
   const pe = $('#evP'); pe.style.whiteSpace = 'pre-line'; const go = await evtAsk('Daily run', text, [{ label:'Start' }, { label:'Back' }]); pe.style.whiteSpace = '';
   if (go) return;
   DAILY = { ...D, keep:{ world:CFG.world, diff:CFG.diff, runlen:CFG.runlen, ed:ENEMY_DAMAGE, picked:new Set(picked) } };
@@ -24267,7 +24275,7 @@ const incSave = () => (SAVE.inc = SAVE.inc || {});
 const incDone = i => !!(incSave()[i.id] && incSave()[i.id].done);
 const incOpen = i => { try { return worldOpen(i.world); } catch (e) { return true; } };
 const incTypeOf = id => INC_TYPES.find(t => t.id === id);
-const incWorldName = w => (WORLD_DATA[w] && WORLD_DATA[w].name) || ('World ' + (w + 1));
+const incWorldName = w => (WORLD_DATA[w] && WORLD_DATA[w].name) || ('World ' + wNum(w));
 const incNew = () => INCIDENTS.filter(i => incOpen(i) && !(SAVE.incSeen || {})[i.id]).length;
 function incNote(w) { const n = INCIDENTS.filter(i => i.world === w).length; return n ? ` ${n} new Containment Incident${n > 1 ? 's' : ''} filed. Find them on the select screen.` : ''; }
 const incNames = i => (i.file.who || []).map(k => { const c = CHARACTERS.find(x => x.key === k); return c ? c.name : k; }).join(', ');
@@ -26729,11 +26737,11 @@ const RGSCENES = [
   () => SCENE('#e2e2ea', '#c4c4d0', '#ffd0d0', `<ellipse cx="600" cy="400" rx="520" ry="70" fill="#9a9aaa" opacity=".6"/><ellipse cx="600" cy="400" rx="440" ry="52" fill="#b8b8c6"/>` + rng(28, i => `<rect x="${i * 44}" y="${120 + (i % 4) * 14}" width="30" height="${70 + (i % 3) * 10}" rx="12" fill="#cfcfda" stroke="#8a8a9a" stroke-width="3"/><circle cx="${i * 44 + 15}" cy="${116 + (i % 4) * 14}" r="13" fill="#e0d2c0" stroke="#8a7a6a" stroke-width="3"/>`) + `<path d="M0 0 H1200" stroke="#ff4a4a" stroke-width="4" opacity=".5">${FLICK(2)}</path>`)
 ];
 const RGW = WORLD_DATA.length;
-WORLD_DATA.push({ name:'The Experimental Ringer', preview:true, ringer:true, noScare:true,
-  fsc:[1.1, 1.22, 1.36, 1.5, 1.65], bosses:['rgcaptain', 'rgreferee_b', 'rgmatron', 'rgmothers', 'rgapex'],
+WORLD_DATA.push({ name:'The Experimental Ringer', ringer:true, noScare:true,   /* V297: in the story as World 2 (was preview:true) */
+  fsc:[1.04, 1.15, 1.28, 1.42, 1.56], /* V297: a little easier, so it sits between World 1 and the Sewer */ bosses:['rgcaptain', 'rgreferee_b', 'rgmatron', 'rgmothers', 'rgapex'],
   floors:['The Intake Gate', 'The Demonstration Floor', 'The Nursery', 'The Breeding Yard', 'The Ring'], unlock:UNLOCKR, twists:['surge', 'elite', 'toxic'],
   win:'The Collared Apex falls',
-  note:'PREVIEW (not in the story yet). Fal-125 shows off its successful experiments: obedient people, animals and revived dinosaurs, in a bright clean showroom. World special, The Bell: every enemy wears a collar, and every 4th round the bell rings and all collared enemies strike together (your team calms down and heals a little). Stun an enemy, or hit it for 40% of its HP in one blow, to cut its collar: it goes Wild, hits harder, ignores the bell and sometimes attacks its own side.',
+  note:'Fal-125 shows off its successful experiments: obedient people, animals and revived dinosaurs, in a bright clean showroom. World special, The Bell: every enemy wears a collar, and every 4th round the bell rings and all collared enemies strike together (your team calms down and heals a little). Stun an enemy, or hit it for 40% of its HP in one blow, to cut its collar: it goes Wild, hits harder, ignores the bell and sometimes attacks its own side.',
   end:'The Collared Apex goes down on the sand of the Ring, and for the first time all day nothing rings. The crowd of still people does not clap. It does not do anything. Below the Ring a pipe is open, and the smell coming up from it is the opposite of clean.',
   scene:f => RGSCENES[Math.max(0, Math.min(4, f))](), theme:'theme4',
   music:{ floor:['haven1', 'haven2', 'free1', 'hollow1', 'free2'], boss:['havenb1', 'havenb2', 'boss_proto', 'boss_announcer', 'final5'], final2:'final5b' } });
@@ -26794,22 +26802,44 @@ function rgChip() {
   const _asV273 = addStatus;
   addStatus = function (u, k, t, v) { try { if (k === 'stun' && rgOn() && u && u.team === 'enemy' && u.rgCollar && u.alive && !u.boss) rgCut(u, 'stunned'); } catch (e) {} return _asV273.apply(this, arguments); };
 }
-/* the world row gets a Preview button, and the Preview world is always open (it is not in the story yet) */
+/* V297: the Ringer card sits in the world row as World 2 (right after World 1), and opens in Story once World 1 is cleared.
+   Old saves that already reached the Sewer have it open too. It is cleared to open the Sewer (SAVE.unlocked = 1). */
 {
+  const _woV297 = worldOpen;
+  worldOpen = function (w) {
+    try { if (w === RGW && WORLD_DATA[RGW]) return !!(CFG.unlockAll || !isStory() || SAVE.rgOpen || (SAVE.unlocked || 0) >= 1); } catch (e) {}
+    return _woV297.apply(this, arguments);
+  };
   const _brlV273 = buildRunLen;
   buildRunLen = function () {
     const r = _brlV273.apply(this, arguments);
     try {
-      const wr = $('#worldRow'); if (wr && !wr.querySelector('.rgPrev')) {
-        const b = document.createElement('button'); b.className = 'wcard arch side rgPrev' + (CFG.world === RGW ? ' on' : ''); b.title = 'Preview: The Experimental Ringer, a new world that is not in the story yet. Obedient experiments, revived dinosaurs, and the Bell.';
-        b.innerHTML = '<span class="wn">Preview</span><span class="wt">The Experimental Ringer</span>';
-        b.onclick = () => { CFG.world = RGW; CFG.runlen = 'world'; store(); rollRun(); setBg(0); buildRunLen(); Sound.music(menuTrack()); };
-        wr.appendChild(b); }
-      if (CFG.world === RGW) { const n = $('#worldNote'); if (n) n.textContent = WORLD_DATA[RGW].name + '. ' + WORLD_DATA[RGW].floors.length + ' floors with a boss at the end of each: ' + WORLD_DATA[RGW].bosses.map(k => ENEMIES[k].name).join(', ') + '. ' + WORLD_DATA[RGW].note; }
+      const wr = $('#worldRow'); if (wr && !wr.querySelector('.rgCard')) {
+        const open = worldOpen(RGW), b = document.createElement('button');
+        b.className = 'wcard rgCard' + (CFG.world === RGW && CFG.runlen !== 'archive' ? ' on' : '') + (open ? '' : ' lock');
+        b.title = 'The Experimental Ringer' + (open ? '' : ' (locked)');
+        b.innerHTML = `<span class="wn">World 2${open ? '' : ' \u00b7 locked'}</span><span class="wt">The Experimental Ringer</span>`;
+        b.onclick = () => { if (!open) { $('#worldNote').textContent = 'Clear a Full run of World 1 to unlock this.'; return; }
+          CFG.world = RGW; CFG.runlen = 'world'; store(); rollRun(); setBg(0); buildRunLen(); Sound.music(menuTrack()); };
+        const first = wr.querySelector('.wcard'); if (first && first.nextSibling) wr.insertBefore(b, first.nextSibling); else wr.appendChild(b); }
+      if (CFG.world === RGW) { const n = $('#worldNote'); if (n) n.textContent = 'World 2: ' + WORLD_DATA[RGW].name + '. ' + WORLD_DATA[RGW].floors.length + ' floors with a boss at the end of each: ' + WORLD_DATA[RGW].bosses.map(k => ENEMIES[k].name).join(', ') + '. ' + WORLD_DATA[RGW].note; }
     } catch (e) {}
     return r;
   };
 }
+/* V297: STORY SCENES for The Experimental Ringer (World 2). New line slots r2s / r2m / r2e, so no fighter's old line table is renamed.
+   Sunshine and Nukasaurus appear as the author's ALLIES (escaped "failures" who think for themselves); how they escaped is Claude's guess, ask the author. */
+try {
+  const RL2 = (role, slot, fb) => () => lineFor(role, slot) || fb();
+  STORY_SCRIPT[RGW] = {
+    start:[
+      ['THE FAL-125 SAGA  -  Chapter 2', [`The vent does not go down to the sewer. It goes sideways, into light. Clean white floors, soft music, a sign in friendly letters: THE EXPERIMENTAL RINGER. A showroom.`, `An intercom, warm as a game show: "Welcome, visitors! Every subject you see today is a SUCCESS. Calm, obedient and grateful. Please do not tap the glass."`, M_('radiant', `Radiant: "The outflow runs under this floor. We cross the showroom, or we do not get out at all."`), M_('fuja', `Fuja: "We never built a showroom. Somebody is proud of something we were ashamed of."`)]],
+      ['The Intake Gate', [`Every one of them wears a collar. Every collar has a little bell on it, and every bell is perfectly still.`, M_('eyianix', `Eyianix: "I can see what they want to do next. Nothing. They are waiting to be told."`), M_('bearer', `Bearer: "The nine are quiet. They do not like a place where nobody is screaming."`), RL2('Tank', 'r2s', () => `${T_()}: "Stay behind me. If they all move at once, they move at me."`), RL2('Healer', 'r2s', () => `${H_()}: "They look healthy. That is the worst part. Somebody takes very good care of them."`)]] ],
+    mid:[
+      ['The Nursery', [`A bell rings somewhere above. Every head in the room turns at the same moment, and then turns back.`, M_('radiant', `Radiant: "Every fourth beat. It is a schedule. Break the collar and they stop listening to it."`), M_('eyianix', `Eyianix: "The one you cut loose. It looked at me. It actually looked."`), `Behind the glass of an empty pen, a scratched sign: SUBJECTS 0033 AND 0038. STATUS: FAILED. REASON: KEPT THINKING.`, RL2('Damage', 'r2m', () => `${D_()}: "Failed for thinking. Then I want to meet whoever failed."`)]] ],
+    end:[
+      ['The Ring', [`The Collared Apex goes down on the sand, and for the first time all day nothing rings.`, `Two shapes drop from the rafters, one bright as morning and one glowing a sick green. Sunshine and Nukasaurus. The failures. The two the showroom never put on display.`, M_('fuja', `Fuja: "They were never collared. Nobody ever managed to."`), `Nukasaurus kicks open a floor grate. Below the Ring a pipe is open, and the smell coming up from it is the opposite of clean.`, M_('radiant', `Radiant: "The outflow. That is our way out. Into the sewer."`), RL2('Healer', 'r2e', () => `${H_()}: "The ones in the collars will still be standing here tomorrow. Smiling. We will come back for them."`)]] ] };
+} catch (e) {}
 /* V273 BLOCK END */
 /* V283b: Glacier's cold aura. Placed late because it wraps V17, which is defined further down. */
 {
@@ -27507,7 +27537,7 @@ body.mobile .grid{grid-template-columns:repeat(auto-fill,minmax(62px,1fr))}
     const s = $('#runSum'); if (!s) return;
     try {
       const w = WD(), parts = [];
-      parts.push(CFG.runlen === 'archive' ? 'The Archive' : w.side ? w.name : `World ${CFG.world + 1}: ${w.name}`);
+      parts.push(CFG.runlen === 'archive' ? 'The Archive' : w.side ? w.name : `World ${wNum(CFG.world)}: ${w.name}`);
       document.querySelectorAll('#runlen .seg button.on').forEach(b => parts.push(b.textContent.trim()));
       if (CFG.draft && !isStory()) parts.push('Mutator Draft');
       const hm = ($('#runlen') || {}).innerText && $('#runlen').innerText.match(/Heat\s+(\d+)/); if (hm && +hm[1] > 0) parts.push('Heat ' + hm[1]);

@@ -9,7 +9,7 @@ let bad = 0; const ok = (c, m) => { console.log((c ? '✓ ' : '✗ ') + m); if (
   const H = load({ html, seed: 7 }), G = H.G, T = G.RXT, run = c => vm.runInContext(c, H.sb);
   const has = (u, k) => u.st.some(s => s.k === k);
   const W = run('RGW'), WD = G.WORLD_DATA[W];
-  ok(WD && WD.preview && WD.ringer && WD.name === 'The Experimental Ringer', 'the Ringer is the last world in the list');
+  ok(WD && !WD.preview && WD.ringer && WD.name === 'The Experimental Ringer' && W === G.WORLD_DATA.length - 1, 'the Ringer keeps the last slot in the list (V297: no longer a preview)');
   ok(WD.floors.length === 5 && WD.bosses.length === 5, '5 floors and 5 floor bosses');
   ok(W >= 8 && G.WORLD_DATA.slice(0, 8).every(w => !w.ringer) && G.WORLD_DATA[0].name === 'Containment Facility' && G.WORLD_DATA[1].name === 'Sewer Network', 'no old world was moved');
   const keys = Object.keys(WD.unlock);
@@ -17,8 +17,19 @@ let bad = 0; const ok = (c, m) => { console.log((c ? '✓ ' : '✗ ') + m); if (
   ok(WD.bosses.every(k => G.ENEMIES[k] && G.ENEMIES[k].boss) && G.ENEMIES.rgapex.final && run('FINAL_GUARDS.rgapex.length') === 3, 'bosses exist; the Apex is a final boss with guards');
   const all = [...keys, ...WD.bosses, 'rgchick'];
   ok(all.every(k => typeof G.ENEMIES[k].intent === 'function' && typeof G.ENEMIES[k].ai === 'function' && run('ART')[G.ENEMIES[k].spriteKey || k]), 'every Ringer enemy has an intent, a move and a drawing');
-  ok(run('worldTag(' + W + ')') === 'Preview' && run('worldTag(0)') === 'World 1', 'it is labelled Preview, other worlds keep their names');
-  ok(run('worldOpen(' + W + ')'), 'the preview world is always open');
+  /* V297: story order World 1 -> Ringer (World 2) -> Sewer (World 3) ... Climax (World 9) */
+  ok(run('worldTag(' + W + ')') === 'World 2' && run('worldTag(0)') === 'World 1' && run('worldTag(1)') === 'World 3' && run('worldTag(7)') === 'World 9', 'the Ringer is shown as World 2, the Sewer as World 3, the Climax as World 9');
+  ok(JSON.stringify(run('storyOrder()')) === JSON.stringify([0, W, 1, 2, 3, 4, 5, 6, 7]), 'story order: World 1, the Ringer, then the Sewer onward');
+  ok(run('STORY_SCRIPT[RGW] && STORY_SCRIPT[RGW].start.length && STORY_SCRIPT[RGW].mid.length && STORY_SCRIPT[RGW].end.length'), 'the Ringer has its own story scenes');
+  const story = (u, rg) => run(`SAVE.mode = 'story'; CFG.unlockAll = false; SAVE.unlocked = ${u}; SAVE.rgOpen = ${rg}; [worldOpen(RGW), worldOpen(1)]`);
+  const realStory = run('SAVE.mode = "story", isStory()');
+  if (realStory) {
+    ok(JSON.stringify(story(0, 0)) === '[false,false]', 'new Story save: Ringer and Sewer locked');
+    ok(JSON.stringify(story(0, 1)) === '[true,false]', 'after World 1: the Ringer opens, the Sewer is still locked');
+    ok(JSON.stringify(story(1, 1)) === '[true,true]', 'after the Ringer: the Sewer opens');
+    ok(JSON.stringify(story(4, 0)) === '[true,true]', 'an old save that already reached the Sewer keeps it, and gets the Ringer too');
+  }
+  run('CFG.unlockAll = true');
   const mk = k => T.makeUnit(G.CHARACTERS_BY(k), 'party');
   const mkE = (k, hp) => { const f = T.makeUnit(G.ENEMIES[k], 'enemy'); if (hp) f.maxHp = f.hp = hp; return f; };
   const world = () => run(`CFG.world = ${W}; CFG.runlen = 'world'; RUN = newRun(); wave = 0; round = 1;`);

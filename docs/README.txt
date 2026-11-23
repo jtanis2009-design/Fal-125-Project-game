@@ -1,6 +1,14 @@
-FAL-125 README. Current version: v296 (file fal125_battle_prototype-v296.html, needs the img folder next to it). Newest entries first.
+FAL-125 README. Current version: v297 (file fal125_battle_prototype-v297.html, needs the img folder next to it). Newest entries first.
 Folders: docs (this file, ROADMAP, Needed, TEST_LAB, design notes), tools (headless test and audit scripts, see TEST_LAB.txt), data (FAL125_Character_Book.xlsx), sprites.
 Read docs/Needed.txt every time a playable character is added. docs/ROADMAP.txt holds only what is still to build.
+
+V297 (THE EXPERIMENTAL RINGER IS WORLD 2 OF THE STORY)
+- The Ringer is no longer a preview. In Story mode the order is now: World 1 Containment Facility, World 2 The Experimental Ringer, World 3 Sewer Network, World 4 Beyond the Facility ... World 9 The Climax. Every world card, note, unlock message and the story recap use the new numbers.
+- Clearing World 1 opens the Ringer; clearing the Ringer opens the Sewer.
+- OLD SAVES ARE SAFE: a save that had already reached the Sewer keeps everything and gets the Ringer opened too. Nothing in the save file was renumbered (the game keeps the Ringer in its own slot and only changes the order and the numbers you see).
+- Story scenes for the Ringer (start, middle, end): the vent leads into a bright showroom instead of the sewer, the Bell keeps every collared subject in line, a sign about two "failed" subjects who "kept thinking", and at the end Sunshine and Nukasaurus drop in and open the grate down to the sewer. HOW Sunshine and Nukasaurus got free is Claude's guess: tell Claude the real story.
+- The Ringer was made a little easier (floor strength -5%), so it sits between World 1 and the Sewer: a test team wins World 1 about 93%, the Ringer 63-83%, the Sewer 53%.
+- Not done yet (ideas): recruit lines for fighters met in the Ringer (they use the general lines now), and making Sunshine and Nukasaurus more likely to appear as wild recruits there. Search "V297".
 
 V296 (FAST LOADING AND THE NEW TYPE CIRCLE)
 FAST LOADING
