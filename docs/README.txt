@@ -1,6 +1,13 @@
-FAL-125 README. Current version: v291 (file fal125_battle_prototype-v291.html). Newest entries first.
+FAL-125 README. Current version: v292 (file fal125_battle_prototype-v292.html). Newest entries first.
 Folders: docs (this file, ROADMAP, Needed, TEST_LAB, design notes), tools (headless test and audit scripts, see TEST_LAB.txt), data (FAL125_Character_Book.xlsx), sprites.
 Read docs/Needed.txt every time a playable character is added. docs/ROADMAP.txt holds only what is still to build.
+
+V292 (TULU'S POSES, NEW WEEPING ANGEL AND CREEP, RADIANT'S SWIPES FIXED)
+- Tulu now has his attack picture (lightning and a scythe) and his knocked-out picture (smoking, rope torn). The white background between the lightning, the scythe and his hair was made see-through.
+- Weeping Angel: new picture (black round body, white wings, cracked eye) with an attack and a knocked-out picture. The words ATTACK / DEATH on the sheet were cut off.
+- Creep: new main picture (green messy hair, green jacket, big grin).
+- Radiant's attack: the white between his green swipes is gone. Where the swipes cross his body they are now a faint see-through green, so you can see his arm and legs through them.
+- The old Weeping Angel and Creep pictures are kept as the free skin "Previous Sprite". Looks only. Search "V292".
 
 V291 (NEW SPRITES FOR GOODBYE, RADIANT AND TULU)
 - Goodbye: the blue furry monster with the big grin, with an attack and a knocked-out picture.
