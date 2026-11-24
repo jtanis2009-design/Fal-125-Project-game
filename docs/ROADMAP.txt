@@ -1,26 +1,58 @@
-FAL-125 ROADMAP (your picks, still to build)
-Last synced: v225. Finished items are removed from the list and kept in the DONE line below.
+FAL-125 ROADMAP V303 to V330 (Claude's plan, agreed with the author on November 24th 2026; reorder or cut anything)
+Last synced: v302.
 
-COMBAT
- 1. Revenge hits: when a fighter falls, the next ally acts at once with +ATK
-RUN STRUCTURE
- 2. Cursed chests: rare relic, risk a curse
- 3. Hidden rooms: found by clicking background details
- 4. Speedrun mode: timer, bonus Shards, ghost of your best run
-ECONOMY
- 5. Gamble altar: bet a chip for a chance at higher rarity
- 6. Wishing well: coins for a random blessing or curse
- 7. Loot beasts: rare enemy that flees after 3 rounds, drops chips
-ENEMIES
- 9. Mimic enemies that copy one of your fighters' moves (the casino Mimic Slot is only a bite, it does not copy)
-10. Summoner nests: spawner that floods the field until killed (bosses already call reinforcements, this is a separate enemy)
-PROGRESSION / MENUS / QOL
-11. Fake loading-screen tips that turn creepy deeper in
+FINISHING WHAT WE STARTED
+ V303  Your type review: apply the author's changes to docs/TYPES.txt, then re-check balance.
+ V304  The Ringer feels finished: its own floor and boss songs, recruit lines there, a Sunshine and Nukasaurus moment (ask how they escaped).
+ V305  Full balance test of every fighter (the last one was V272), buff the weak ones, nobody nerfed without asking.
+
+SPRITES
+ V306  Boss sprites part 1 (Worlds 1-3): a Gemini prompt per boss; Bearable's poses when credits allow.
+ V307  Boss sprites part 2 (Worlds 4-9 and the Ringer).
+ V308  Healing poses: Tangler's and Blackbird's unused third picture, and any healer the author sends one for.
+
+NEW GAMEPLAY (from the old list)
+ V309  Revenge Hits (a fighter falls, the next ally acts at once and harder) + Mimic enemies that copy a fighter's move.
+ V310  Risk and reward: cursed chests, a wishing well, loot beasts that flee after 3 rounds.
+ V311  Hidden rooms found by clicking background details + creepy loading-screen tips that get stranger deeper in.
+ V312  Summoner nests: an enemy that keeps calling more until it dies.
+
+REWORKS
+ V313  Healer variety pass: rework a few healers that still share the stack-builder template (author picks which).
+ V314  Soundemon rework: the trap-style kit discussed before.
+
+MUSIC AND POLISH
+ V315  Music pass: new songs where worlds share tracks, a final boss song, volume balance.
+ V316  New-player pass: tutorial, first 10 minutes of Story, phone layout, an in-game type chart.
+
+THE AUTHOR'S DEATH GAMES (needs the author's rules for each game)
+ V317  Death Games side mode, part 1: special challenge battles built on the author's games (Hide and Bleed, Hot Touch, Mimic Ball, Fade Bite, Skinwalker's Paradise), each with its own rules; the winners (Soundemon, Slinder, Luckster, The Red Walker...) get a moment.
+ V318  Death Games part 2: the remaining games, rewards (skins, chips, titles).
+ V319  Skinwalker's Paradise story: The Red Walker, Players 3 and 8 (needs the author's story).
+
+STORY
+ V320  Dollion and Fal-125: a story beat in World 6 (Freedom at a Price) where Dollion faces what killed its brother.
+ V321  The Climax ending pass: a stronger final scene and a true ending for clearing everything.
+ V322  The snowfall zombie game (from the page next to The Painter's sheet) as a side quest, if the author shares it.
+
+TEAM PLAY AND REPLAY
+ V323  Team-up moves: special combined ultimates for groups that belong together (Toon, Limit and Sna; Music trio.v1; Music trio.v2; Fuja and Void...).
+ V324  New Game+: replay the story with harder enemies, keeping your roster.
+ V325  More skins: author-drawn alternate looks, and a skin wardrobe screen.
+
+SPRITES AND QUALITY
+ V326  Enemy sprites part 3: the most common normal enemies.
+ V327  Accessibility and settings: type icons for colour-blind players, text size, battle speed.
+ V328  Save safety: export and import your save as a code, so progress is never lost.
+
+MILESTONE
+ V329  Full playtest and bug sweep of every world and mode.
+ V330  Milestone release: a credits screen with every character and the author, and a "what's new" page.
 
 DONE (version in brackets):
  Enemy adaptation, the counter-pick idea (v17), Branching routes (v38), Run Styles (v120), Hunt contracts + Bond Combo fix (v121), Achievements (v122),
  Move animations (v123), Confronting Yourself quest (v125), SCP enemy art + moves (v126), Sell chips for coins (v184), Quick party presets (saved presets on the select screen),
  Visual novel dialogue (v207), VN effects (v208), Battle banter box + knockout effects (v209), Boss phase banner + ultimate/Bond cut-ins + reveals (v210),
- Elemental reactions (visuals v212, rules v224), Character Mastery with lore for every fighter (v219, all written v223), Black Market (v222), Run Style audit (v225), Elite traits (v299).
+ Elemental reactions (visuals v212, rules v224), Character Mastery with lore for every fighter (v219, all written v223), Black Market (v222), Run Style audit (v225), Ringer in the story (v297), Music trio.v2 (v298, rework v300, sprites v301), Elite traits (v299), Nine types + fast loading (v296).
 Notes on what counted as done: "Branching map" is the V38 route system (Medical Wing, Containment Sector, Abandoned Barracks, Restricted Floor: fights, elites, infirmary, survivor events, trophies); shop stops are separate and there is no pure "treasure" node.
 "Small lore drops for every fighter's unlocks" is covered by the Mastery 2 lore entry (Lorebook > Fighter Files). Say so if you meant something else and it goes back on the list.

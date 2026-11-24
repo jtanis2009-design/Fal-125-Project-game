@@ -1,6 +1,13 @@
-FAL-125 README. Current version: v301 (file fal125_battle_prototype-v301.html, needs the img folder next to it). Newest entries first.
+FAL-125 README. Current version: v302 (file fal125_battle_prototype-v302.html, needs the img folder next to it). Newest entries first.
 Folders: docs (this file, ROADMAP, Needed, TEST_LAB, design notes), tools (headless test and audit scripts, see TEST_LAB.txt), data (FAL125_Character_Book.xlsx), sprites.
 Read docs/Needed.txt every time a playable character is added. docs/ROADMAP.txt holds only what is still to build.
+
+V302 (YOUR ANSWERS: HUSH, DOLLION, THE RED WALKER; ROADMAP TO V330)
+- Hush is genderless: every "she/her" about Hush is now "they/them" (move text, Codex, Archive, Mastery, tips).
+- Dollion: its brother was killed by Fal-125 itself (not by another subject). Its description, Archive entry and Mastery text say so now.
+- The Red Walker: he survived the death game Skinwalker's Paradise, and Players 3 and 8 played it with him. His description and Archive entry say so now.
+- Furnace's name is confirmed.
+- docs/ROADMAP.txt now holds the plan from V303 to V330. Search "V302".
 
 V301 (YOUR SPRITES FOR TAPE-21, LUV-4 AND SKATEBORED)
 - Tape-21, Luv-4 and Skatebored now use your own sprites, each with an idle, an attack and a knocked-out picture. With this, every fighter has a real sprite.
