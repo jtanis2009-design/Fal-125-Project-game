@@ -2,8 +2,8 @@ FAL-125 ROADMAP V303 to V330 (Claude's plan, agreed with the author on November 
 Last synced: v302.
 
 FINISHING WHAT WE STARTED
- V303  Your type review: apply the author's changes to docs/TYPES.txt, then re-check balance.
- V304  The Ringer feels finished: its own floor and boss songs, recruit lines there, a Sunshine and Nukasaurus moment (ask how they escaped).
+ V303  DONE: Kuiyka's name + Claude's second look at the types.
+ V304  DONE: The Ringer feels finished: its own floor and boss songs, recruit lines there, a Sunshine and Nukasaurus moment (ask how they escaped).
  V305  Full balance test of every fighter (the last one was V272), buff the weak ones, nobody nerfed without asking.
 
 SPRITES

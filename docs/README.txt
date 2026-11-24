@@ -1,6 +1,12 @@
-FAL-125 README. Current version: v303 (file fal125_battle_prototype-v303.html, needs the img folder next to it). Newest entries first.
+FAL-125 README. Current version: v304 (file fal125_battle_prototype-v304.html, needs the img folder next to it). Newest entries first.
 Folders: docs (this file, ROADMAP, Needed, TEST_LAB, design notes), tools (headless test and audit scripts, see TEST_LAB.txt), data (FAL125_Character_Book.xlsx), sprites.
 Read docs/Needed.txt every time a playable character is added. docs/ROADMAP.txt holds only what is still to build.
+
+V304 (THE RINGER, FINISHED: ITS OWN MUSIC, RECRUITS, SUNSHINE AND NUKASAURUS)
+- The Experimental Ringer has its own songs now (it borrowed the Safe Haven's and World 5's before): five floor songs that start as a cheerful game show with a little bell and get more uneasy floor by floor (a wrong-sounding music box in the Nursery, heavy footsteps in the Breeding Yard, a big brass night in the Ring), four boss songs, the Collared Apex's own song with a faster second phase, and a menu theme.
+- Recruit scenes in the Ringer: anyone you meet there stands behind glass marked SUCCESS in a collar, and breaks it to join you.
+- Sunshine and Nukasaurus: in the Ringer they are the most likely wild fighters to meet, with their own scenes (a broken case marked FAILED; a dinosaur chewing through a collar). If they are already in your team, they react to the FAILED sign in the middle scene and walk out into the Ring at the end. How they got free is Claude's guess: tell Claude the real story.
+- The Test Lab's world list now uses the story numbers too (the Ringer is 2). Search "V304".
 
 V303 (KUIYKA'S NAME, SECOND LOOK AT THE TYPES)
 - 0136 is now spelled Kuiyka everywhere (the author's spelling). Slinder stays Slinder.

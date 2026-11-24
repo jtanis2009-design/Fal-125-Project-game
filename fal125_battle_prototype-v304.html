@@ -3480,6 +3480,22 @@ const Sound = (() => {
     casinob7:{ lv:1.41, s:'break', dk:'break2', bp:'funk', bpm:146, root:44, mode:'dor', seed:167, p:7, v:'reed', ding:1 },
     casinob8:{ lv:0.6, s:'goth', dk:'four', bp:'pulse16', bpm:164, root:40, mode:'phr', seed:179, p:3, v:'organ' }
   });
+  /* ===== V304: THE EXPERIMENTAL RINGER'S OWN MUSIC. A bright game-show showroom with a little bell in it, that gets more uneasy floor by floor
+     (it borrowed the Safe Haven's and World 5's songs before). lv values are first guesses: measure in Chrome and adjust TRIM if one is too loud. ===== */
+  Object.assign(SONGS, {
+    rg_f1:{ lv:1.0, s:'march', bpm:112, root:48, mode:'maj', seed:801, p:2, v:'bell', ding:1 },                    /* The Intake Gate: a cheerful welcome */
+    rg_f2:{ lv:1.2, s:'house', bp:'bounce', bpm:122, root:50, mode:'mix', seed:809, p:4, v:'pluck', ding:1 },      /* The Demonstration Floor: the show is on */
+    rg_f3:{ lv:0.9, s:'ambient', bpm:92, root:53, mode:'lyd', seed:811, p:1, v:'bell', arr:1 },                    /* The Nursery: a music box, slightly wrong */
+    rg_f4:{ lv:0.8, s:'tribal', bpm:120, root:45, mode:'mix', seed:821, p:6, v:'flute' },                          /* The Breeding Yard: heavy footsteps */
+    rg_f5:{ lv:1.0, s:'march', dk:'rock', bpm:132, root:47, mode:'maj', seed:823, p:0, v:'brass', ding:1 },       /* The Ring: the big night */
+    rg_b1:{ lv:0.97, s:'gallop', bpm:150, root:48, mode:'mix', seed:827, p:3, v:'brass' },                         /* The Usher Captain */
+    rg_b2:{ lv:1.08, s:'electro', bpm:140, root:50, mode:'dor', seed:829, p:5, v:'sq', ding:1 },                   /* The Head Referee */
+    rg_b3:{ lv:0.69, s:'goth', bpm:120, root:53, mode:'harm', seed:839, p:2, v:'organ' },                          /* Hatchery Matron */
+    rg_b4:{ lv:1.1, s:'synthwave', bpm:128, root:45, mode:'min', seed:853, p:7, v:'ep' },                          /* The Wire and Cloth Mothers */
+    rg_final:{ lv:1.04, s:'epic', dk:'four', bp:'gallop', kk:'hard', bpm:124, root:47, mode:'min', seed:857, p:1, v:'brass' },   /* The Collared Apex */
+    rg_finalb:{ lv:0.88, from:'rg_final', bpm:150, hot:true },
+    rg_theme:{ lv:0.92, s:'lounge', bp:'sub', dk:'half', bpm:92, root:48, mode:'maj', seed:859, p:0, v:'bell', ding:1 }   /* world menu */
+  });
   Object.keys(SONGS).forEach(k => { const e = SONGS[k]; if (!e.from) TRACKS[k] = mkSong(e); });
   Object.keys(SONGS).forEach(k => { const e = SONGS[k]; if (e.from) TRACKS[k] = mkSong({ ...SONGS[e.from], ...e }); });
 
@@ -10456,7 +10472,7 @@ Object.assign(UNLOCK_CLOWN, { clown_x30:3, clown_x31:3, clown_x32:3, clown_x33:2
   function build() {
     const chars = CHARACTERS.slice().sort((a, b) => a.name.localeCompare(b.name));
     const slot = i => `<select data-f="p${i}">${opt('', '(empty)', !cur.party[i])}${chars.map(c => opt(c.key, `${c.name} (${c.role})`, cur.party[i] === c.key)).join('')}</select>`;
-    const worlds = WORLD_DATA.map((w, i) => opt(i, `${i + 1}. ${w.name}`, cur.world === i)).join('');
+    const worlds = WORLD_DATA.map((w, i) => opt(i, w.side ? `Side quest: ${w.name}` : `${wNum(i)}. ${w.name}`, cur.world === i)).join('');   /* V304: story numbers (the Ringer is World 2) */
     const reco = PLAYSTYLES.map((x, i) => opt(i, x.name)).join('');
     p.innerHTML = '<h3>Test Lab</h3><div class="lS" id="lS">Set it up, then Launch. Your real save is never touched.</div>'
       + '<div class="lt">PARTY</div><div class="lr">' + [0, 1, 2, 3].map(slot).join('') + '</div>'
@@ -20472,7 +20488,7 @@ RL.kuikya = [["A thunderous bonk goes through the whole corridor, again and agai
 RL.dethtech = [["Every speaker in a security booth is playing the same hiss of an old tape. In the corner, a small hooded figure with a white skull for a face is coughing into his black sleeve, a hand axe resting against his knee.", "Tape-21: \"Don't worry, I'm sick. I'm always sick. It makes me better at this.\"", "Tape-21: \"You're getting out? Take me. I'll play loud. I'll play sick. Same thing.\""], ["A drain cover rattles. A long brown ribbon of tape is caught on it, still playing something nobody can quite hear. A little hooded skull climbs out after it, dragging an axe and wiping where his nose would be.", "Tape-21: \"Caught a cold down there. Caught three. Nice.\"", "Tape-21: \"Fine. I'll come. If anything hits me, good. I'll give it all back.\""]];   /* V300 */
 RL.izumi = [["A cloud of glowing blue butterflies drifts down the corridor. In the middle walks a very pale girl with a black bob, a big red bow and dark rings under her eyes. She stops, goes very still, and for a moment she is simply not there. Then she is again.", "Luv-4: \"Sorry. I was dead for a second. It happens. Don't be scared.\"", "Luv-4: \"You're going out? I'll come. Dead or alive, I'll keep you standing.\""], ["A flooded tunnel, and on the water hundreds of blue butterflies floating perfectly still. A pale girl with a red bow sits on a pipe above them, swinging her feet.", "Luv-4: \"Emo vampires near you. That's me. Hi.\"", "Luv-4: \"Take me with you. Nobody should walk out of here alone. I did that once.\""]];   /* V300 */
 RL.anhero = [["A guard is about to strike a cowering subject when a battered skateboard slams into his shins. A grey-skinned kid in a beanie and a torn red flannel rolls in after it, picks it up and stands between them, looking extremely bored.", "Skatebored: \"Ugh. Leave them alone. Hit me instead. I wasn't doing anything anyway.\"", "Skatebored: \"You're breaking out? Whatever. I'll come. Somebody's got to take the hits and I'm free all day.\""], ["Something is grinding down the sewer railing on a skateboard, very fast and very badly. It falls off, lands in the water, climbs out and checks the board before it checks itself.", "Skatebored: \"Board's fine. I'm fine. Kind of. Who cares.\"", "Skatebored: \"Let me come. I'll stand in front. I'm good at getting hit. It's the only thing I'm not bored of.\""]];   /* V300 */
-const recruitLines = c => { const w = CFG.world; const r = (RL[c.key] || [])[w]; return (w <= 1 && r) ? { appear:r[0], fight:r[1], join:r[2] } : null; };
+const recruitLines = c => { const w = CFG.world; try { if (typeof rgRecruitLines === 'function') { const x = rgRecruitLines(c, w); if (x) return x; } } catch (e) {} const r = (RL[c.key] || [])[w]; return (w <= 1 && r) ? { appear:r[0], fight:r[1], join:r[2] } : null; };   /* V304: the Ringer has its own recruit lines */
 function wildDef(c, i) {
   const s = WD().fsc[floorOf(i)] || 1, sa = 1 + (s - 1) * .7, role = c.role, k = 'wild_' + c.key;
   const mv = role === 'Tank' ? ['Shoulder charge', 'Brace'] : role === 'Healer' ? ['Jab', 'Mend'] : ['Strike', 'Heavy strike'];
@@ -20627,7 +20643,7 @@ async function allyEncounter(i) {
   const forced = !!RUN.forceAlly || !!first; RUN.forceAlly = false;   /* V38: the Containment Sector route guarantees an encounter */
   if (!forced && Math.random() >= Math.min(STORY_ENC.max, STORY_ENC.chance + STORY_ENC.pity * RUN.allyMiss)) { RUN.allyMiss++; return null; }
   RUN.allyMiss = 0;
-  const c = first || pick(pool);
+  const c = first || (typeof rgPickAlly === 'function' && rgPickAlly(pool)) || pick(pool);   /* V304: Sunshine and Nukasaurus are often met in the Ringer */
   const rl = recruitLines(c);
   /* v206: the combined recruit screen (below) replaces the old text prompt; it always leads into the fight */
   foes = [makeUnit(wildDef(c, i), 'enemy')];
@@ -26983,8 +26999,8 @@ WORLD_DATA.push({ name:'The Experimental Ringer', ringer:true, noScare:true,   /
   win:'The Collared Apex falls',
   note:'Fal-125 shows off its successful experiments: obedient people, animals and revived dinosaurs, in a bright clean showroom. World special, The Bell: every enemy wears a collar, and every 4th round the bell rings and all collared enemies strike together (your team calms down and heals a little). Stun an enemy, or hit it for 40% of its HP in one blow, to cut its collar: it goes Wild, hits harder, ignores the bell and sometimes attacks its own side.',
   end:'The Collared Apex goes down on the sand of the Ring, and for the first time all day nothing rings. The crowd of still people does not clap. It does not do anything. Below the Ring a pipe is open, and the smell coming up from it is the opposite of clean.',
-  scene:f => RGSCENES[Math.max(0, Math.min(4, f))](), theme:'theme4',
-  music:{ floor:['haven1', 'haven2', 'free1', 'hollow1', 'free2'], boss:['havenb1', 'havenb2', 'boss_proto', 'boss_announcer', 'final5'], final2:'final5b' } });
+  scene:f => RGSCENES[Math.max(0, Math.min(4, f))](), theme:'rg_theme',   /* V304: its own songs */
+  music:{ floor:['rg_f1', 'rg_f2', 'rg_f3', 'rg_f4', 'rg_f5'], boss:['rg_b1', 'rg_b2', 'rg_b3', 'rg_b4', 'rg_final'], final2:'rg_finalb' } });
 
 /* ---- the Bell ---- */
 function rgCut(u, why) {
@@ -27078,7 +27094,28 @@ try {
     mid:[
       ['The Nursery', [`A bell rings somewhere above. Every head in the room turns at the same moment, and then turns back.`, M_('radiant', `Radiant: "Every fourth beat. It is a schedule. Break the collar and they stop listening to it."`), M_('eyianix', `Eyianix: "The one you cut loose. It looked at me. It actually looked."`), `Behind the glass of an empty pen, a scratched sign: SUBJECTS 0033 AND 0038. STATUS: FAILED. REASON: KEPT THINKING.`, RL2('Damage', 'r2m', () => `${D_()}: "Failed for thinking. Then I want to meet whoever failed."`)]] ],
     end:[
-      ['The Ring', [`The Collared Apex goes down on the sand, and for the first time all day nothing rings.`, `Two shapes drop from the rafters, one bright as morning and one glowing a sick green. Sunshine and Nukasaurus. The failures. The two the showroom never put on display.`, M_('fuja', `Fuja: "They were never collared. Nobody ever managed to."`), `Nukasaurus kicks open a floor grate. Below the Ring a pipe is open, and the smell coming up from it is the opposite of clean.`, M_('radiant', `Radiant: "The outflow. That is our way out. Into the sewer."`), RL2('Healer', 'r2e', () => `${H_()}: "The ones in the collars will still be standing here tomorrow. Smiling. We will come back for them."`)]] ] };
+      ['The Ring', [`The Collared Apex goes down on the sand, and for the first time all day nothing rings.`, () => (hasP('sunshine') || hasP('nukasaurus')) ? `${hasP('sunshine') && hasP('nukasaurus') ? 'Sunshine and Nukasaurus' : hasP('sunshine') ? 'Sunshine' : 'Nukasaurus'} ${hasP('sunshine') && hasP('nukasaurus') ? 'walk' : 'walks'} out into the middle of the Ring. Every still face in the crowd turns to look at the failure that got away.` : `Two shapes drop from the rafters, one bright as morning and one glowing a sick green. Sunshine and Nukasaurus. The failures. The two the showroom never put on display.`, M_('fuja', `Fuja: "They were never collared. Nobody ever managed to."`), () => `${hasP('sunshine') && !hasP('nukasaurus') ? 'Sunshine tears open' : 'Nukasaurus kicks open'} a floor grate. Below the Ring a pipe is open, and the smell coming up from it is the opposite of clean.`, M_('radiant', `Radiant: "The outflow. That is our way out. Into the sewer."`), RL2('Healer', 'r2e', () => `${H_()}: "The ones in the collars will still be standing here tomorrow. Smiling. We will come back for them."`)]] ] };
+} catch (e) {}
+/* V304: THE RINGER, FINISHED. Its own songs (rg_* in SONGS), recruit lines for anyone met here (rgRecruitLines), and Sunshine and Nukasaurus:
+   in the Ringer they are the most likely wild fighters to meet (rgPickAlly, half the time when either is still free), with their own lines and story reactions.
+   How they got free is Claude's guess (they "kept thinking" and walked out); the author can tell the real story. Search "V304". */
+const RG_REC = {
+  sunshine:["A display case with a brass plate: SUBJECT 0033, FAILED. The glass is broken from the inside. Something bright is crouched on top of it, watching the collared crowd below with a killer's patience.", "Sunshine: (it does not wait for the bell. It never has.)", "Sunshine drops down beside you, and for the first time in the showroom nobody is following orders."],
+  nukasaurus:["A green glow comes from behind a door marked FAILED SAMPLES. Inside, a dinosaur that should not exist is chewing through a collar it was never made to wear, and the air tastes of metal.", "Nukasaurus: (a low, rattling roar. The collar it was chewing goes off like a firework.)", "Nukasaurus steps out of the room it was locked in, and every collared animal in the hall flinches."]
+};
+function rgRecruitLines(c, w) {
+  if (w !== RGW) return null;
+  const R = RG_REC[c.key]; if (R) return { appear:R[0], fight:R[1], join:R[2] };
+  return { appear:`Behind a pane of glass marked SUCCESS, ${c.name} stands perfectly still in a Fal-125 collar, smiling the showroom smile. When you get close, the smile slips.`,
+    fight:`(${c.name} moves before the bell says so.)`,
+    join:`${c.name} pulls off what is left of the collar and falls in behind you without being told to.` };
+}
+function rgPickAlly(pool) {
+  try { if (CFG.world !== RGW) return null; const f = pool.filter(c => c.key === 'sunshine' || c.key === 'nukasaurus'); return f.length && Math.random() < .5 ? pick(f) : null; } catch (e) { return null; }
+}
+try {   /* Sunshine and Nukasaurus react when they are already in your team (lines are Claude's guesses) */
+  STORY_SCRIPT[RGW].mid[0][1].push(() => hasP('sunshine') ? `Sunshine stops in front of the empty pen and looks at the sign for a long time. Then it keeps walking, faster.` : null);
+  STORY_SCRIPT[RGW].mid[0][1].push(() => hasP('nukasaurus') ? `Nukasaurus scratches one long claw across the word FAILED until it is gone.` : null);
 } catch (e) {}
 /* V273 BLOCK END */
 /* V283b: Glacier's cold aura. Placed late because it wraps V17, which is defined further down. */
