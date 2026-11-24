@@ -1,6 +1,10 @@
-FAL-125 README. Current version: v302 (file fal125_battle_prototype-v302.html, needs the img folder next to it). Newest entries first.
+FAL-125 README. Current version: v303 (file fal125_battle_prototype-v303.html, needs the img folder next to it). Newest entries first.
 Folders: docs (this file, ROADMAP, Needed, TEST_LAB, design notes), tools (headless test and audit scripts, see TEST_LAB.txt), data (FAL125_Character_Book.xlsx), sprites.
 Read docs/Needed.txt every time a playable character is added. docs/ROADMAP.txt holds only what is still to build.
+
+V303 (KUIYKA'S NAME, SECOND LOOK AT THE TYPES)
+- 0136 is now spelled Kuiyka everywhere (the author's spelling). Slinder stays Slinder.
+- Claude checked every fighter's type a second time. Two changes: Tape-21 is now a Demon (your sprite is a hooded skull reaper, not a digital tape), and Luckster is now Human (a man in a rabbit hood who won Fade Bite, like the other death-game players). Everyone else stayed. docs/TYPES.txt has the updated list: tell Claude anyone to move. Search "V303".
 
 V302 (YOUR ANSWERS: HUSH, DOLLION, THE RED WALKER; ROADMAP TO V330)
 - Hush is genderless: every "she/her" about Hush is now "they/them" (move text, Codex, Archive, Mastery, tips).

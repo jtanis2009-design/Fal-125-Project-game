@@ -13,7 +13,7 @@ let bad = 0; const ok = (c, m) => { console.log((c ? '✓ ' : '✗ ') + m); if (
   const mkE = (hp) => { const f = T.makeUnit(Object.assign({}, G.ENEMIES[ek]), 'enemy'); f.boss = false; f.maxHp = f.hp = hp || 9000; f.atk = 30; return f; };
   const mk = k => T.makeUnit(G.CHARACTERS_BY(k), 'party');
   run('RUN = newRun(); round = 1');
-  const want = [['dethtech', 'Tape-21', 'Damage', '0137', 'Plague', 'Virtual'], ['izumi', 'Luv-4', 'Healer', '0138', 'Warden', 'Anomaly'], ['anhero', 'Skatebored', 'Tank', '0139', 'Guardian', 'Human']];
+  const want = [['dethtech', 'Tape-21', 'Damage', '0137', 'Plague', 'Demon'], ['izumi', 'Luv-4', 'Healer', '0138', 'Warden', 'Anomaly'], ['anhero', 'Skatebored', 'Tank', '0139', 'Guardian', 'Human']];
   want.forEach(([k, n, r, id, b, ty]) => { const c = G.CHARACTERS_BY(k); ok(c && c.name === n && c.role === r && c.id === id && c.build === b && c.type === ty && c.skills.every(s => S[s]) && S['ult_' + k], `${n}: ${r}, ${id}, ${b}, ${ty}, 3 moves and an ultimate`); });
   const ids = G.CHARACTERS.map(x => x.id); ok(new Set(ids).size === ids.length, 'every fighter has a different number');
   ok(want.every(([k]) => run(`IDENT.${k} && PARTY_QUIPS.${k}.length === 2 && STORY_EXTRA.${k} && RL.${k}.length === 2 && ARC_LORE.${k}.length === 6 && MAST_TEXT.${k} && SKIN_DEFS.${k}.length === 2`)), 'identity, quips, story lines, recruit scenes, Archive, Mastery and 2 skins for all three');

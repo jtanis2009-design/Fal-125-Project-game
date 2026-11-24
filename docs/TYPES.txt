@@ -1,4 +1,5 @@
-FAL-125 TYPES (V296). Claude's draft: tell Claude which fighters to move.
+FAL-125 TYPES (V296, second look V303). Tell Claude which fighters to move.
+V303 changes: Tape-21 Virtual -> Demon (the author's sprite is a hooded skull reaper), Luckster Animalistic -> Human (a man in a rabbit hood; Fade Bite winner). Every other pick was checked again and kept.
 
 THE CIRCLE (each type beats the next one: +30% damage, and -20% the other way):
   Angel > Demon > Human > Animalistic > Hybrid > Machine > Virtual > Anomaly > Cosmic > Angel
@@ -6,14 +7,14 @@ THE CIRCLE (each type beats the next one: +30% damage, and -20% the other way):
 ANGEL (8): holy beings. Beats Demon: holy light burns the damned.
   Hush, Lovesick, Marrow, Rainbow Ripper, Tearwing, Velara, Weeping Angel, Xainbow
 
-DEMON (28): demons and devils. Beats Human: demons prey on people.
-  Akuna, Bearer, Bonesaw, C-Ruin, Doommaster, Eyianix, Felo de se, Flokelore, Hemo, Ixis, Kano, Kitsuna, Kuikya, Lycion, Naginata, Ox, Pyrelash, Reflux, Renku, Ruckus, Rue, Soundemon, Stitchheart, Sunburst, Tangler, Umbra, Vein Ripper, Xekna
+DEMON (29): demons and devils. Beats Human: demons prey on people.
+  Akuna, Bearer, Bonesaw, C-Ruin, Doommaster, Eyianix, Felo de se, Flokelore, Hemo, Ixis, Kano, Kitsuna, Kuiyka, Lycion, Naginata, Ox, Pyrelash, Reflux, Renku, Ruckus, Rue, Soundemon, Stitchheart, Sunburst, Tangler, Tape-21, Umbra, Vein Ripper, Xekna
 
-HUMAN (36): people (and the clowns). Beats Animalistic: people hunt, cage and tame beasts.
-  Ano, Caspic, Chaser, Clown.x2, Clown.x25, Clown.x33, Cy, Demure, Dollion, Furnace, Gloom, Gutter, Haz-225, Haz-378, Hole, Intervein, Kasugu, Moon, Nane, Nero, Nose, Punchline, Radiant, Ripper, Sevalio, Sinkhole, Slinder, Smiley, The Painter, The Red Walker, The Vendor, Tomb, Toon, Unbreakable, Voltage 77, Wugang
+HUMAN (38): people (and the clowns). Beats Animalistic: people hunt, cage and tame beasts.
+  Ano, Caspic, Chaser, Clown.x2, Clown.x25, Clown.x33, Cy, Demure, Dollion, Furnace, Gloom, Gutter, Haz-225, Haz-378, Hole, Intervein, Kasugu, Luckster, Moon, Nane, Nero, Nose, Punchline, Radiant, Ripper, Sevalio, Sinkhole, Skatebored, Slinder, Smiley, The Painter, The Red Walker, The Vendor, Tomb, Toon, Unbreakable, Voltage 77, Wugang
 
-ANIMALISTIC (13): beasts and animal bodies. Beats Hybrid: instinct tears apart forced, unstable flesh.
-  Blackbird, Bloodspike, Conquer, Dog Hunter, Glacier, Hound Dog, Luckster, Nukasaurus, Parda, Sadie & The Stray, Sleepy, Sunshine, Uquna
+ANIMALISTIC (12): beasts and animal bodies. Beats Hybrid: instinct tears apart forced, unstable flesh.
+  Blackbird, Bloodspike, Conquer, Dog Hunter, Glacier, Hound Dog, Nukasaurus, Parda, Sadie & The Stray, Sleepy, Sunshine, Uquna
 
 HYBRID (13): a demon mixed with flesh (your rule). Beats Machine: living flesh grows through and chokes metal.
   Abomination Devic, Devourer, Envival, Iris, Limit, Monstro, Mushroom, Ronin, Sna, Snavo, Thorn, Vor, Walker
@@ -24,8 +25,8 @@ MACHINE (8): built things: wires, metal, scrap, cords. Beats Virtual: hardware p
 VIRTUAL (5): digital, glitch and broadcast things. Beats Anomaly: code can glitch, copy and patch the impossible.
   Copyright, Ghost, Glitch, Seam, Smiley.wires
 
-ANOMALY (16): impossible things with no body type. Beats Cosmic: it breaks the laws even stars obey.
-  Anigari, Claire, Cloak, Corridor Stalker, Creep, Dia, Flick, Goodbye, Inkating, Kaleido, Maw, Mindbender, Outbreak, Spiral, Still-06, The Watcher
+ANOMALY (17): impossible things with no body type. Beats Cosmic: it breaks the laws even stars obey.
+  Anigari, Claire, Cloak, Corridor Stalker, Creep, Dia, Flick, Goodbye, Inkating, Kaleido, Luv-4, Maw, Mindbender, Outbreak, Spiral, Still-06, The Watcher
 
 COSMIC (7): black holes, void, light, other dimensions. Beats Angel: the void swallows heaven's light.
   Back Shatter, Eye of Sin, Fuja, Hollowpoint, Serpentine, Shamoon, Void
