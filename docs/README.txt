@@ -1,6 +1,14 @@
-FAL-125 README. Current version: v304 (file fal125_battle_prototype-v304.html, needs the img folder next to it). Newest entries first.
+FAL-125 README. Current version: v305 (file fal125_battle_prototype-v305.html, needs the img folder next to it). Newest entries first.
 Folders: docs (this file, ROADMAP, Needed, TEST_LAB, design notes), tools (headless test and audit scripts, see TEST_LAB.txt), data (FAL125_Character_Book.xlsx), sprites.
 Read docs/Needed.txt every time a playable character is added. docs/ROADMAP.txt holds only what is still to build.
+
+V305 (FULL BALANCE TEST: 30 WEAK FIGHTERS MADE STRONGER)
+- Every one of the 137 fighters was tested again (the last full test was V272, before the nine types and many new fighters). The full table is in docs/BALANCE_TEST.txt. Fighters are only compared with others of the same role.
+- As asked, only the weak ones were changed, and only made STRONGER. Nobody was made weaker (Iris, Parda, Goodbye and Maw are the strongest tanks and were left alone).
+- Damage (more ATK and HP): Chaser, The Red Walker, Dog Hunter, Punchline, Kasugu, Cloak, Ronin, Toon, Hemo, Back Shatter, and Felo de se (HP only).
+- Tanks (more HP and DEF): Kano, Lifewire, C-Ruin, Glitch, Sinkhole, Devic, Xekna, Intervein, Reflux, Anigari, Flick, Stitchheart.
+- Healers (stronger heals, more HP and DEF): Caspic, Sleepy, Ano, Flokelore, Hollowpoint, Bearable, The Painter.
+- Biggest changes: The Red Walker won 7 of 24 late test runs, now 16; Chaser 9 to 16; Toon 9.1 to 12.1 average wave early; Lifewire 9.1 to 12.9; Hollowpoint 14.9 to 18.6. The Red Walker, Chaser and Dog Hunter still start a bit slowly early on, but now sit with the other fighters at the bottom of the normal range. Search "V305".
 
 V304 (THE RINGER, FINISHED: ITS OWN MUSIC, RECRUITS, SUNSHINE AND NUKASAURUS)
 - The Experimental Ringer has its own songs now (it borrowed the Safe Haven's and World 5's before): five floor songs that start as a cheerful game show with a little bell and get more uneasy floor by floor (a wrong-sounding music box in the Nursery, heavy footsteps in the Breeding Yard, a big brass night in the Ring), four boss songs, the Collared Apex's own song with a faster second phase, and a menu theme.

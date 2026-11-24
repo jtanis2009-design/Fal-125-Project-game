@@ -27285,6 +27285,26 @@ function eltMake(e) { e.name = 'Elite ' + e.name; e.maxHp = e.hp = Math.round(e.
     return r;
   };
 }
+/* V305: FULL BALANCE TEST (docs/BALANCE_TEST.txt, made on v303). The author asked to buff only the weak ones; nobody was made weaker.
+   Every fighter was played in its role's team (60 runs World 5 level 1 Hard, 24 runs World 6 level 10 Hard) and compared inside its role.
+   BUFF305: hp / atk multipliers, def added, heal multiplier (their own heals, like BUFF272). Search "V305". */
+const BUFF305 = {
+  /* Damage */
+  chaser:{ atk:1.20, hp:1.15 }, redwalker:{ atk:1.20, hp:1.20 }, doghunter:{ atk:1.15, hp:1.12 }, punchline:{ atk:1.10, hp:1.08 }, kasugu:{ atk:1.10, hp:1.08 },
+  cloak:{ atk:1.08, hp:1.08 }, ronin:{ atk:1.08, hp:1.08 }, toon:{ atk:1.08, hp:1.08 }, hemo:{ atk:1.15, hp:1.15 }, felodese:{ hp:1.10 }, shatter:{ atk:1.05, hp:1.05 },
+  /* Tank */
+  kano:{ hp:1.22, def:3 }, lifewire:{ hp:1.15, def:2 }, cruin:{ hp:1.25, def:3 }, glitch:{ hp:1.15, def:2 }, sinkhole:{ hp:1.15, def:2 }, devic:{ hp:1.12, def:2 },
+  xekna:{ hp:1.12, def:2 }, intervein:{ hp:1.20, def:3 }, reflux:{ hp:1.12, def:2 }, anigari:{ hp:1.12, def:1 }, flick:{ hp:1.10, def:1 }, stitchheart:{ hp:1.12, def:2 },
+  /* Healer */
+  caspic:{ heal:1.25, hp:1.10, def:1 }, sleepy:{ heal:1.25, hp:1.10, def:1 }, ano:{ heal:1.20, hp:1.10, def:1 }, flokelore:{ heal:1.20, hp:1.10, def:1 },
+  hollowpoint:{ heal:1.20, hp:1.10, def:1 }, bearable:{ heal:1.15, hp:1.10, def:1 }, painter:{ heal:1.10, hp:1.10, def:1 }
+};
+try {
+  Object.keys(BUFF305).forEach(k => { const c = CHARACTERS.find(x => x.key === k), b = BUFF305[k]; if (!c || c._v305) return; c._v305 = 1;
+    if (b.hp) c.hp = Math.round(c.hp * b.hp); if (b.atk) c.atk = Math.round(c.atk * b.atk * 10) / 10; if (b.def) c.def += b.def; });
+  const _heV305 = heal;
+  heal = function (u, n) { try { const b = cur && cur.team === 'party' && BUFF305[cur.key]; if (b && b.heal && n > 0) n *= b.heal; } catch (e) {} return _heV305.call(this, u, n); };
+} catch (e) {}
 </script>
 <div id="jsStat" style="position:fixed;left:8px;bottom:8px;z-index:99998;font:12px monospace;color:#9d96a6;background:#000a;padding:3px 7px;border-radius:4px;max-width:90vw">Loading game...</div>
 <noscript><div style="position:fixed;left:0;right:0;top:30%;z-index:99999;background:#300;color:#fff;padding:16px;font:16px sans-serif;text-align:center">JavaScript is off or blocked here. Open this file in Chrome or Firefox (not a file preview or in-app viewer).</div></noscript>

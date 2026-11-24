@@ -4,7 +4,7 @@ Last synced: v302.
 FINISHING WHAT WE STARTED
  V303  DONE: Kuiyka's name + Claude's second look at the types.
  V304  DONE: The Ringer feels finished: its own floor and boss songs, recruit lines there, a Sunshine and Nukasaurus moment (ask how they escaped).
- V305  Full balance test of every fighter (the last one was V272), buff the weak ones, nobody nerfed without asking.
+ V305  DONE: Full balance test of every fighter (the last one was V272), buff the weak ones, nobody nerfed without asking.
 
 SPRITES
  V306  Boss sprites part 1 (Worlds 1-3): a Gemini prompt per boss; Bearable's poses when credits allow.
