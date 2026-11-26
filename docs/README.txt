@@ -1,6 +1,12 @@
-FAL-125 README. Current version: v305 (file fal125_battle_prototype-v305.html, needs the img folder next to it). Newest entries first.
+FAL-125 README. Current version: v306 (file fal125_battle_prototype-v306.html, needs the img folder next to it). Newest entries first.
 Folders: docs (this file, ROADMAP, Needed, TEST_LAB, design notes), tools (headless test and audit scripts, see TEST_LAB.txt), data (FAL125_Character_Book.xlsx), sprites.
 Read docs/Needed.txt every time a playable character is added. docs/ROADMAP.txt holds only what is still to build.
+
+V306 (NEW SPRITES FOR VOR AND ANIGARI)
+- Vor: the white mask face with glowing red eyes and the huge grin on a shaggy black body, with an attack (a red slash) and a knocked-out picture (the mask lying in a heap of black scribbles).
+- Anigari: the white face with the bullseye eye, the huge red grin and the wild black hair, with an attack and a knocked-out picture.
+- The white trapped between Vor's claws, under his slash and inside the scribbles of his knocked-out picture was made see-through. The white masks, teeth and Anigari's white skin are part of the drawings and were kept.
+- The old pictures are kept as the free skin "Previous Sprite". Looks only. Boss sprite prompts for the roadmap's V306 and V307 are in docs/BOSS_PROMPTS.txt (those boss sprites will come as later versions). Search "V306".
 
 V305 (FULL BALANCE TEST: 30 WEAK FIGHTERS MADE STRONGER)
 - Every one of the 137 fighters was tested again (the last full test was V272, before the nine types and many new fighters). The full table is in docs/BALANCE_TEST.txt. Fighters are only compared with others of the same role.
