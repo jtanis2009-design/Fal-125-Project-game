@@ -1,6 +1,9 @@
-FAL-125 README. Current version: v307 (file fal125_battle_prototype-v307.html, needs the img folder next to it). Newest entries first.
+FAL-125 README. Current version: v308 (file fal125_battle_prototype-v308.html, needs the img folder next to it). Newest entries first.
 Folders: docs (this file, ROADMAP, Needed, TEST_LAB, design notes), tools (headless test and audit scripts, see TEST_LAB.txt), data (FAL125_Character_Book.xlsx), sprites.
 Read docs/Needed.txt every time a playable character is added. docs/ROADMAP.txt holds only what is still to build.
+
+V308 (FLICK'S ATTACK FACES LEFT)
+- As you asked, Flick's attack picture is flipped: the open mouth and the slashing claw now face LEFT. Looks only. Search "V308".
 
 V307 (NEW SPRITE FOR FLICK)
 - Flick: the new look with the huge round mouth full of teeth, the brown hair, the stitched grey neck and the striped arms with bloody claws, with an attack picture (mouth wide open, one claw slashing) and a knocked-out picture (head down in a pool of blood, bits flying up).

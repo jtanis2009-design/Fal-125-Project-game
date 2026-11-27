@@ -26177,7 +26177,7 @@ EMBED_SKIN.anigari_classic = 'img/anigari_previous.webp';
 EMBED.anigari_atk="img/anigari_atk.webp";
 EMBED.anigari_ko="img/anigari_ko.webp";
 ['vor', 'anigari'].forEach(k => { try { if (SKINS[k] && EMBED_SKIN[k + '_classic'] && !SKINS[k].some(x => x.id === 'classic')) SKINS[k].unshift({ id:'classic', name:'Previous Sprite', cost:0, art:k + '_classic' }); } catch (e) {} });
-/* V307: the author's new Gemini sprite for Flick (idle + attack + knocked out). The old picture is kept as the skin "Previous Sprite". */
+/* V307: the author's new Gemini sprite for Flick (idle + attack + knocked out).  V308: attack picture flipped to face left (author). The old picture is kept as the skin "Previous Sprite". */
 EMBED_SKIN.flick_classic = 'img/flick_previous.webp';
 EMBED.flick_atk="img/flick_atk.webp";
 EMBED.flick_ko="img/flick_ko.webp";
