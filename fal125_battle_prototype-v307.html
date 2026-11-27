@@ -20247,7 +20247,7 @@ SKINS.sadie.forEach(x => { if (x.id === 's1' || x.id === 's2') { x.art = 'sadie_
 ['ember', 'ghost'].forEach((o, i) => { Object.keys(SAVE.owned || {}).forEach(k => { if (k.endsWith(':' + o)) { SAVE.owned[k.replace(':' + o, ':s' + (i + 1))] = 1; delete SAVE.owned[k]; } });
   Object.keys(SAVE.skin || {}).forEach(k => { if (SAVE.skin[k] === o) SAVE.skin[k] = 's' + (i + 1); }); });
 /* v131: removed skins (broken Classics, Radiant horror drawing, Eye of Sin original drawing) -> back to Default if one was equipped */
-[['sna','classic'],['fuja','classic'],['vor','classic'],['flick','classic'],['radiant','drawing'],['eyeofsin','drawing']].forEach(([k,id]) => { if ((SAVE.skin || {})[k] === id) delete SAVE.skin[k]; });
+[['sna','classic'],['fuja','classic'],['radiant','drawing'],['eyeofsin','drawing']].forEach(([k,id]) => { if ((SAVE.skin || {})[k] === id) delete SAVE.skin[k]; });
 function showSkins() {
   const _scTop = [$('#skins'), $('#skinList')].map(e => e ? e.scrollTop : 0);   /* v205: remember where you were, so buying/equipping doesn't throw you back to the first fighter */
   $('#shardLine').textContent = 'Tokens: ' + (SAVE.tokens || 0) + ' \u00b7 Shards: ' + (SAVE.shards || 0) + ' (earned at the end of every run). Every skin is previewed on the fighter below.';
@@ -26177,6 +26177,11 @@ EMBED_SKIN.anigari_classic = 'img/anigari_previous.webp';
 EMBED.anigari_atk="img/anigari_atk.webp";
 EMBED.anigari_ko="img/anigari_ko.webp";
 ['vor', 'anigari'].forEach(k => { try { if (SKINS[k] && EMBED_SKIN[k + '_classic'] && !SKINS[k].some(x => x.id === 'classic')) SKINS[k].unshift({ id:'classic', name:'Previous Sprite', cost:0, art:k + '_classic' }); } catch (e) {} });
+/* V307: the author's new Gemini sprite for Flick (idle + attack + knocked out). The old picture is kept as the skin "Previous Sprite". */
+EMBED_SKIN.flick_classic = 'img/flick_previous.webp';
+EMBED.flick_atk="img/flick_atk.webp";
+EMBED.flick_ko="img/flick_ko.webp";
+['flick'].forEach(k => { try { if (SKINS[k] && EMBED_SKIN[k + '_classic'] && !SKINS[k].some(x => x.id === 'classic')) SKINS[k].unshift({ id:'classic', name:'Previous Sprite', cost:0, art:k + '_classic' }); } catch (e) {} });
 /* ===== V268: ATTACK POSES AND KNOCKED-OUT POSES. A fighter can have two extra sprites: <key>_atk (shown for a moment whenever it hits something) and
    <key>_ko (shown while it is down). First four: Rainbow Ripper, Ixis, Gloom and Ano (the author's Gemini sprites; their idle sprites were replaced too).
    To give any fighter poses: add sprites/<key>_atk.png and sprites/<key>_ko.png and the matching EMBED.<key>_atk / EMBED.<key>_ko lines. Nothing else.

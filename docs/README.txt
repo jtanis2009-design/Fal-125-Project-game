@@ -1,6 +1,11 @@
-FAL-125 README. Current version: v306 (file fal125_battle_prototype-v306.html, needs the img folder next to it). Newest entries first.
+FAL-125 README. Current version: v307 (file fal125_battle_prototype-v307.html, needs the img folder next to it). Newest entries first.
 Folders: docs (this file, ROADMAP, Needed, TEST_LAB, design notes), tools (headless test and audit scripts, see TEST_LAB.txt), data (FAL125_Character_Book.xlsx), sprites.
 Read docs/Needed.txt every time a playable character is added. docs/ROADMAP.txt holds only what is still to build.
+
+V307 (NEW SPRITE FOR FLICK)
+- Flick: the new look with the huge round mouth full of teeth, the brown hair, the stitched grey neck and the striped arms with bloody claws, with an attack picture (mouth wide open, one claw slashing) and a knocked-out picture (head down in a pool of blood, bits flying up).
+- Your pictures had a black background (not white), so they were cut along Flick's dark outline. The black inside the mouth and the dark stripes on the arms were kept. The words ATTACK / DEATH were cut off.
+- The old picture is kept as the free skin "Previous Sprite". Also fixed: Vor's and Flick's "Previous Sprite" skin no longer switches back to Default when you reload the game. Looks only. Search "V307".
 
 V306 (NEW SPRITES FOR VOR AND ANIGARI)
 - Vor: the white mask face with glowing red eyes and the huge grin on a shaggy black body, with an attack (a red slash) and a knocked-out picture (the mask lying in a heap of black scribbles).
